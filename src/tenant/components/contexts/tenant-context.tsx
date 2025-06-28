@@ -2,7 +2,7 @@
 "use client";
 
 import { createContext, useContext, ReactNode } from "react";
-import { Tenant } from "./tenant";
+import { Tenant } from "../../services/tenant-services";
 
 interface TenantContextType {
     tenant: Tenant;

@@ -1,6 +1,6 @@
 // middleware.ts - for advanced routing)
 import { NextRequest, NextResponse } from "next/server";
-import { getTenantByDomain } from "./tenant/tenant";
+import { getTenantByDomain } from "./tenant/services/tenant-services";
 
 export async function middleware(request: NextRequest) {
     const host = request.headers.get("host") || "localhost:3000";

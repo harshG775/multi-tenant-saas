@@ -1,5 +1,5 @@
 import { headers } from "next/headers";
-import { getTenantByDomain, type Tenant } from "./tenant";
+import { getTenantByDomain, type Tenant } from "../services/tenant-services";
 
 export async function resolveTenant(): Promise<Tenant> {
     const headersList = await headers();
