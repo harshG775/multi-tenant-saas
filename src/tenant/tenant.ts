@@ -62,7 +62,7 @@ export async function getTenantByDomain(domain: string): Promise<Tenant | null> 
 
     if (domain === "multi-tenant-saas.vercel.app" || domain === "localhost" || domain === "127.0.0.1") {
         const dummyTenant: Tenant = {
-            id: "tenant-demo-001",
+            id: "tenant-demo",
             name: "Demo Company Ltd",
             domain: domain,
             slug: "demo-company",
@@ -104,7 +104,7 @@ export async function getTenantByDomain(domain: string): Promise<Tenant | null> 
 
             createdAt: new Date("2024-01-15T10:00:00Z"),
             updatedAt: new Date("2024-12-01T14:30:00Z"),
-            createdBy: "user-admin-001",
+            createdBy: "user-admin",
         };
 
         return dummyTenant;
