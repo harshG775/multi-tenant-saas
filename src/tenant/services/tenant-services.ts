@@ -60,7 +60,7 @@ export interface Tenant {
 export async function getTenantByDomain(domain: string): Promise<Tenant | null> {
     // In production, this would query your database
 
-    if (domain === "multi-tenant-saas.delta.vercel.app" || domain === "localhost" || domain === "127.0.0.1") {
+    if (domain === "multi-tenant-saas-delta.vercel.app" || domain === "localhost" || domain === "127.0.0.1") {
         const dummyTenant: Tenant = {
             id: "tenant-demo",
             name: "Demo Company Ltd",
