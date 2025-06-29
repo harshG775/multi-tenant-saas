@@ -108,8 +108,8 @@ const tenants: Tenant[] = [
                 accent: "oklch(0.6 0.118 184.704)",
             },
             branding: {
-                logo: "/logos/demo-company.png",
-                favicon: "/favicons/demo-company.ico",
+                logo: "https://picsum.photos/200/200?random=1",
+                favicon: "https://picsum.photos/32/32?random=1",
             },
             radius: "0.75rem",
         },
@@ -131,11 +131,11 @@ const tenants: Tenant[] = [
         metadata: {
             title: { default: "Demo Company", template: "%s - Demo Company" },
             description: "Demo Company SaaS tenant",
-            icons: { icon: "/icons/demo.ico" },
+            icons: { icon: "https://picsum.photos/32/32?random=1" },
             openGraph: {
                 title: "Demo Company",
                 description: "Explore the Demo Company portal.",
-                images: ["/og/demo.png"],
+                images: ["https://picsum.photos/1200/630?random=1"],
             },
         },
     },
@@ -161,8 +161,8 @@ const tenants: Tenant[] = [
                 destructive: "oklch(0.5 0.15 27)",
             },
             branding: {
-                logo: "/logos/fintechx.svg",
-                favicon: "/favicons/fintechx.ico",
+                logo: "https://picsum.photos/200/200?random=2",
+                favicon: "https://picsum.photos/32/32?random=2",
             },
             radius: "0.5rem",
         },
@@ -181,11 +181,11 @@ const tenants: Tenant[] = [
         metadata: {
             title: { default: "FintechX", template: "%s - FintechX" },
             description: "FintechX enterprise tenant",
-            icons: { icon: "/icons/fintechx.ico" },
+            icons: { icon: "https://picsum.photos/32/32?random=2" },
             openGraph: {
                 title: "FintechX",
                 description: "Manage your finance SaaS experience.",
-                images: ["/og/fintechx.png"],
+                images: ["https://picsum.photos/1200/630?random=2"],
             },
         },
     },
@@ -210,8 +210,8 @@ const tenants: Tenant[] = [
                 primaryForeground: "oklch(0.98 0.01 90)",
             },
             branding: {
-                logo: "/logos/edunova.png",
-                favicon: "/favicons/edunova.ico",
+                logo: "https://picsum.photos/200/200?random=3",
+                favicon: "https://picsum.photos/32/32?random=3",
             },
             radius: "0.375rem",
         },
@@ -230,11 +230,11 @@ const tenants: Tenant[] = [
         metadata: {
             title: { default: "EduNova", template: "%s - EduNova" },
             description: "Education-focused startup tenant",
-            icons: { icon: "/icons/edunova.ico" },
+            icons: { icon: "https://picsum.photos/32/32?random=3" },
             openGraph: {
                 title: "EduNova",
                 description: "Learn and grow with EduNova.",
-                images: ["/og/edunova.png"],
+                images: ["https://picsum.photos/1200/630?random=3"],
             },
         },
     },
@@ -259,8 +259,8 @@ const tenants: Tenant[] = [
                 destructive: "oklch(0.4 0.18 20)",
             },
             branding: {
-                logo: "/logos/mediquant.svg",
-                favicon: "/favicons/mediquant.ico",
+                logo: "https://picsum.photos/200/200?random=4",
+                favicon: "https://picsum.photos/32/32?random=4",
             },
             radius: "0.25rem",
         },
@@ -279,11 +279,11 @@ const tenants: Tenant[] = [
         metadata: {
             title: { default: "MediQuant", template: "%s - MediQuant" },
             description: "Healthcare analytics provider",
-            icons: { icon: "/icons/mediquant.ico" },
+            icons: { icon: "https://picsum.photos/32/32?random=4" },
             openGraph: {
                 title: "MediQuant",
                 description: "Healthcare analytics and insights.",
-                images: ["/og/mediquant.png"],
+                images: ["https://picsum.photos/1200/630?random=4"],
             },
         },
     },
