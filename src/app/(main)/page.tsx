@@ -139,24 +139,6 @@ export default function MainPage() {
                         </div>
                     </div>
                 </div>
-
-                {/* Open Graph Preview */}
-                <div className="bg-card p-6 rounded-xl border">
-                    <h2 className="text-2xl font-semibold mb-4">Social Preview</h2>
-                    <div className="border rounded-lg overflow-hidden max-w-lg">
-                        <img
-                            src={tenant.metadata.openGraph.images[0]}
-                            alt="Open Graph Preview"
-                            width={1200}
-                            height={630}
-                            className="w-full h-auto"
-                        />
-                        <div className="p-4">
-                            <h3 className="font-semibold">{tenant.metadata.openGraph.title}</h3>
-                            <p className="text-sm text-muted-foreground">{tenant.metadata.openGraph.description}</p>
-                        </div>
-                    </div>
-                </div>
             </div>
         </main>
     );

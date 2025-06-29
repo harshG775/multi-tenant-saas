@@ -1,5 +1,6 @@
 import { headers } from "next/headers";
-import { getTenantByDomain, type Tenant } from "../services/tenant-services";
+import { type Tenant } from "@/types/tenant";
+import { getTenantByDomain } from "../services/tenant-services";
 
 export async function resolveTenant(): Promise<Tenant> {
     const headersList = await headers();
@@ -8,7 +9,7 @@ export async function resolveTenant(): Promise<Tenant> {
     // Extract domain from host (remove port if present)
     const domain = host.split(":")[0];
 
-    const tenant = await getTenantByDomain(domain);    
+    const tenant = await getTenantByDomain(domain);
     if (!tenant) {
         // Handle tenant not found - redirect to main site or show error
         throw new Error(`Tenant not found for domain: ${domain}`);

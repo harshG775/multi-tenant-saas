@@ -1,8 +1,8 @@
 // lib/tenant-context.tsx
 "use client";
 
+import { Tenant } from "@/types/tenant";
 import { createContext, useContext, ReactNode } from "react";
-import { Tenant } from "../../services/tenant-services";
 
 interface TenantContextType {
     tenant: Tenant;
