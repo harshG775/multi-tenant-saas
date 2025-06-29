@@ -55,6 +55,23 @@ export interface Tenant {
     createdAt: Date;
     updatedAt: Date;
     createdBy: string;
+
+    // Meta
+    metadata: {
+        title: {
+            default: string;
+            template: string;
+        }
+        description: string;
+        icons: {
+            icon: string;
+        };
+        openGraph: {
+            title: string;
+            description: string;
+            images: string[];
+        };
+    };
 }
 
 export async function getTenantByDomain(domain: string): Promise<Tenant | null> {
@@ -110,6 +127,17 @@ const tenants: Tenant[] = [
         createdAt: new Date("2024-01-15T10:00:00Z"),
         updatedAt: new Date("2024-12-01T14:30:00Z"),
         createdBy: "user-admin",
+
+        metadata: {
+            title: { default: "Demo Company", template: "%s - Demo Company" },
+            description: "Demo Company SaaS tenant",
+            icons: { icon: "/icons/demo.ico" },
+            openGraph: {
+                title: "Demo Company",
+                description: "Explore the Demo Company portal.",
+                images: ["/og/demo.png"],
+            },
+        },
     },
     {
         id: "tenant-fintechx",
@@ -150,6 +178,16 @@ const tenants: Tenant[] = [
         createdAt: new Date("2023-11-01T09:00:00Z"),
         updatedAt: new Date(),
         createdBy: "user-fintech-admin",
+        metadata: {
+            title: { default: "FintechX", template: "%s - FintechX" },
+            description: "FintechX enterprise tenant",
+            icons: { icon: "/icons/fintechx.ico" },
+            openGraph: {
+                title: "FintechX",
+                description: "Manage your finance SaaS experience.",
+                images: ["/og/fintechx.png"],
+            },
+        },
     },
     {
         id: "tenant-edunova",
@@ -189,6 +227,16 @@ const tenants: Tenant[] = [
         createdAt: new Date("2025-06-01T12:00:00Z"),
         updatedAt: new Date(),
         createdBy: "user-edunova-founder",
+        metadata: {
+            title: { default: "EduNova", template: "%s - EduNova" },
+            description: "Education-focused startup tenant",
+            icons: { icon: "/icons/edunova.ico" },
+            openGraph: {
+                title: "EduNova",
+                description: "Learn and grow with EduNova.",
+                images: ["/og/edunova.png"],
+            },
+        },
     },
     {
         id: "tenant-mediquant",
@@ -228,5 +276,15 @@ const tenants: Tenant[] = [
         createdAt: new Date("2023-08-15T08:30:00Z"),
         updatedAt: new Date(),
         createdBy: "user-mediquant-ceo",
+        metadata: {
+            title: { default: "MediQuant", template: "%s - MediQuant" },
+            description: "Healthcare analytics provider",
+            icons: { icon: "/icons/mediquant.ico" },
+            openGraph: {
+                title: "MediQuant",
+                description: "Healthcare analytics and insights.",
+                images: ["/og/mediquant.png"],
+            },
+        },
     },
 ];
