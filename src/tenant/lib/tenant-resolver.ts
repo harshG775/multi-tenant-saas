@@ -9,7 +9,8 @@ export async function resolveTenant(): Promise<Tenant> {
     const domain = host.split(":")[0];
 
     const tenant = await getTenantByDomain(domain);
-
+    console.log("Tenant:", tenant);
+    
     if (!tenant) {
         // Handle tenant not found - redirect to main site or show error
         throw new Error(`Tenant not found for domain: ${domain}`);
