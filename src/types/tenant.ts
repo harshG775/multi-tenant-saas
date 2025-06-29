@@ -3,20 +3,13 @@ import { Metadata } from "next";
 export interface Theme {
     mode: "light" | "dark" | "system";
     // Core brand colors (OKLCH format)
-    colors: {
-        primary: string; // oklch(0.21 0.034 264.665)
-        primaryForeground: string; // oklch(0.985 0.002 247.839)
-        accent?: string; // Optional accent override
-        destructive?: string; // Optional destructive override
-    };
+    customCss: string;
     // Custom branding
     branding: {
         logo?: string;
         favicon?: string;
         customCss?: string;
     };
-    // Component overrides
-    radius?: string; // CSS border-radius value
 }
 
 export interface Tenant {

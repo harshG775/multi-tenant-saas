@@ -38,19 +38,19 @@ export default function MainPage() {
                 </div>
 
                 {/* Subscription Info */}
-                <div className="bg-card p-6 rounded-xl border">
+                <div className="p-6 rounded-xl border bg-primary text-primary-foreground">
                     <h2 className="text-2xl font-semibold mb-4">Subscription</h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>
-                            <p className="text-sm text-muted-foreground">Plan</p>
+                            <p className="text-sm text-muted">Plan</p>
                             <p className="font-medium">{tenant.planId.replace("plan-", "").toUpperCase()}</p>
                         </div>
                         <div>
-                            <p className="text-sm text-muted-foreground">Status</p>
+                            <p className="text-sm text-muted">Status</p>
                             <p className="font-medium">{tenant.subscriptionStatus}</p>
                         </div>
                         <div>
-                            <p className="text-sm text-muted-foreground">
+                            <p className="text-sm text-muted">
                                 {tenant.subscriptionStatus === "trial" ? "Trial ends" : "Renews on"}
                             </p>
                             <p className="font-medium">
@@ -105,40 +105,6 @@ export default function MainPage() {
                     )}
                 </div>
 
-                {/* Theme Preview */}
-                <div className="bg-card p-6 rounded-xl border">
-                    <h2 className="text-2xl font-semibold mb-4">Branding Preview</h2>
-                    <div className="flex flex-col md:flex-row gap-6">
-                        <div className="flex-1">
-                            <div
-                                className="h-32 rounded-lg mb-4 flex items-center justify-center"
-                                style={{ backgroundColor: tenant.theme.colors.primary }}
-                            >
-                                <p
-                                    className="text-xl font-bold"
-                                    style={{ color: tenant.theme.colors.primaryForeground }}
-                                >
-                                    Primary Color
-                                </p>
-                            </div>
-                            <div className="space-y-2">
-                                <p className="text-sm text-muted-foreground">Mode: {tenant.theme.mode}</p>
-                                <p className="text-sm text-muted-foreground">Border Radius: {tenant.theme.radius}</p>
-                            </div>
-                        </div>
-                        <div className="flex-1">
-                            <div className="border rounded-lg p-4 h-32 flex items-center justify-center">
-                                <img
-                                    src={tenant.theme.branding.logo || "https://picsum.photos/200/200"}
-                                    alt="Company Logo"
-                                    width={160}
-                                    height={80}
-                                    className="object-contain max-h-full max-w-full"
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </main>
     );

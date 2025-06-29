@@ -14,14 +14,14 @@ export async function middleware(request: NextRequest) {
         return NextResponse.redirect(new URL("/tenant-not-found", request.url));
     }
 
-    // Check tenant status
-    if (tenant.status === "suspended") {
-        return NextResponse.redirect(new URL("/suspended", request.url));
-    }
+    // // Check tenant status
+    // if (tenant.status === "suspended") {
+    //     return NextResponse.redirect(new URL("/suspended", request.url));
+    // }
 
-    if (tenant.status === "cancelled") {
-        return NextResponse.redirect(new URL("/cancelled", request.url));
-    }
+    // if (tenant.status === "cancelled") {
+    //     return NextResponse.redirect(new URL("/cancelled", request.url));
+    // }
 
     // Add tenant info to headers for use in components
     const response = NextResponse.next();
