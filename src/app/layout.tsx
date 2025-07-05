@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
 import { TenantProvider } from "@/tenant/components/contexts/tenant-context";
 import { resolveTenant } from "@/tenant/lib/tenant-resolver";
 import { ModeToggle, ThemeProvider } from "@/components/ui/theme-provider";
@@ -17,24 +16,28 @@ const geistMono = Geist_Mono({
 
 export async function generateMetadata(): Promise<Metadata> {
     const tenant = await resolveTenant();
-
-    return tenant.metadata;
+    return tenant.metadata.root;
 }
 
-export default async function RootLayout({
+async function RootLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
     const tenant = await resolveTenant();
-
     return (
         <html lang="en" suppressHydrationWarning>
-            {tenant.theme.customCss && (
-                <head>
-                    <style>{tenant.theme.customCss || ""}</style>
-                </head>
-            )}
+            <head>
+                {/* This link loads BEFORE Tailwind styles */}
+                <link
+                    rel="stylesheet"
+                    href={
+                        tenant.theme.style.href ||
+                        `/themes/styles/${tenant.theme.style.id}.css` ||
+                        "/themes/styles/default.css"
+                    }
+                />
+            </head>
             <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
                 <TenantProvider tenant={tenant}>
                     <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
@@ -46,3 +49,6 @@ export default async function RootLayout({
         </html>
     );
 }
+// This import goes AFTER the custom theme import
+import "./globals.css";
+export default RootLayout;

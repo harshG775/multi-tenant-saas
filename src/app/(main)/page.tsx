@@ -36,75 +36,9 @@ export default function MainPage() {
                         </div>
                     </div>
                 </div>
-
-                {/* Subscription Info */}
-                <div className="p-6 rounded-xl border bg-primary text-primary-foreground">
-                    <h2 className="text-2xl font-semibold mb-4">Subscription</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div>
-                            <p className="text-sm text-muted">Plan</p>
-                            <p className="font-medium">{tenant.planId.replace("plan-", "").toUpperCase()}</p>
-                        </div>
-                        <div>
-                            <p className="text-sm text-muted">Status</p>
-                            <p className="font-medium">{tenant.subscriptionStatus}</p>
-                        </div>
-                        <div>
-                            <p className="text-sm text-muted">
-                                {tenant.subscriptionStatus === "trial" ? "Trial ends" : "Renews on"}
-                            </p>
-                            <p className="font-medium">
-                                {tenant.subscriptionStatus === "trial"
-                                    ? tenant.trialEndsAt?.toLocaleDateString("en-US", {
-                                          year: "numeric",
-                                          month: "long",
-                                          day: "numeric",
-                                      })
-                                    : tenant.currentPeriodEnd?.toLocaleDateString("en-US", {
-                                          year: "numeric",
-                                          month: "long",
-                                          day: "numeric",
-                                      })}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Limits & Features */}
-                <div className="bg-card p-6 rounded-xl border">
-                    <h2 className="text-2xl font-semibold mb-4">Resources</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div>
-                            <p className="text-sm text-muted-foreground">User Limit</p>
-                            <p className="font-medium">{tenant.userLimit}</p>
-                        </div>
-                        <div>
-                            <p className="text-sm text-muted-foreground">Storage</p>
-                            <p className="font-medium">{Math.floor(tenant.storageLimit / (1024 * 1024 * 1024))} GB</p>
-                        </div>
-                        <div>
-                            <p className="text-sm text-muted-foreground">API Rate Limit</p>
-                            <p className="font-medium">{tenant.apiRateLimit}/hour</p>
-                        </div>
-                    </div>
-
-                    {tenant.featureFlags.length > 0 && (
-                        <div className="mt-6">
-                            <p className="text-sm text-muted-foreground mb-2">Enabled Features</p>
-                            <div className="flex flex-wrap gap-2">
-                                {tenant.featureFlags.map((feature) => (
-                                    <span
-                                        key={feature}
-                                        className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm"
-                                    >
-                                        {feature.replace(/-/g, " ")}
-                                    </span>
-                                ))}
-                            </div>
-                        </div>
-                    )}
-                </div>
-
+                <div className="bg-primary text-primary-foreground h-20 w-full flex items-center justify-center text-2xl">Primary</div>
+                <div className="bg-secondary text-secondary-foreground h-20 w-full flex items-center justify-center text-2xl">Secondary</div>
+                <div className="bg-accent text-accent-foreground h-20 w-full flex items-center justify-center text-2xl">Accent</div>
             </div>
         </main>
     );
