@@ -7,7 +7,7 @@ export async function middleware(request: NextRequest) {
     const domain = host.split(":")[0];
 
     // Check if tenant exists
-    const tenant = await getTenantByDomain(domain);
+    const tenant = await getTenantByDomain(domain); //! un-optimized - should be cached using redis/memcached/etc
 
     if (!tenant) {
         // Redirect to main marketing site or show tenant not found
