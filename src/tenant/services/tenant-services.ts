@@ -11,7 +11,7 @@ export const tenants: Tenant[] = [
     {
         id: "tenant_001",
         name: "AstroZone",
-        domain: "multi-tenant-saas-delta.vercel.app",
+        domain: "astrozone.localhost",
         slug: "astrozone",
         baseDomain: "astrohub.app",
 
@@ -70,7 +70,7 @@ export const tenants: Tenant[] = [
             style: {
                 id: "stargaze-dark",
                 mode: "dark",
-                href: "/themes/styles/sunset-horizon.css",
+                href: "/themes/styles/default.css",
             },
             branding: {
                 logo: "https://picsum.photos/seed/stargaze-logo/200/60",
