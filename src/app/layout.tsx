@@ -40,7 +40,12 @@ async function RootLayout({
             </head>
             <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
                 <TenantProvider tenant={tenant}>
-                    <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+                    <ThemeProvider
+                        attribute="class"
+                        defaultTheme={tenant.theme.style.mode || "light"}
+                        enableSystem
+                        disableTransitionOnChange
+                    >
                         {children}
                         <ModeToggle className="fixed bottom-4 right-4" />
                     </ThemeProvider>
