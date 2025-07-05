@@ -1,3 +1,4 @@
+import "./globals.css";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { TenantProvider } from "@/tenant/components/contexts/tenant-context";
@@ -28,7 +29,6 @@ async function RootLayout({
     return (
         <html lang="en" suppressHydrationWarning>
             <head>
-                {/* This link loads BEFORE Tailwind styles */}
                 <link
                     rel="stylesheet"
                     href={
@@ -49,6 +49,4 @@ async function RootLayout({
         </html>
     );
 }
-// This import goes AFTER the custom theme import
-import "./globals.css";
 export default RootLayout;
