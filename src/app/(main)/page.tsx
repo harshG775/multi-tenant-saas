@@ -1,6 +1,6 @@
 "use client";
 
-import { useTenant } from "@/tenant/components/contexts/tenant-context";
+import { useTenant } from "@/tenant/contexts/tenant-context";
 
 export default function MainPage() {
     const { tenant } = useTenant();

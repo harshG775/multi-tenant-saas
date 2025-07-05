@@ -1,7 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { TenantProvider } from "@/tenant/components/contexts/tenant-context";
+import { TenantProvider } from "@/tenant/contexts/tenant-context";
 import { resolveTenant } from "@/tenant/lib/tenant-resolver";
 import { ModeToggle, ThemeProvider } from "@/components/ui/theme-provider";
 

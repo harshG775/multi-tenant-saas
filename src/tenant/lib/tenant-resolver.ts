@@ -1,8 +1,9 @@
 import { headers } from "next/headers";
 import { type Tenant } from "@/types/tenant";
 import { getTenantByDomain } from "../services/tenant-services";
+import { cache } from "react";
 
-export async function resolveTenant(): Promise<Tenant> {
+export const resolveTenant = cache(async function (): Promise<Tenant> {
     const headersList = await headers();
     const host = headersList.get("host") || "localhost:3000";
 
@@ -16,4 +17,4 @@ export async function resolveTenant(): Promise<Tenant> {
     }
 
     return tenant;
-}
+});
