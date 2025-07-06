@@ -1,19 +1,8 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import { TenantProvider } from "@/tenant/contexts/tenant-context";
 import { resolveTenant } from "@/tenant/lib/tenant-resolver";
 import { ModeToggle, ThemeProvider } from "@/components/ui/theme-provider";
-
-const geistSans = Geist({
-    variable: "--font-geist-sans",
-    subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-    variable: "--font-geist-mono",
-    subsets: ["latin"],
-});
 
 export async function generateMetadata(): Promise<Metadata> {
     const tenant = await resolveTenant();
@@ -31,18 +20,18 @@ async function RootLayout({
             <head>
                 <link
                     rel="stylesheet"
-                    href={
-                        tenant.theme.style.href ||
-                        `/themes/styles/${tenant.theme.style.id}.css` ||
-                        "/themes/styles/default.css"
-                    }
+                    href={tenant?.theme?.style?.href ? tenant.theme.style.href : "/themes/styles/default.css"}
+                />
+                <link
+                    rel="stylesheet"
+                    href={tenant?.theme?.fontStyle?.href ? tenant.theme.fontStyle.href : `/themes/fonts/default.css`}
                 />
             </head>
-            <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+            <body className={` antialiased`}>
                 <TenantProvider tenant={tenant}>
                     <ThemeProvider
                         attribute="class"
-                        defaultTheme={tenant.theme.style.mode || "light"}
+                        defaultTheme={tenant?.theme?.style?.mode || "light"}
                         enableSystem
                         disableTransitionOnChange
                     >

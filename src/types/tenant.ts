@@ -19,6 +19,7 @@ export interface Tenant {
     theme: {
         template: { id: string }; // page layout template
         style: { id: string; href?: string; mode: "light" | "dark" | "system" }; // theme
+        fontStyle: { id: string; href?: string };
         // Custom branding
         branding: {
             logo?: string;

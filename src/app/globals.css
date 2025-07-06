@@ -5,6 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+    /* colors */
     --color-background: var(--background);
     --color-foreground: var(--foreground);
     --color-card: var(--card);
@@ -38,9 +39,13 @@
     --color-sidebar-border: var(--sidebar-border);
     --color-sidebar-ring: var(--sidebar-ring);
 
-    --font-sans: var(--font-sans);
-    --font-mono: var(--font-mono);
-    --font-serif: var(--font-serif);
+    /* Typography Semantic Assignments */
+    --font-primary: var(--font-primary); /* body */
+    --font-secondary: var(--font-secondary); /* Headings */
+    --font-accent: var(--font-accent); /* (for Subheadings, buttons, labels, etc.)*/
+    --font-display: var(--font-display); /* Large Headings */
+    --font-code: var(--font-code); /* Code */
+    --font-quote: var(--font-quote); /* Quotes */
 
     --radius-sm: calc(var(--radius) - 4px);
     --radius-md: calc(var(--radius) - 2px);
@@ -57,7 +62,6 @@
     --shadow-2xl: var(--shadow-2xl);
 }
 
-
 @layer base {
     * {
         @apply border-border outline-ring/50;
@@ -66,5 +70,3 @@
         @apply bg-background text-foreground;
     }
 }
-
-

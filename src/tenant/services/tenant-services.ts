@@ -2,7 +2,6 @@ import { Tenant } from "@/types/tenant";
 
 export async function getTenantByDomain(domain: string): Promise<Tenant | null> {
     // In production, this would query your database
-
     const tenant = tenants.find((t) => t.domain === domain || domain.includes(t.domain));
     return tenant || null;
 }
@@ -26,9 +25,10 @@ export const tenants: Tenant[] = [
             template: { id: "classic" },
             style: {
                 id: "astro-light",
-                mode: "light",
                 href: "/themes/styles/sunset-horizon.css",
+                mode: "light",
             },
+            fontStyle: { id: "geist", href: "/themes/fonts/default.css" },
             branding: {
                 logo: "https://picsum.photos/seed/astrozone-logo/200/60",
                 favicon: "https://picsum.photos/seed/astrozone-favicon/32/32",
@@ -69,9 +69,10 @@ export const tenants: Tenant[] = [
             template: { id: "modern" },
             style: {
                 id: "stargaze-dark",
-                mode: "dark",
                 href: "/themes/styles/default.css",
+                mode: "dark",
             },
+            fontStyle: { id: "inter-playfair", href: "/themes/fonts/inter-playfair.css" },
             branding: {
                 logo: "https://picsum.photos/seed/stargaze-logo/200/60",
                 favicon: "https://picsum.photos/seed/stargaze-favicon/32/32",

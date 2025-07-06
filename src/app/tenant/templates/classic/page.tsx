@@ -41,7 +41,19 @@ export default function ClassicPage() {
                     <div className="bg-secondary text-secondary-foreground h-20 w-full flex items-center justify-center text-2xl">Secondary</div>
                     <div className="bg-accent text-accent-foreground h-20 w-full flex items-center justify-center text-2xl">Accent</div>    
                 </div>
+                <div>
+                    <div className="text-2xl font-bold">font: {tenant.theme.fontStyle.id}</div>
+                    <ul className="flex flex-wrap gap-4">
+                        <li className="font-primary text-2xl border p-2">Primary</li>
+                        <li className="font-secondary text-2xl border p-2">Secondary</li>
+                        <li className="font-accent text-2xl border p-2">Accent</li>
+                        <li className="font-display text-2xl border p-2">Display</li>
+                        <li className="font-code text-2xl border p-2">Code</li>
+                        <li className="font-quote text-2xl border p-2">Quote</li>
+                        <li className="font-navigation text-2xl border p-2">Navigation</li>
+                    </ul>
                 </div>
+            </div>
         </main>
     );
 }
