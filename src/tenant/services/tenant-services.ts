@@ -18,6 +18,9 @@ export const tenants: Tenant[] = [
             root: {
                 title: "AstroZone",
                 description: "Get personalized astrology readings from AstroZone experts.",
+                icons: {
+                    icon: "https://picsum.photos/seed/astrozone-favicon/32/32",
+                },
             },
         },
 
@@ -62,6 +65,9 @@ export const tenants: Tenant[] = [
             root: {
                 title: "StarGaze",
                 description: "Your personal gateway to the stars and future predictions.",
+                icons: {
+                    icon: "https://picsum.photos/seed/stargaze-favicon/32/32",
+                },
             },
         },
 
