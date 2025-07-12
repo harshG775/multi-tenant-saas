@@ -1,26 +1,31 @@
 // middleware.ts - for advanced routing)
 import { NextRequest, NextResponse } from "next/server";
 import { getTenantByDomain } from "./tenant/services/tenant-services";
+import { defaultDomain, extractdomain } from "./tenant/lib/utils";
 
 export async function middleware(request: NextRequest) {
-    const host = request.headers.get("host") || "localhost:3000";
-    const domain = host.split(":")[0];
+    const { pathname } = request.nextUrl;
+    const domain = extractdomain(request);
 
     // Check if tenant exists
-    const tenant = await getTenantByDomain(domain); //! un-optimized - should be cached using redis/memcached/etc
+    const tenant = await getTenantByDomain(domain || ""); //! un-optimized - should be cached using redis/memcached/etc
 
-    if (!tenant) {
-        // Redirect to main marketing site or show tenant not found
-        return NextResponse.redirect(new URL("/tenant-not-found", request.url));
+    if (defaultDomain !== domain) {
+        // Block access to admin page from other domains
+        if (pathname.startsWith("/admin")) {
+            return NextResponse.redirect(new URL("/", request.url));
+        }
     }
 
     // Add tenant info to headers for use in components
     const response = NextResponse.next();
-    response.headers.set("x-tenant-id", tenant.id);
-    response.headers.set("x-tenant-slug", tenant.slug); // optional, if used in routing
-    response.headers.set("x-tenant-template", tenant.theme.template.id);
-    response.headers.set("x-tenant-style", tenant.theme.style.id);
-    response.headers.set("x-tenant-style-href", tenant.theme.style.href || "");
+    if (domain && tenant) {
+        response.headers.set("x-tenant-id", tenant.id);
+        response.headers.set("x-tenant-domain", domain);
+        response.headers.set("x-tenant-template", tenant.theme.template.id);
+        response.headers.set("x-tenant-style", tenant.theme.style.id);
+        response.headers.set("x-tenant-style-href", tenant.theme.style.href || "");
+    }
 
     return response;
 }

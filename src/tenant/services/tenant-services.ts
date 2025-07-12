@@ -10,7 +10,7 @@ export const tenants: Tenant[] = [
     {
         id: "tenant_001",
         name: "AstroZone",
-        domain: "astrozone.localhost",
+        domain: "astrozone",
         slug: "astrozone",
         baseDomain: "astrohub.app",
 
@@ -58,7 +58,7 @@ export const tenants: Tenant[] = [
     {
         id: "tenant_002",
         name: "StarGaze",
-        domain: "stargaze.localhost",
+        domain: "stargaze",
         slug: "stargaze",
 
         metadata: {
