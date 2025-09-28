@@ -9,9 +9,9 @@ export interface Tenant {
         layout: {
             root: {
                 props: {
-                    title: string;
-                    description: string;
-                    favicon: string;
+                    title?: string;
+                    description?: string;
+                    favicon?: string;
                 };
             };
         };
