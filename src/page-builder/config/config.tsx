@@ -45,25 +45,6 @@ type Props = {
     };
 };
 
-// Modern color palettes
-const MODERN_COLORS = {
-    gradient: {
-        primary: "from-purple-600 to-blue-600",
-        secondary: "from-emerald-500 to-cyan-600",
-        dark: "from-gray-900 to-slate-800",
-    },
-    solid: {
-        primary: "bg-slate-900",
-        secondary: "bg-emerald-600",
-        light: "bg-slate-50",
-    },
-    text: {
-        light: "text-white",
-        dark: "text-slate-900",
-        muted: "text-slate-600",
-    },
-};
-
 export const config: Config<Props> = {
     components: {
         Navbar_1: {
