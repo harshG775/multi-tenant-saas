@@ -5,15 +5,15 @@ import { cache } from "react";
 
 export const resolveTenant = cache(async function (): Promise<Tenant> {
     const headersList = await headers();
-    const host = headersList.get("host") || "localhost:3000";
+    const tenantKey = headersList.get("x-tenant");
 
-    // Extract domain from host (remove port if present)
-    const domain = host.split(":")[0];
+    if (!tenantKey) {
+        throw new Error("Tenant header missing in request");
+    }
 
-    const tenant = await getTenantByDomain(domain);
+    const tenant = await getTenantByDomain(tenantKey);
     if (!tenant) {
-        // Handle tenant not found - redirect to main site or show error
-        throw new Error(`Tenant not found for domain: ${domain}`);
+        throw new Error(`Tenant not found for key: ${tenantKey}`);
     }
 
     return tenant;
