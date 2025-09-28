@@ -13,7 +13,13 @@ export type Config<T extends Record<string, any>> = {
 
 // RENDER
 export type Data<Components = Record<string, any>> = {
-    root: { props: {} };
+    root: {
+        props: {
+            title: string;
+            description: string;
+            favicon: string;
+        };
+    };
     content: {
         id: string;
         type: string;

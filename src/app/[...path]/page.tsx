@@ -10,11 +10,10 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
     const root = tenant.data?.pages?.[finalPath]?.root;
 
     return {
-        title: root?.props?.title ?? tenant.data.Layout?.root?.props?.title ?? tenant.domain,
-        description:
-            root?.props?.description ?? tenant.data.Layout?.root?.props?.description ?? "Default description",
+        title: root?.props?.title ?? tenant.data.layout?.root?.props?.title ?? tenant.domain,
+        description: root?.props?.description ?? tenant.data.layout?.root?.props?.description ?? "Default description",
         icons: {
-            icon: root?.props?.favicon ?? tenant.data.Layout?.root?.props?.favicon ?? "/favicon.ico",
+            icon: root?.props?.favicon ?? tenant.data.layout?.root?.props?.favicon ?? "/favicon.ico",
         },
     };
 }
@@ -23,8 +22,10 @@ export default async function MainPage({ params }: { params: Promise<{ path: str
     const finalPath = `/${path.join("/")}`;
     const tenant = await resolveTenant();
 
-    const data = tenant.data?.pages?.[finalPath]
+    const data = tenant.data?.pages?.[finalPath];
     return (
-        <Client data={data}/>
+        <>
+            <Client data={data} />
+        </>
     );
 }
