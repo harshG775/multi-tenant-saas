@@ -81,6 +81,35 @@ export const tenants: Tenant[] = [
                         },
                     ],
                 },
+                "/privacy": {
+                    root: {
+                        props: {
+                            title: "Welcome to YouTube",
+                            description: "The world’s biggest video platform.",
+                        },
+                    },
+                    content: [
+                        {
+                            id: "navbar-1",
+                            type: "Navbar_1",
+                            props: {
+                                brand: "Facebook",
+                                links: ["Home", "Profile", "Messages", "Settings"],
+                            },
+                        },
+
+                        {
+                            id: "hero-1",
+                            type: "HeroBlock_1",
+                            props: {
+                                title: "Connect with friends and the world around you",
+                                subtitle: "See photos, videos, and updates from your friends.",
+                                buttonText: "Sign Up",
+                                buttonUrl: "/signup",
+                            },
+                        },
+                    ],
+                },
             },
         },
         createdAt: new Date(),
@@ -155,6 +184,35 @@ export const tenants: Tenant[] = [
                             props: {
                                 brand: "YouTube",
                                 year: "2025",
+                            },
+                        },
+                    ],
+                },
+                "/privacy": {
+                    root: {
+                        props: {
+                            title: "Welcome to YouTube",
+                            description: "The world’s biggest video platform.",
+                        },
+                    },
+                    content: [
+                        {
+                            id: "navbar-1",
+                            type: "Navbar_2",
+                            props: {
+                                brand: "YouTube",
+                                links: ["Home", "Trending", "Subscriptions", "Library"],
+                            },
+                        },
+                        {
+                            id: "features-1",
+                            type: "Features_2",
+                            props: {
+                                items: [
+                                    { title: "Explore", description: "Find new and trending videos." },
+                                    { title: "Upload", description: "Share your content easily." },
+                                    { title: "Subscribe", description: "Follow your favorite channels." },
+                                ],
                             },
                         },
                     ],

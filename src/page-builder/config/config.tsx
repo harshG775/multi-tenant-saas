@@ -355,7 +355,7 @@ export const config: Config<Props> = {
                 brand: "Brand",
                 year: "2025",
                 links: [
-                    { name: "Privacy Policy", url: "#privacy" },
+                    { name: "Privacy Policy", url: "/privacy" },
                     { name: "Terms of Service", url: "#terms" },
                     { name: "Contact", url: "#contact" },
                 ],
@@ -395,7 +395,7 @@ export const config: Config<Props> = {
                 brand: "Brand",
                 year: "2025",
                 links: [
-                    { name: "Privacy", url: "#privacy" },
+                    { name: "Privacy", url: "/privacy" },
                     { name: "Terms", url: "#terms" },
                     { name: "Support", url: "#support" },
                 ],
