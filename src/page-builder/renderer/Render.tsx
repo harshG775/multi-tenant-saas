@@ -16,8 +16,8 @@ export type Data<Components = Record<string, any>> = {
     root: {
         props: {
             title: string;
-            description: string;
-            favicon: string;
+            description?: string;
+            favicon?: string;
         };
     };
     content: {

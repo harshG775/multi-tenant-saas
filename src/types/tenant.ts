@@ -18,6 +18,7 @@ export interface Tenant {
         pages: {
             [key: string]: Data;
         };
+        theme?: string;
     };
 
     createdAt: Date;

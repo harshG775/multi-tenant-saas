@@ -13,7 +13,7 @@ export const tenants: Tenant[] = [
         name: "Facebook",
         domain: "facebook",
         data: {
-            Layout: {
+            layout: {
                 root: {
                     props: {
                         title: "Facebook – Connect with Friends",
@@ -21,7 +21,6 @@ export const tenants: Tenant[] = [
                         favicon: "https://www.google.com/s2/favicons?domain=facebook.com",
                     },
                 },
-                content: {},
             },
             pages: {
                 "/": {
@@ -34,7 +33,7 @@ export const tenants: Tenant[] = [
                     content: [
                         {
                             id: "navbar-1",
-                            type: "Navbar",
+                            type: "Navbar_1",
                             props: {
                                 brand: "Facebook",
                                 links: ["Home", "Profile", "Messages", "Settings"],
@@ -43,7 +42,7 @@ export const tenants: Tenant[] = [
 
                         {
                             id: "features-1",
-                            type: "Features",
+                            type: "Features_1",
                             props: {
                                 items: [
                                     { title: "Fast", description: "Optimized for speed." },
@@ -54,7 +53,7 @@ export const tenants: Tenant[] = [
                         },
                         {
                             id: "hero-1",
-                            type: "HeroBlock",
+                            type: "HeroBlock_1",
                             props: {
                                 title: "Connect with friends and the world around you",
                                 subtitle: "See photos, videos, and updates from your friends.",
@@ -64,7 +63,7 @@ export const tenants: Tenant[] = [
                         },
                         {
                             id: "testimonials-1",
-                            type: "Testimonials",
+                            type: "Testimonials_1",
                             props: {
                                 quotes: [
                                     { name: "Alice", text: "Facebook keeps me connected with my friends!" },
@@ -74,7 +73,7 @@ export const tenants: Tenant[] = [
                         },
                         {
                             id: "footer-1",
-                            type: "Footer",
+                            type: "Footer_1",
                             props: {
                                 brand: "Facebook",
                                 year: "2025",
@@ -93,7 +92,7 @@ export const tenants: Tenant[] = [
         name: "Youtube",
         domain: "youtube",
         data: {
-            Layout: {
+            layout: {
                 root: {
                     props: {
                         title: "YouTube – Broadcast Yourself",
@@ -101,7 +100,6 @@ export const tenants: Tenant[] = [
                         favicon: "https://www.google.com/s2/favicons?domain=youtube.com",
                     },
                 },
-                content: {},
             },
             pages: {
                 "/": {
@@ -114,7 +112,7 @@ export const tenants: Tenant[] = [
                     content: [
                         {
                             id: "navbar-1",
-                            type: "Navbar",
+                            type: "Navbar_2",
                             props: {
                                 brand: "YouTube",
                                 links: ["Home", "Trending", "Subscriptions", "Library"],
@@ -122,7 +120,7 @@ export const tenants: Tenant[] = [
                         },
                         {
                             id: "hero-1",
-                            type: "HeroBlock",
+                            type: "HeroBlock_2",
                             props: {
                                 title: "Discover and share the world’s videos",
                                 subtitle: "Watch millions of videos, upload your own, and connect with creators.",
@@ -132,7 +130,7 @@ export const tenants: Tenant[] = [
                         },
                         {
                             id: "features-1",
-                            type: "Features",
+                            type: "Features_2",
                             props: {
                                 items: [
                                     { title: "Explore", description: "Find new and trending videos." },
@@ -143,7 +141,7 @@ export const tenants: Tenant[] = [
                         },
                         {
                             id: "testimonials-1",
-                            type: "Testimonials",
+                            type: "Testimonials_2",
                             props: {
                                 quotes: [
                                     { name: "Charlie", text: "YouTube is my go-to for tutorials!" },
@@ -153,7 +151,7 @@ export const tenants: Tenant[] = [
                         },
                         {
                             id: "footer-1",
-                            type: "Footer",
+                            type: "Footer_2",
                             props: {
                                 brand: "YouTube",
                                 year: "2025",
