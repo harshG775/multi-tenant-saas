@@ -33,13 +33,51 @@ export const tenants: Tenant[] = [
                     },
                     content: [
                         {
+                            id: "navbar-1",
+                            type: "Navbar",
+                            props: {
+                                brand: "Facebook",
+                                links: ["Home", "Profile", "Messages", "Settings"],
+                            },
+                        },
+
+                        {
+                            id: "features-1",
+                            type: "Features",
+                            props: {
+                                items: [
+                                    { title: "Fast", description: "Optimized for speed." },
+                                    { title: "Secure", description: "Your data is protected." },
+                                    { title: "Social", description: "Connect with your network." },
+                                ],
+                            },
+                        },
+                        {
                             id: "hero-1",
                             type: "HeroBlock",
                             props: {
-                                title: "Welcome to Facebook",
-                                subtitle: "Connect with friends and the world around you.",
-                                buttonText: "Get Started",
+                                title: "Connect with friends and the world around you",
+                                subtitle: "See photos, videos, and updates from your friends.",
+                                buttonText: "Sign Up",
                                 buttonUrl: "/signup",
+                            },
+                        },
+                        {
+                            id: "testimonials-1",
+                            type: "Testimonials",
+                            props: {
+                                quotes: [
+                                    { name: "Alice", text: "Facebook keeps me connected with my friends!" },
+                                    { name: "Bob", text: "Love sharing moments with my family here." },
+                                ],
+                            },
+                        },
+                        {
+                            id: "footer-1",
+                            type: "Footer",
+                            props: {
+                                brand: "Facebook",
+                                year: "2025",
                             },
                         },
                     ],
@@ -75,13 +113,50 @@ export const tenants: Tenant[] = [
                     },
                     content: [
                         {
+                            id: "navbar-1",
+                            type: "Navbar",
+                            props: {
+                                brand: "YouTube",
+                                links: ["Home", "Trending", "Subscriptions", "Library"],
+                            },
+                        },
+                        {
                             id: "hero-1",
                             type: "HeroBlock",
                             props: {
-                                title: "Welcome to YouTube",
-                                subtitle: "Discover and share the world’s videos.",
-                                buttonText: "Start Watching",
+                                title: "Discover and share the world’s videos",
+                                subtitle: "Watch millions of videos, upload your own, and connect with creators.",
+                                buttonText: "Get Started",
                                 buttonUrl: "/explore",
+                            },
+                        },
+                        {
+                            id: "features-1",
+                            type: "Features",
+                            props: {
+                                items: [
+                                    { title: "Explore", description: "Find new and trending videos." },
+                                    { title: "Upload", description: "Share your content easily." },
+                                    { title: "Subscribe", description: "Follow your favorite channels." },
+                                ],
+                            },
+                        },
+                        {
+                            id: "testimonials-1",
+                            type: "Testimonials",
+                            props: {
+                                quotes: [
+                                    { name: "Charlie", text: "YouTube is my go-to for tutorials!" },
+                                    { name: "Dana", text: "I love discovering new music here." },
+                                ],
+                            },
+                        },
+                        {
+                            id: "footer-1",
+                            type: "Footer",
+                            props: {
+                                brand: "YouTube",
+                                year: "2025",
                             },
                         },
                     ],

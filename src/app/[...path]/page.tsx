@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 
 import { resolveTenant } from "@/tenant/lib/tenant-resolver";
+import { Client } from "./client";
 
 export async function generateMetadata({ params }: { params: Promise<{ path: string[] }> }): Promise<Metadata> {
     const { path = [] } = await params;
@@ -22,10 +23,8 @@ export default async function MainPage({ params }: { params: Promise<{ path: str
     const finalPath = `/${path.join("/")}`;
     const tenant = await resolveTenant();
 
-    const data = tenant.data?.pages?.[finalPath]?.content;
+    const data = tenant.data?.pages?.[finalPath]
     return (
-        <div>
-            <h1 className="p-16 text-4xl font-bold">{JSON.stringify(data)}</h1>
-        </div>
+        <Client data={data}/>
     );
 }
