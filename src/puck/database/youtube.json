@@ -1,0 +1,24 @@
+{
+    "/": {
+        "root": {
+            "props": {
+                "title": "YouTube – Broadcast Yourself",
+                "description": "Discover, watch, and share videos.",
+                "favicon": "https://www.google.com/s2/favicons?domain=youtube.com"
+            }
+        },
+        "content": [
+            {
+                "type": "HeroOld",
+                "props": {
+                    "title": "YouTube – Broadcast Yourself",
+                    "subtitle": "Discover, watch, and share videos.",
+                    "buttonText": "Get Started",
+                    "buttonUrl": "#",
+                    "id": "HeroOld-f5dbc95e-fe10-4604-8ae2-cc5b0fb8592a"
+                }
+            }
+        ],
+        "zones": {}
+    }
+}

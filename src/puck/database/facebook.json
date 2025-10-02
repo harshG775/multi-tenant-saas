@@ -1,0 +1,24 @@
+{
+    "/": {
+        "root": {
+            "props": {
+                "title": "Facebook – Connect with Friends",
+                "description": "Join Facebook to connect with friends, family and communities.",
+                "favicon": "https://www.google.com/s2/favicons?domain=facebook.com"
+            }
+        },
+        "content": [
+            {
+                "type": "HeroOld",
+                "props": {
+                    "title": "Facebook – Connect with Friends",
+                    "subtitle": "Join Facebook to connect with friends, family and communities.",
+                    "buttonText": "Get Started",
+                    "buttonUrl": "#",
+                    "id": "HeroOld-f5dbc95e-fe10-4604-8ae2-cc5b0fb8592a"
+                }
+            }
+        ],
+        "zones": {}
+    }
+}
