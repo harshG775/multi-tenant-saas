@@ -2,7 +2,12 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export async function middleware(req: NextRequest) {
-    const res = NextResponse.next();
+    const hostname = req.headers.get("host") || "";
+    const tenantKey = hostname.split(".")[0];
+
+    const requestHeaders = new Headers(req.headers);
+    requestHeaders.set("x-tenant", tenantKey);
+    const res = NextResponse.next({ request: { headers: requestHeaders } });
 
     if (req.method === "GET") {
         // Rewrite routes that match "/[...puckPath]/edit" to "/puck/[...puckPath]"
@@ -21,3 +26,6 @@ export async function middleware(req: NextRequest) {
 
     return res;
 }
+export const config = {
+    matcher: "/:path*",
+};
