@@ -1,7 +1,12 @@
 import { NextRequest } from "next/server";
 
-export const defaultDomain = process.env.DEFAULT_DOMAIN || "multi-tenant-saas-delta.vercel.app";
-export function extractdomain(request: NextRequest): string | null {
+const rootDomain = process.env.ROOT_DOMAIN || "multi-tenant-saas-delta.vercel.app";
+
+export function extractDomain(request: NextRequest): string {
+    const host = request.headers.get("host") || "";
+    return host.split(":")[0];
+}
+export function extractSubdomain(request: NextRequest): string | null {
     const url = request.url;
     const host = request.headers.get("host") || "";
     const hostname = host.split(":")[0];
@@ -22,5 +27,20 @@ export function extractdomain(request: NextRequest): string | null {
         return null;
     }
 
-    return defaultDomain;
+    // Production environment
+    const rootDomainFormatted = rootDomain.split(":")[0];
+
+    // Handle preview deployment URLs (tenant---branch-name.vercel.app)
+    if (hostname.includes("---") && hostname.endsWith(".vercel.app")) {
+        const parts = hostname.split("---");
+        return parts.length > 0 ? parts[0] : null;
+    }
+
+    // Regular subdomain detection
+    const isSubdomain =
+        hostname !== rootDomainFormatted &&
+        hostname !== `www.${rootDomainFormatted}` &&
+        hostname.endsWith(`.${rootDomainFormatted}`);
+
+    return isSubdomain ? hostname.replace(`.${rootDomainFormatted}`, "") : null;
 }

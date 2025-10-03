@@ -7,8 +7,6 @@ import { cache } from "react";
 export const resolveTenant = cache(async function (): Promise<Tenant> {
     const headersList = await headers();
     const host = headersList.get("x-tenant") || "default";
-    console.log("host", { host });
-
     const tenantKey = host.split(".")[0];
     if (!tenantKey) {
         throw new Error("Tenant header missing in request");

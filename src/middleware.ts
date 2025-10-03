@@ -1,12 +1,15 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { extractSubdomain } from "./tenant/lib/utils";
 
 export async function middleware(req: NextRequest) {
-    const hostname = req.headers.get("host") || "";
-    const tenantKey = hostname.split(".")[0];
+    const subdomain = extractSubdomain(req);
 
     const requestHeaders = new Headers(req.headers);
-    requestHeaders.set("x-tenant", tenantKey);
+    if (subdomain) {
+        console.log("subdomain:", { subdomain });
+        requestHeaders.set("x-tenant", subdomain);
+    }
     const res = NextResponse.next({ request: { headers: requestHeaders } });
 
     if (req.method === "GET") {
@@ -27,5 +30,13 @@ export async function middleware(req: NextRequest) {
     return res;
 }
 export const config = {
-    matcher: "/:path*",
+    matcher: [
+        /*
+         * Match all paths except for:
+         * 1. /api routes
+         * 2. /_next (Next.js internals)
+         * 3. all root files inside /public (e.g. /favicon.ico)
+         */
+        "/((?!api|_next|[\\w-]+\\.\\w+).*)",
+    ],
 };
