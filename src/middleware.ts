@@ -1,13 +1,16 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { extractSubdomain } from "./tenant/lib/utils";
+import { extractDomain } from "./tenant/lib/utils";
 
 export async function middleware(req: NextRequest) {
-    const subdomain = extractSubdomain(req);
+    const { domain, subDomain } = extractDomain(req);
+
     const requestHeaders = new Headers(req.headers);
 
-    if (subdomain) {
-        requestHeaders.set("x-tenant", subdomain);
+    if (subDomain) {
+        requestHeaders.set("x-tenant", subDomain);
+    } else {
+        requestHeaders.set("x-tenant", domain);
     }
 
     if (req.method === "GET") {

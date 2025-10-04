@@ -2,11 +2,7 @@ import { NextRequest } from "next/server";
 
 const rootDomain = process.env.ROOT_DOMAIN || "multi-tenant-saas-delta.vercel.app";
 
-export function extractDomain(request: NextRequest): string {
-    const host = request.headers.get("host") || "";
-    return host.split(":")[0];
-}
-export function extractSubdomain(request: NextRequest): string | null {
+export function extractDomain(request: NextRequest): { domain: string; subDomain: string | null } {
     const url = request.url;
     const host = request.headers.get("host") || "";
     const hostname = host.split(":")[0];
@@ -16,31 +12,46 @@ export function extractSubdomain(request: NextRequest): string | null {
         // Try to extract subdomain from the full URL
         const fullUrlMatch = url.match(/http:\/\/([^.]+)\.localhost/);
         if (fullUrlMatch && fullUrlMatch[1]) {
-            return fullUrlMatch[1];
+            return {
+                domain: "localhost",
+                subDomain: fullUrlMatch[1],
+            };
         }
 
-        // Fallback to host header approach
+        // Fallback: check host header
         if (hostname.includes(".localhost")) {
-            return hostname.split(".")[0];
+            return {
+                domain: "localhost",
+                subDomain: hostname.split(".")[0],
+            };
         }
 
-        return null;
+        return {
+            domain: "localhost",
+            subDomain: null,
+        };
     }
 
     // Production environment
     const rootDomainFormatted = rootDomain.split(":")[0];
 
-    // Handle preview deployment URLs (tenant---branch-name.vercel.app)
+    // Handle preview deployments like tenant---branch.vercel.app
     if (hostname.includes("---") && hostname.endsWith(".vercel.app")) {
         const parts = hostname.split("---");
-        return parts.length > 0 ? parts[0] : null;
+        return {
+            domain: rootDomainFormatted,
+            subDomain: parts.length > 0 ? parts[0] : null,
+        };
     }
 
-    // Regular subdomain detection
+    // Regular domain/subdomain detection
     const isSubdomain =
         hostname !== rootDomainFormatted &&
         hostname !== `www.${rootDomainFormatted}` &&
         hostname.endsWith(`.${rootDomainFormatted}`);
 
-    return isSubdomain ? hostname.replace(`.${rootDomainFormatted}`, "") : null;
+    return {
+        domain: rootDomainFormatted,
+        subDomain: isSubdomain ? hostname.replace(`.${rootDomainFormatted}`, "") : null,
+    };
 }
