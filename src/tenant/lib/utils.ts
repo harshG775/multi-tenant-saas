@@ -31,25 +31,16 @@ export function extractDomain(request: NextRequest): { domain: string; subDomain
     }
 
     // Production environment
-    const rootDomainFormatted = hostname.split(":")[0];
-
-    // Handle preview deployments like tenant---branch.vercel.app
     if (hostname.includes("---") && hostname.endsWith(".vercel.app")) {
         const parts = hostname.split("---");
         return {
-            domain: rootDomainFormatted,
+            domain: hostname,
             subDomain: parts.length > 0 ? parts[0] : null,
         };
     }
 
-    // Regular domain/subdomain detection
-    const isSubdomain =
-        hostname !== rootDomainFormatted &&
-        hostname !== `www.${rootDomainFormatted}` &&
-        hostname.endsWith(`.${rootDomainFormatted}`);
-
     return {
-        domain: rootDomainFormatted,
-        subDomain: isSubdomain ? hostname.replace(`.${rootDomainFormatted}`, "") : null,
+        domain: hostname,
+        subDomain: hostname.replace(`.${hostname}`, ""),
     };
 }
