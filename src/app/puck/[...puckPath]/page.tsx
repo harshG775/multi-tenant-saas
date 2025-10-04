@@ -16,6 +16,7 @@ import { Client } from "./client";
 import { Metadata } from "next";
 import { getPage } from "@/puck/lib/get-page";
 import { resolveTenant } from "@/tenant/lib/tenant-resolver";
+import { headers } from "next/headers";
 
 export async function generateMetadata({ params }: { params: Promise<{ puckPath: string[] }> }): Promise<Metadata> {
     const { puckPath = [] } = await params;
@@ -27,6 +28,9 @@ export async function generateMetadata({ params }: { params: Promise<{ puckPath:
 }
 
 export default async function Page({ params }: { params: Promise<{ puckPath: string[] }> }) {
+    const headersList = await headers();
+    console.log("x-tenant", headersList.get("x-tenant"));
+
     const { puckPath = [] } = await params;
     const path = `/${puckPath.join("/")}`;
     const tenant = await resolveTenant();

@@ -4,12 +4,11 @@ import { extractSubdomain } from "./tenant/lib/utils";
 
 export async function middleware(req: NextRequest) {
     const subdomain = extractSubdomain(req);
-
     const requestHeaders = new Headers(req.headers);
+
     if (subdomain) {
         requestHeaders.set("x-tenant", subdomain);
     }
-    const res = NextResponse.next({ request: { headers: requestHeaders } });
 
     if (req.method === "GET") {
         // Rewrite routes that match "/[...puckPath]/edit" to "/puck/[...puckPath]"
@@ -17,7 +16,7 @@ export async function middleware(req: NextRequest) {
             const pathWithoutEdit = req.nextUrl.pathname.slice(0, req.nextUrl.pathname.length - 5);
             const pathWithEditPrefix = `/puck${pathWithoutEdit}`;
 
-            return NextResponse.rewrite(new URL(pathWithEditPrefix, req.url));
+            return NextResponse.rewrite(new URL(pathWithEditPrefix, req.url), { request: { headers: requestHeaders } });
         }
 
         // Disable "/puck/[...puckPath]"
@@ -26,16 +25,9 @@ export async function middleware(req: NextRequest) {
         }
     }
 
-    return res;
+    return NextResponse.next({ request: { headers: requestHeaders } });
 }
+
 export const config = {
-    matcher: [
-        /*
-         * Match all paths except for:
-         * 1. /api routes
-         * 2. /_next (Next.js internals)
-         * 3. all root files inside /public (e.g. /favicon.ico)
-         */
-        "/((?!api|_next|[\\w-]+\\.\\w+).*)",
-    ],
+    matcher: ["/((?!api|_next|[\\w-]+\\.\\w+).*)"],
 };
