@@ -31,16 +31,15 @@ export function extractDomain(request: NextRequest): { domain: string; subDomain
     }
 
     // Production environment
-    if (hostname.includes("---") && hostname.endsWith(".vercel.app")) {
-        const parts = hostname.split("---");
+    if (host.endsWith(".vercel.app")) {
+        let parts = hostname.split(".vercel.app")[0];
         return {
             domain: hostname,
             subDomain: parts.length > 0 ? parts[0] : null,
         };
     }
-
     return {
         domain: hostname,
-        subDomain: hostname.replace(`.${hostname}`, ""),
+        subDomain: hostname.split(".")[0],
     };
 }
