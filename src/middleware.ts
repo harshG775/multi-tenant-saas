@@ -7,7 +7,6 @@ export async function middleware(req: NextRequest) {
 
     const requestHeaders = new Headers(req.headers);
     if (subdomain) {
-        console.log("subdomain:", { subdomain });
         requestHeaders.set("x-tenant", subdomain);
     }
     const res = NextResponse.next({ request: { headers: requestHeaders } });
