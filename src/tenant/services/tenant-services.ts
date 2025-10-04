@@ -9,25 +9,9 @@ export async function getTenantByDomain(domain: string): Promise<Tenant | null> 
 // db simultaion for testing
 export const tenants: Tenant[] = [
     {
-        id: "default",
-        name: "Default",
-        domain: "default",
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        createdBy: "admin_001",
-    },
-    {
-        id: "facebook",
-        name: "Facebook",
-        domain: "facebook",
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        createdBy: "admin_001",
-    },
-    {
-        id: "youtube",
-        name: "Youtube",
-        domain: "youtube",
+        id: "multi-tenant-saas-delta",
+        name: "Multi tenant SAAS",
+        domain: "multi-tenant-saas-delta",
         createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: "admin_001",

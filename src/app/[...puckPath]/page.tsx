@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: { params: Promise<{ puckPath:
     const data = getPage(path, tenant?.id);
 
     return {
-        title: data?.root.props?.title ?? tenant.domain,
+        title: data?.root.props?.title,
         // description: data?.root.props.description ?? "Default description",
         // icons: {
         //     icon: data?.root.props.favicon ?? "/favicon.ico",
