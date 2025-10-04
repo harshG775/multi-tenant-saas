@@ -1,7 +1,5 @@
 import { NextRequest } from "next/server";
 
-const rootDomain = process.env.ROOT_DOMAIN || "multi-tenant-saas-delta.vercel.app";
-
 export function extractDomain(request: NextRequest): { domain: string; subDomain: string | null } {
     const url = request.url;
     const host = request.headers.get("host") || "";
@@ -33,7 +31,7 @@ export function extractDomain(request: NextRequest): { domain: string; subDomain
     }
 
     // Production environment
-    const rootDomainFormatted = rootDomain.split(":")[0];
+    const rootDomainFormatted = hostname.split(":")[0];
 
     // Handle preview deployments like tenant---branch.vercel.app
     if (hostname.includes("---") && hostname.endsWith(".vercel.app")) {
