@@ -8,9 +8,9 @@ export async function middleware(req: NextRequest) {
     const requestHeaders = new Headers(req.headers);
 
     if (subDomain) {
-        requestHeaders.set("x-tenant", subDomain);
+        requestHeaders.set("x-subDomain", subDomain);
     } else {
-        requestHeaders.set("x-tenant", domain);
+        requestHeaders.set("x-domain", domain);
     }
 
     if (req.method === "GET") {
