@@ -1,10 +1,10 @@
-/* public/themes/fonts/default.css */
-@import url("https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Geist:wght@100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Fira+Code:wght@300..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
 :root {
-    --font-primary: "Geist", sans-serif;
-    --font-secondary: "Geist", sans-serif;
-    --font-accent: "Geist", sans-serif;
-    --font-display: "Geist", sans-serif;
-    --font-code: "Geist Mono", monospace;
-    --font-quote: "Geist Mono", monospace;
+    /* Base font assignments */
+    --font-primary: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-secondary: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-accent: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-display: "Playfair Display", Georgia, serif;
+    --font-code: "Fira Code", "Geist Mono", monospace;
+    --font-quote: "Playfair Display", Georgia, serif;
 }
