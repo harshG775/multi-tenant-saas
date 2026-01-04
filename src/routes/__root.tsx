@@ -7,6 +7,7 @@ import TanStackQueryDevtools from "../integrations/tanstack-query/devtools"
 import appCss from "../styles.css?url"
 
 import type { QueryClient } from "@tanstack/react-query"
+import { TenantProvider } from "@/components/contexts/tenant-context"
 
 interface MyRouterContext {
     queryClient: QueryClient
@@ -14,7 +15,7 @@ interface MyRouterContext {
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
     loader({ serverContext }) {
-        console.log(serverContext?.tenant)
+        return { tenant: serverContext?.tenant }
     },
     head: () => ({
         meta: [
@@ -41,13 +42,17 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+    const loaderData = Route.useLoaderData()
+    if (!loaderData.tenant) {
+        throw new Error("loaderData.tenant not found")
+    }
     return (
         <html lang="en">
             <head>
                 <HeadContent />
             </head>
             <body>
-                {children}
+                <TenantProvider tenant={loaderData.tenant}>{children}</TenantProvider>
                 <TanStackDevtools
                     config={{
                         position: "bottom-right",
