@@ -9,55 +9,48 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as TenantRouteImport } from './routes/$tenant'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as TSplatRouteImport } from './routes/[t]/$'
 
-const TenantRoute = TenantRouteImport.update({
-  id: '/$tenant',
-  path: '/$tenant',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TSplatRoute = TSplatRouteImport.update({
+  id: '/t/$',
+  path: '/t/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/$tenant': typeof TenantRoute
+  '/t/$': typeof TSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/$tenant': typeof TenantRoute
+  '/t/$': typeof TSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/$tenant': typeof TenantRoute
+  '/t/$': typeof TSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/$tenant'
+  fullPaths: '/' | '/t/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/$tenant'
-  id: '__root__' | '/' | '/$tenant'
+  to: '/' | '/t/$'
+  id: '__root__' | '/' | '/t/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  TenantRoute: typeof TenantRoute
+  TSplatRoute: typeof TSplatRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/$tenant': {
-      id: '/$tenant'
-      path: '/$tenant'
-      fullPath: '/$tenant'
-      preLoaderRoute: typeof TenantRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -65,12 +58,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/t/$': {
+      id: '/t/$'
+      path: '/t/$'
+      fullPath: '/t/$'
+      preLoaderRoute: typeof TSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  TenantRoute: TenantRoute,
+  TSplatRoute: TSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
