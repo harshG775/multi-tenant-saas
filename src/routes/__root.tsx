@@ -13,6 +13,9 @@ interface MyRouterContext {
 }
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
+    loader({ serverContext }) {
+        console.log(serverContext?.tenant)
+    },
     head: () => ({
         meta: [
             {
