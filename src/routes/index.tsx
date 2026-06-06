@@ -1,14 +1,30 @@
-import { createFileRoute } from "@tanstack/react-router"
+import { createFileRoute, Link } from "@tanstack/react-router"
 
-export const Route = createFileRoute("/")({ component: Home })
+export const Route = createFileRoute("/")({ component: component })
 
-function Home() {
+function component() {
+    const { tenantConfig } = Route.useRouteContext()
     return (
-        <div className="p-8">
-            <h1 className="text-4xl font-bold">Welcome to TanStack Start</h1>
-            <p className="mt-4 text-lg">
-                Edit <code className="text-primary">src/routes/index.tsx</code> to get started.
-            </p>
-        </div>
+        <main>
+            <section className="p-6 flex items-center gap-4">
+                <img
+                    src={tenantConfig.meta.logo}
+                    alt={tenantConfig.meta.name}
+                    width={100}
+                    height={100}
+                    style={{ borderRadius: "50%" }}
+                />
+
+                <div>
+                    <h1>Welcome to {tenantConfig.meta.name}</h1>
+                    <p>{tenantConfig.meta.description}</p>
+
+                    <small>Hostname: {tenantConfig.hostname}</small>
+                </div>
+                <Link to="/settings" className="block max-w-max underline hover:text-blue-600">
+                    Navigate to settings
+                </Link>
+            </section>
+        </main>
     )
 }
