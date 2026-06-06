@@ -15,6 +15,7 @@ export const getRouter = async () => {
         scrollRestoration: true,
         defaultPreload: "intent",
         defaultPreloadStaleTime: 0,
+        defaultNotFoundComponent: () => <p>Not Found</p>,
     })
 
     setupRouterSsrQueryIntegration({ router, queryClient: context.queryClient })
