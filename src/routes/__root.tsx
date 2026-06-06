@@ -14,8 +14,6 @@ interface MyRouterContext {
 }
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
-    staleTime: Infinity,
-    gcTime: Infinity,
     beforeLoad: async ({ context }) => {
         const tenantConfig = await context.queryClient.ensureQueryData({
             queryKey: ["tenant-config"],
