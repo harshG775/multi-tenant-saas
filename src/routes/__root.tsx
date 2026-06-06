@@ -7,14 +7,18 @@ import TanStackQueryDevtools from "../integrations/tanstack-query/devtools"
 import appCss from "../styles.css?url"
 
 import type { QueryClient } from "@tanstack/react-query"
-import type { TenantType } from "#/tenant/types/tenant.type"
+import { getTenantConfigFn } from "#/tenant/utils/serverFns/tenant.functions"
 
 interface MyRouterContext {
     queryClient: QueryClient
-    tenantConfig: TenantType
 }
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
+    beforeLoad: async () => {
+        const tenantConfig = await getTenantConfigFn()
+        return { tenantConfig }
+    },
+
     head: ({ match }) => {
         const tenantConfig = match.context.tenantConfig
         const title = tenantConfig.meta.name || "TanStack Start Starter"

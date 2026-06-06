@@ -3,15 +3,13 @@ import { routeTree } from "./routeTree.gen"
 
 import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query"
 import { getContext } from "./integrations/tanstack-query/root-provider"
-import { getTenantConfigFn } from "./tenant/utils/serverFns/tenant.functions"
 
 export const getRouter = async () => {
-    const tenantConfig = await getTenantConfigFn()
     const context = getContext()
 
     const router = createTanStackRouter({
         routeTree,
-        context: { ...context, tenantConfig },
+        context: context,
         scrollRestoration: true,
         defaultPreload: "intent",
         defaultPreloadStaleTime: 0,
