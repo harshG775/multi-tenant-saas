@@ -14,11 +14,18 @@ interface MyRouterContext {
 }
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
-    beforeLoad: async () => {
-        const tenantConfig = await getTenantConfigFn()
+    staleTime: Infinity,
+    gcTime: Infinity,
+    beforeLoad: async ({ context }) => {
+        const tenantConfig = await context.queryClient.ensureQueryData({
+            queryKey: ["tenant-config"],
+            queryFn: () => getTenantConfigFn(),
+            staleTime: Infinity,
+            gcTime: Infinity,
+        })
+        // const tenantConfig = await getTenantConfigFn()
         return { tenantConfig }
     },
-
     head: ({ match }) => {
         const tenantConfig = match.context.tenantConfig
         const title = tenantConfig.meta.name || "TanStack Start Starter"
