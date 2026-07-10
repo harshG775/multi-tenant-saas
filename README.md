@@ -1,236 +1,139 @@
-Welcome to your new TanStack Start app!
+# Multi-Tenant SaaS
 
-# Getting Started
+A multi-tenant SaaS starter built on [TanStack Start](https://tanstack.com/start). Tenants are resolved on the server from the request's `Host` header, so each domain/subdomain can serve its own branding (name, description, logo, favicon) from a single deployment.
 
-To run this application:
+## Tech Stack
+
+- [TanStack Start](https://tanstack.com/start) — full-stack React framework (SSR, server functions, middleware)
+- [TanStack Router](https://tanstack.com/router) — file-based routing
+- [TanStack Query](https://tanstack.com/query) — data fetching / cache
+- [React 19](https://react.dev/) + [React Compiler](https://react.dev/learn/react-compiler)
+- [Vite](https://vite.dev/) + [Nitro](https://nitro.build/) server adapter
+- [Tailwind CSS v4](https://tailwindcss.com/) + [shadcn](https://ui.shadcn.com/)
+- [Zod](https://zod.dev/) + [T3 Env](https://env.t3.gg/) for typed environment variables
+- [Vitest](https://vitest.dev/) for testing
+- TypeScript, ESLint (`@tanstack/eslint-config`), Prettier
+
+## How Multi-Tenancy Works
+
+1. Every request passes through `tenantMiddleware` ([src/lib/server/tenant.middleware.ts](src/lib/server/tenant.middleware.ts)), which reads the `Host` header, normalizes it, and looks up a matching tenant.
+2. The hostname is normalized by [src/lib/normalizeHostname.ts](src/lib/normalizeHostname.ts) so that local dev URLs like `tenant-1.com.localhost:3000` resolve to `tenant-1.com`.
+3. The matched tenant (or `null`) is attached to the request context and exposed to routes via `getTenantFn` ([src/lib/server/tenant.function.ts](src/lib/server/tenant.function.ts)).
+4. The root route (`src/routes/__root.tsx`) loads the tenant in `beforeLoad` and uses it to set the page `<title>`, meta description, Open Graph tags, and favicon per tenant.
+5. If no tenant matches the hostname, the app redirects to an onboarding URL (`https://onboard.yourapp.com`) — update this placeholder before shipping.
+
+Tenants currently live in an in-memory array inside `tenant.middleware.ts`. Swap this for a real lookup (database, KV store, edge config, etc.) when moving past prototyping.
+
+### Try it locally
+
+The dev server binds to `localhost:3000`. To exercise tenant resolution locally, use a `<tenant-hostname>.localhost` URL so it maps to a seeded tenant:
+
+- http://tenant-1.com.localhost:3000
+- http://tenant-2.com.localhost:3000
+
+Any other hostname (including plain `http://localhost:3000`) won't match a tenant and will redirect to the onboarding URL.
+
+### Adding a tenant
+
+Add an entry to the `tenantsDB` array in [src/lib/server/tenant.middleware.ts](src/lib/server/tenant.middleware.ts):
+
+```ts
+{
+    id: "tenant-3",
+    hostname: "tenant-3.com",
+    meta: {
+        name: "Tenant Three",
+        description: "...",
+        logo: "https://.../logo.png",
+        favicon: "https://.../favicon.ico",
+    },
+}
+```
+
+The shape is defined by `TenantType` in [src/types/tenant.type.ts](src/types/tenant.type.ts).
+
+## Getting Started
 
 ```bash
 pnpm install
 pnpm dev
 ```
 
-# Building For Production
+The app runs at http://localhost:3000.
 
-To build this application for production:
+## Available Scripts
+
+```bash
+pnpm dev       # start the dev server
+pnpm build     # production build (outputs to dist/)
+pnpm preview   # preview the production build
+pnpm test      # run tests with Vitest
+pnpm lint      # lint with ESLint
+pnpm format    # format with Prettier + ESLint --fix
+pnpm check     # check formatting without writing
+```
+
+## Environment Variables
+
+Managed with `@t3-oss/env-core` in [src/env.ts](src/env.ts):
+
+| Variable          | Side   | Required | Description                     |
+| ----------------- | ------ | -------- | -------------------------------- |
+| `SERVER_URL`      | server | no       | Base URL of the server           |
+| `VITE_APP_TITLE`  | client | no       | Default app title (must be prefixed with `VITE_` to reach the client) |
+
+Add new variables in `src/env.ts`, then read them via `import { env } from "#/env"`.
+
+## Project Structure
+
+```
+src/
+├── components/ui/          # shadcn-generated UI components
+├── integrations/
+│   └── tanstack-query/     # QueryClient setup + devtools panel
+├── lib/
+│   ├── server/
+│   │   ├── tenant.middleware.ts   # resolves tenant from Host header
+│   │   └── tenant.function.ts     # server fn exposing tenant to routes
+│   ├── normalizeHostname.ts
+│   └── utils.ts
+├── routes/                 # file-based routes (TanStack Router)
+│   ├── __root.tsx          # root layout, per-tenant <head> metadata
+│   └── index.tsx           # home page, renders tenant branding
+├── types/tenant.type.ts
+├── env.ts                  # typed environment variables
+├── router.tsx               # router + query integration
+└── start.ts                 # TanStack Start instance, request middleware
+```
+
+## Adding a Route
+
+Add a file under `src/routes`; TanStack Router generates the route tree automatically. Use `<Link to="/path">` from `@tanstack/react-router` to navigate between routes. See the [Routing docs](https://tanstack.com/router/latest/docs/framework/react/guide/routing-concepts) for layouts, loaders, and nested routes.
+
+## Adding UI Components
+
+This project uses shadcn. Add new components with:
+
+```bash
+pnpm dlx shadcn@latest add <component>
+```
+
+## Deployment
+
+The app builds to a self-contained Node server via Nitro:
 
 ```bash
 pnpm build
-```
-
-## Testing
-
-This project uses [Vitest](https://vitest.dev/) for testing. You can run the tests with:
-
-```bash
-pnpm test
-```
-
-## Styling
-
-This project uses [Tailwind CSS](https://tailwindcss.com/) for styling.
-
-### Removing Tailwind CSS
-
-If you prefer not to use Tailwind CSS:
-
-1. Remove the demo pages in `src/routes/demo/`
-2. Replace the Tailwind import in `src/styles.css` with your own styles
-3. Remove `tailwindcss()` from the plugins array in `vite.config.ts`
-4. Uninstall the packages: `pnpm add @tailwindcss/vite tailwindcss --dev`
-
-## Linting & Formatting
-
-This project uses [eslint](https://eslint.org/) and [prettier](https://prettier.io/) for linting and formatting. Eslint is configured using [tanstack/eslint-config](https://tanstack.com/config/latest/docs/eslint). The following scripts are available:
-
-```bash
-pnpm lint
-pnpm format
-pnpm check
-```
-
-## Deploy with Nitro
-
-This project uses Nitro as a generic server adapter, so it can run on any Node-compatible host.
-
-```bash
-npm run build
 node dist/server/index.mjs
 ```
 
-The build output is a self-contained Node server. To deploy, push the `dist/` directory to your host (Render, Fly.io, your own VPS, etc.) and run the server command above.
+Push the `dist/` directory to any Node-compatible host (Render, Fly.io, a VPS, etc.). For platform-specific presets (Vercel, Netlify, Cloudflare, AWS Lambda) and tuning, see the [Nitro deploy docs](https://v3.nitro.build/deploy). In production, tenant hostnames should be real domains/subdomains pointed at this deployment (with wildcard DNS/TLS for subdomain-based tenancy).
 
-For host-specific presets (Vercel, Netlify, Cloudflare, AWS Lambda, etc.) and tuning, see https://v3.nitro.build/deploy.
+## Status / Roadmap
 
-## T3Env
+This is an early-stage starter. Notable gaps to fill in before production use:
 
-- You can use T3Env to add type safety to your environment variables.
-- Add Environment variables to the `src/env.mjs` file.
-- Use the environment variables in your code.
-
-### Usage
-
-```ts
-import { env } from "#/env"
-
-console.log(env.VITE_APP_TITLE)
-```
-
-## Shadcn
-
-Add components using the latest version of [Shadcn](https://ui.shadcn.com/).
-
-```bash
-pnpm dlx shadcn@latest add button
-```
-
-## Routing
-
-This project uses [TanStack Router](https://tanstack.com/router) with file-based routing. Routes are managed as files in `src/routes`.
-
-### Adding A Route
-
-To add a new route to your application just add a new file in the `./src/routes` directory.
-
-TanStack will automatically generate the content of the route file for you.
-
-Now that you have two routes you can use a `Link` component to navigate between them.
-
-### Adding Links
-
-To use SPA (Single Page Application) navigation you will need to import the `Link` component from `@tanstack/react-router`.
-
-```tsx
-import { Link } from "@tanstack/react-router"
-```
-
-Then anywhere in your JSX you can use it like so:
-
-```tsx
-<Link to="/about">About</Link>
-```
-
-This will create a link that will navigate to the `/about` route.
-
-More information on the `Link` component can be found in the [Link documentation](https://tanstack.com/router/v1/docs/framework/react/api/router/linkComponent).
-
-### Using A Layout
-
-In the File Based Routing setup the layout is located in `src/routes/__root.tsx`. Anything you add to the root route will appear in all the routes. The route content will appear in the JSX where you render `{children}` in the `shellComponent`.
-
-Here is an example layout that includes a header:
-
-```tsx
-import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router"
-
-export const Route = createRootRoute({
-    head: () => ({
-        meta: [
-            { charSet: "utf-8" },
-            { name: "viewport", content: "width=device-width, initial-scale=1" },
-            { title: "My App" },
-        ],
-    }),
-    shellComponent: ({ children }) => (
-        <html lang="en">
-            <head>
-                <HeadContent />
-            </head>
-            <body>
-                <header>
-                    <nav>
-                        <Link to="/">Home</Link>
-                        <Link to="/about">About</Link>
-                    </nav>
-                </header>
-                {children}
-                <Scripts />
-            </body>
-        </html>
-    ),
-})
-```
-
-More information on layouts can be found in the [Layouts documentation](https://tanstack.com/router/latest/docs/framework/react/guide/routing-concepts#layouts).
-
-## Server Functions
-
-TanStack Start provides server functions that allow you to write server-side code that seamlessly integrates with your client components.
-
-```tsx
-import { createServerFn } from "@tanstack/react-start"
-
-const getServerTime = createServerFn({
-    method: "GET",
-}).handler(async () => {
-    return new Date().toISOString()
-})
-
-// Use in a component
-function MyComponent() {
-    const [time, setTime] = useState("")
-
-    useEffect(() => {
-        getServerTime().then(setTime)
-    }, [])
-
-    return <div>Server time: {time}</div>
-}
-```
-
-## API Routes
-
-You can create API routes by using the `server` property in your route definitions:
-
-```tsx
-import { createFileRoute } from "@tanstack/react-router"
-import { json } from "@tanstack/react-start"
-
-export const Route = createFileRoute("/api/hello")({
-    server: {
-        handlers: {
-            GET: () => json({ message: "Hello, World!" }),
-        },
-    },
-})
-```
-
-## Data Fetching
-
-There are multiple ways to fetch data in your application. You can use TanStack Query to fetch data from a server. But you can also use the `loader` functionality built into TanStack Router to load the data for a route before it's rendered.
-
-For example:
-
-```tsx
-import { createFileRoute } from "@tanstack/react-router"
-
-export const Route = createFileRoute("/people")({
-    loader: async () => {
-        const response = await fetch("https://swapi.dev/api/people")
-        return response.json()
-    },
-    component: PeopleComponent,
-})
-
-function PeopleComponent() {
-    const data = Route.useLoaderData()
-    return (
-        <ul>
-            {data.results.map((person) => (
-                <li key={person.name}>{person.name}</li>
-            ))}
-        </ul>
-    )
-}
-```
-
-Loaders simplify your data fetching logic dramatically. Check out more information in the [Loader documentation](https://tanstack.com/router/latest/docs/framework/react/guide/data-loading#loader-parameters).
-
-# Demo files
-
-Files prefixed with `demo` can be safely deleted. They are there to provide a starting point for you to play around with the features you've installed.
-
-# Learn More
-
-You can learn more about all of the offerings from TanStack in the [TanStack documentation](https://tanstack.com).
-
-For TanStack Start specific documentation, visit [TanStack Start](https://tanstack.com/start).
+- [ ] Replace the in-memory `tenantsDB` with a real data store
+- [ ] Authentication and per-tenant user management
+- [ ] Real onboarding flow (the current redirect target is a placeholder)
+- [ ] Tenant-scoped data access / authorization
