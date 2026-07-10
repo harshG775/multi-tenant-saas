@@ -16,13 +16,21 @@ A multi-tenant SaaS starter built on [TanStack Start](https://tanstack.com/start
 
 ## How Multi-Tenancy Works
 
-1. Every request passes through `tenantMiddleware` ([src/lib/server/tenant.middleware.ts](src/lib/server/tenant.middleware.ts)), which reads the `Host` header, normalizes it, and looks up a matching tenant.
-2. The hostname is normalized by [src/lib/normalizeHostname.ts](src/lib/normalizeHostname.ts) so that local dev URLs like `tenant-1.com.localhost:3000` resolve to `tenant-1.com`.
-3. The matched tenant (or `null`) is attached to the request context and exposed to routes via `getTenantFn` ([src/lib/server/tenant.function.ts](src/lib/server/tenant.function.ts)).
+Tenant logic is colocated as a feature module in [src/modules/tenant/](src/modules/tenant/) rather than spread across generic `lib`/`types` folders. Each new feature should follow the same pattern: `src/modules/<feature>/` with its own middleware, server functions, types, and an `index.ts` barrel exporting the public API.
+
+1. Every request passes through `tenantMiddleware` ([src/modules/tenant/tenant.middleware.ts](src/modules/tenant/tenant.middleware.ts)), which reads the `Host` header, normalizes it, and looks up a matching tenant.
+2. The hostname is normalized by [src/lib/normalizeHostname.ts](src/lib/normalizeHostname.ts) — a generic string helper, not tenant-specific — so that local dev URLs like `tenant-1.com.localhost:3000` resolve to `tenant-1.com`.
+3. The matched tenant (or `null`) is attached to the request context and exposed to routes via `getTenantFn` ([src/modules/tenant/tenant.function.ts](src/modules/tenant/tenant.function.ts)).
 4. The root route (`src/routes/__root.tsx`) loads the tenant in `beforeLoad` and uses it to set the page `<title>`, meta description, Open Graph tags, and favicon per tenant.
 5. If no tenant matches the hostname, the app redirects to an onboarding URL (`https://onboard.yourapp.com`) — update this placeholder before shipping.
 
 Tenants currently live in an in-memory array inside `tenant.middleware.ts`. Swap this for a real lookup (database, KV store, edge config, etc.) when moving past prototyping.
+
+Consumers import from the module's barrel, not its internal files:
+
+```ts
+import { getTenantFn, tenantMiddleware, type TenantType } from "#/modules/tenant"
+```
 
 ### Try it locally
 
@@ -35,7 +43,7 @@ Any other hostname (including plain `http://localhost:3000`) won't match a tenan
 
 ### Adding a tenant
 
-Add an entry to the `tenantsDB` array in [src/lib/server/tenant.middleware.ts](src/lib/server/tenant.middleware.ts):
+Add an entry to the `tenantsDB` array in [src/modules/tenant/tenant.middleware.ts](src/modules/tenant/tenant.middleware.ts):
 
 ```ts
 {
@@ -50,7 +58,7 @@ Add an entry to the `tenantsDB` array in [src/lib/server/tenant.middleware.ts](s
 }
 ```
 
-The shape is defined by `TenantType` in [src/types/tenant.type.ts](src/types/tenant.type.ts).
+The shape is defined by `TenantType` in [src/modules/tenant/tenant.type.ts](src/modules/tenant/tenant.type.ts).
 
 ## Getting Started
 
@@ -92,19 +100,23 @@ src/
 ├── integrations/
 │   └── tanstack-query/     # QueryClient setup + devtools panel
 ├── lib/
-│   ├── server/
-│   │   ├── tenant.middleware.ts   # resolves tenant from Host header
-│   │   └── tenant.function.ts     # server fn exposing tenant to routes
-│   ├── normalizeHostname.ts
-│   └── utils.ts
+│   ├── utils.ts             # generic, cross-feature helpers (e.g. cn())
+│   └── normalizeHostname.ts # generic hostname string helper
+├── modules/                 # feature modules — one folder per feature
+│   └── tenant/
+│       ├── tenant.middleware.ts   # resolves tenant from Host header
+│       ├── tenant.function.ts     # server fn exposing tenant to routes
+│       ├── tenant.type.ts
+│       └── index.ts               # public API barrel
 ├── routes/                 # file-based routes (TanStack Router)
 │   ├── __root.tsx          # root layout, per-tenant <head> metadata
 │   └── index.tsx           # home page, renders tenant branding
-├── types/tenant.type.ts
 ├── env.ts                  # typed environment variables
 ├── router.tsx               # router + query integration
 └── start.ts                 # TanStack Start instance, request middleware
 ```
+
+New features go in their own `src/modules/<feature>/` folder (server functions, middleware, types, components as needed) with an `index.ts` barrel as the public entry point. Reserve `src/lib/` for truly generic, cross-feature utilities.
 
 ## Adding a Route
 

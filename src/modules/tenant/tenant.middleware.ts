@@ -1,5 +1,5 @@
 import { createMiddleware } from "@tanstack/react-start"
-import { normalizeHostname } from "../normalizeHostname"
+import { normalizeHostname } from "#/lib/normalizeHostname"
 
 const tenantsDB = [
     {
