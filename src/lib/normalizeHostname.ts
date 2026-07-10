@@ -3,7 +3,7 @@ export const normalizeHostname = (hostname: string): string => {
     
     // Development handling (e.g., tenant-1.com.localhost:3000)
     if (hostname.includes("localhost")) {
-        const cleaned = hostname.replace(".localhost", "").replace(":3000", "")
+        const cleaned = hostname.replace(".localhost", "").replace(/:\d+$/, "")
         finalHostname = cleaned
     }
 
