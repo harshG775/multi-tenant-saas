@@ -7,29 +7,23 @@ import TanStackQueryDevtools from "../integrations/tanstack-query/devtools"
 import appCss from "../styles.css?url"
 
 import type { QueryClient } from "@tanstack/react-query"
-import { getTenantConfigFn } from "#/tenant/lib/server/tenant.functions"
+import { getTenantFn } from "#/lib/server/tenant.function"
 
 interface MyRouterContext {
     queryClient: QueryClient
 }
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
-    beforeLoad: async ({ context }) => {
-        const tenantConfig = await context.queryClient.ensureQueryData({
-            queryKey: ["tenant-config"],
-            queryFn: () => getTenantConfigFn(),
-            staleTime: Infinity,
-            gcTime: Infinity,
-        })
-        // const tenantConfig = await getTenantConfigFn()
-        return { tenantConfig }
+    beforeLoad: async () => {
+        const tenant = await getTenantFn()
+        return { tenant }
     },
     head: ({ match }) => {
-        const tenantConfig = match.context.tenantConfig
-        const title = tenantConfig.meta.name || "TanStack Start Starter"
-        const description = tenantConfig.meta.description || "Default app description"
-        const favicon = tenantConfig.meta.favicon || "/favicon.ico"
-        const image = tenantConfig.meta.logo
+        const tenant = match.context.tenant
+        const title = tenant.meta.name || "TanStack Start Starter"
+        const description = tenant.meta.description || "Default app description"
+        const favicon = tenant.meta.favicon || "/favicon.ico"
+        const image = tenant.meta.logo
         return {
             meta: [
                 { charSet: "utf-8" },

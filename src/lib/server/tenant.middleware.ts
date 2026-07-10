@@ -1,3 +1,5 @@
+import { createMiddleware } from "@tanstack/react-start"
+import { normalizeHostname } from "../normalizeHostname"
 
 const tenantsDB = [
     {
@@ -21,8 +23,12 @@ const tenantsDB = [
         },
     },
 ]
-let count = 0
-export const getTenantConfigByHostname = ({ hostname }: { hostname: string }) => {
-    console.log("<getTenantConfigByHostname> call count:", count++)
-    return tenantsDB.find((tenant) => tenant.hostname === hostname) ?? null
-}
+
+export const tenantMiddleware = createMiddleware({ type: "request" }).server(async ({ request, next }) => {
+    const hostname = normalizeHostname(request.headers.get("host") ?? "")
+
+    const tenant = tenantsDB.find((t) => t.hostname === hostname) ?? null
+    return next({
+        context: { tenant },
+    })
+})
