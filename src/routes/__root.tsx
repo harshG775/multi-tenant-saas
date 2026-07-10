@@ -7,7 +7,7 @@ import TanStackQueryDevtools from "../integrations/tanstack-query/devtools"
 import appCss from "../styles.css?url"
 
 import type { QueryClient } from "@tanstack/react-query"
-import { getTenantConfigFn } from "#/tenant/utils/serverFns/tenant.functions"
+import { getTenantConfigFn } from "#/tenant/lib/server/tenant.functions"
 
 interface MyRouterContext {
     queryClient: QueryClient

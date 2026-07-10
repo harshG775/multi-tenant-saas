@@ -1,5 +1,4 @@
-// src/lib/serverFns/tenant.functions.ts
-
+import { redirect } from "@tanstack/react-router"
 import { createServerFn } from "@tanstack/react-start"
 import { getRequestUrl } from "@tanstack/react-start/server"
 import { normalizeHostname } from "#/tenant/utils/normalizeHostname"
@@ -14,7 +13,8 @@ export const getTenantConfigFn = createServerFn().handler(async (): Promise<Tena
     const tenantConfig = getTenantConfigByHostname({ hostname })
 
     if (!tenantConfig) {
-        throw new Response("Tenant Not Found", { status: 404 })
+        // throw new Response("Tenant Not Found", { status: 404 })
+        throw redirect({ href: "http://tenant-1.com.localhost:3000", statusCode: 302 })
     }
 
     return tenantConfig
