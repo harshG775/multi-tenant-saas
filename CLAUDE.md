@@ -79,20 +79,9 @@ File-based routing via TanStack Router; `src/routeTree.gen.ts` is generated (don
 - Two path aliases resolve to `src/`: `#/*` (used throughout the existing code) and `@/*`. Prefer `#/*` for consistency with existing imports.
 - ESLint config extends `@tanstack/eslint-config` with several rules turned off (`import/no-cycle`, `import/order`, `sort-imports`, `@typescript-eslint/array-type`, `@typescript-eslint/require-await`, `pnpm/json-enforce-catalog`) — don't fight these when linting.
 
-### Auth (planned: better-auth)
+### Auth (better-auth)
 
-Not implemented yet, but the intended model has been decided:
-
-- **No cross-tenant identity / no organizations.** Each tenant is fully walled off — a user belongs to exactly one tenant. Do not reach for better-auth's `organization` plugin (that's for one identity with memberships across many orgs); it doesn't fit here.
-- Put `tenantId` and `role` (`"user" | "admin"`) directly on better-auth's user model via its additional-fields mechanism — a flat field, not a separate membership table, since it's a 1:1 user↔tenant relationship.
-- Email uniqueness must be scoped to `(tenantId, email)`, not global — two different tenants may have a user with the same email.
-- better-auth has no built-in tenant awareness, so two hook points need custom wiring against the existing `tenantMiddleware`/`context.tenant`:
-  1. **Sign-up** — stamp `tenantId` from `context.tenant.id` onto the new user (e.g. a `databaseHooks` "before create" hook).
-  2. **Sign-in / user lookup** — scope the "find user by email" query to the current tenant too, or a same-email user from a different tenant could match.
-- Session cookies are already domain-scoped (tenants are separate hostnames), so cross-tenant session leakage isn't a concern — no extra work needed there.
-- Two admin tiers, don't conflate them:
-  - **Tenant admin** (`tenant.com/admin`) — a user with `role === "admin"` inside that tenant. Gate with a simple role check; better-auth's `admin` plugin is likely unnecessary since it assumes a platform-wide role set (ban/impersonate semantics), not per-tenant roles.
-  - **Platform admin** (managing all tenants — billing, tenant creation) — a separate, not-yet-built concern, unrelated to any single tenant's `/admin` route.
+better-auth is installed and partially wired up — schema, tenant FK, and a request-header bridge from `tenantMiddleware` into better-auth's `trustedOrigins` all exist, but signup/sign-in aren't tenant-scoped yet and there's no `/admin` guard. Full current state, design decisions (no organizations, isolated-per-tenant model, tenant-admin vs. platform-admin split), the `x-tenant-id` header mechanism, and the remaining TODO list are tracked in @docs/auth.md — read it before touching auth code.
 
 ### UI components (shadcn)
 
@@ -108,6 +97,6 @@ Config is in `components.json` (style `base-vega`, neutral base color, icon libr
 
 This is an early-stage starter (see README "Status / Roadmap"):
 - `tenantsDB` is in-memory, not backed by the (already-configured) Postgres database yet.
-- No auth / per-tenant user management yet — see "Auth (planned: better-auth)" above for the decided model before implementing.
+- Auth is in progress — see "Auth (better-auth)" above / @docs/auth.md for what's built vs. still missing.
 - Onboarding redirect target (`https://onboard.yourapp.com`) is a placeholder.
 - No tenant-scoped data access/authorization yet.
