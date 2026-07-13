@@ -23,11 +23,12 @@ const tenantsDB = [
         },
     },
 ]
+export const findTenantByHostname = (hostname: string) => tenantsDB.find((t) => t.hostname === hostname) ?? null
 
 export const tenantMiddleware = createMiddleware({ type: "request" }).server(async ({ request, next }) => {
     const hostname = normalizeHostname(request.headers.get("host") ?? "")
 
-    const tenant = tenantsDB.find((t) => t.hostname === hostname) ?? null
+    const tenant = findTenantByHostname(hostname)
     return next({
         context: { tenant },
     })
