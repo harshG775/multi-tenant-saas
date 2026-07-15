@@ -15,7 +15,7 @@
 3. `getTenantFn` ([src/modules/tenant/tenant.function.ts](../src/modules/tenant/tenant.function.ts)) is a server function that reads `context.tenant`. No match → throws a `redirect` to the placeholder onboarding URL.
 4. `__root.tsx`'s `beforeLoad` calls `getTenantFn()` and puts the result on router context, so every route/loader downstream can read `tenant` without re-fetching.
 5. DB access goes through `src/lib/db/index.ts` (Neon HTTP client + Drizzle instance), with relations defined separately in `src/lib/db/relations/index.ts` via `defineRelations` — the two must be kept in sync when tables with foreign keys change.
-6. Auth requests hit `/api/auth/$`, which rebuilds the incoming request with an `x-tenant-id` header (from `context.tenant.id`) before handing it to `auth.handler(...)`. `trustedOrigins` in `src/lib/auth/index.ts` reads that header to decide whether to trust the request's `Host`. Full detail in [auth.md](./auth.md).
+6. Auth requests hit `/api/auth/$` (site users) or `/api/auth-admin/$` (tenant/site owners), each rebuilding the incoming request with an `x-tenant-id` header (from `context.tenant.id`) before handing it to the matching `betterAuth()` instance's `.handler(...)`. `trustedOrigins` in `src/lib/auth/auth.ts` / `admin-auth.ts` reads that header to decide whether to trust the request's `Host`. Full detail in [auth.md](./auth.md).
 
 There's no client/server rendering split beyond standard TanStack Start SSR — everything under `src/routes` is server-rendered on first load, no client-only islands exist yet.
 

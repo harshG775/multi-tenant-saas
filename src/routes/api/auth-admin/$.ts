@@ -1,4 +1,4 @@
-import { auth } from "#/lib/auth"
+import { adminAuth } from "#/lib/auth"
 import { createFileRoute } from "@tanstack/react-router"
 
 const withTenantHeader = (request: Request, tenantId: string | undefined) => {
@@ -15,14 +15,14 @@ const withTenantHeader = (request: Request, tenantId: string | undefined) => {
     })
 }
 
-export const Route = createFileRoute("/api/auth/$")({
+export const Route = createFileRoute("/api/auth-admin/$")({
     server: {
         handlers: {
             GET: async ({ request, context }) => {
-                return await auth.handler(withTenantHeader(request, context.tenant?.id))
+                return await adminAuth.handler(withTenantHeader(request, context.tenant?.id))
             },
             POST: async ({ request, context }) => {
-                return await auth.handler(withTenantHeader(request, context.tenant?.id))
+                return await adminAuth.handler(withTenantHeader(request, context.tenant?.id))
             },
         },
     },
