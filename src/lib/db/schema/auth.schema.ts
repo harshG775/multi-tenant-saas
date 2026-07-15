@@ -1,25 +1,21 @@
 import { pgTable, text, timestamp, boolean, index } from "drizzle-orm/pg-core"
-import { tenant } from "./tenant.schema"
+import { siteDomain } from "./tenant.schema"
 
-export const user = pgTable(
-    "user",
-    {
-        id: text("id").primaryKey(),
-        tenantId: text("tenant_id")
-            .notNull()
-            .references(() => tenant.id, { onDelete: "cascade" }),
-        name: text("name").notNull(),
-        email: text("email").notNull().unique(),
-        emailVerified: boolean("email_verified").default(false).notNull(),
-        image: text("image"),
-        createdAt: timestamp("created_at").defaultNow().notNull(),
-        updatedAt: timestamp("updated_at")
-            .defaultNow()
-            .$onUpdate(() => /* @__PURE__ */ new Date())
-            .notNull(),
-    },
-    (table) => [index("user_tenantId_idx").on(table.tenantId)],
-)
+export const user = pgTable("user", {
+    id: text("id").primaryKey(),
+    name: text("name").notNull(),
+    email: text("email").notNull().unique(),
+    emailVerified: boolean("email_verified").default(false).notNull(),
+    image: text("image"),
+    siteDomainId: text("site_domain_id")
+        .notNull()
+        .references(() => siteDomain.id, { onDelete: "cascade" }),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at")
+        .defaultNow()
+        .$onUpdate(() => /* @__PURE__ */ new Date())
+        .notNull(),
+})
 
 export const session = pgTable(
     "session",
