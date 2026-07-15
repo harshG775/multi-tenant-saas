@@ -8,13 +8,17 @@ The project originally started on Next.js (commit `a70f86f`, "remove:nextjs proj
 
 `src/lib/db/index.ts` uses `@neondatabase/serverless` (the `neon-http` adapter) rather than `node-postgres`/`postgres.js`. This follows Neon's own default client for a Neon-backed project, not a specific edge/serverless deploy constraint. Tradeoff: `neon-http` talks to Neon's HTTP endpoint, so `DATABASE_URL` must point at an actual Neon database (or its local proxy) — a plain local Postgres instance isn't a drop-in substitute.
 
-## No organizations — fully isolated per-tenant identity
+## No organizations — fully isolated per-site-domain identity
 
-`user.tenantId` is a flat FK (one tenant per user), not a membership/organization table, and better-auth's `organization` plugin is intentionally unused. Each tenant is meant to be fully walled off. Full detail in [auth.md](./auth.md#design-decisions-settled-drive-future-work).
+`user.siteDomainId` is a flat FK (one site domain per user), not a membership/organization table, and better-auth's `organization` plugin is intentionally unused. Isolation is per `siteDomain`, not per `tenant` — two site domains under the same tenant still can't share a user. better-auth's `organization`/`teams` feature groups members drawn from one shared org-wide pool; it doesn't give each sub-entity (site domain) its own independent, isolated member pool, which is what a Hostinger-style "connect a domain, that domain gets its own users" flow needs. Full detail in [auth.md](./auth.md#design-decisions-settled-drive-future-work).
 
-## Two separate admin tiers, not better-auth's `admin` plugin
+## Two better-auth instances (`admin` + `user`), not one `user` table with roles
 
-Tenant-admin is a plain `role === "admin"` check scoped to one tenant; platform-admin (managing all tenants) is a separate, unbuilt concern. better-auth's built-in `admin` plugin assumes a platform-wide role set with ban/impersonate semantics, which doesn't fit per-tenant roles. Full detail in [auth.md](./auth.md#design-decisions-settled-drive-future-work).
+A tenant owner signs up on the platform's own domain before any site domain exists, so their account can't carry a `siteDomainId` — the earlier plan (a `role === "admin"` column on `user`) doesn't fit once onboarding happens on a separate domain from any site. Instead: two identity spaces, each its own `betterAuth()` instance/schema, sharing one Postgres DB — `user` (site-domain-scoped end users, exists today) and `admin` (tenant-scoped owners, planned). Both instances can run on the same domain (`tenant-x.com` serves the site via `user` and `tenant-x.com/admin` via `admin`) as long as each sets a distinct `cookiePrefix` and `basePath` — same defaults on both would collide. Full detail in [auth.md](./auth.md#two-identity-spaces-admin-vs-user-planned).
+
+## Platform-wide superadmin tier deferred
+
+A third tier (managing all tenants — billing, tenant creation/suspension) is a real eventual need but explicitly out of scope until the `admin`/`user` split above is working end-to-end. Not designed yet.
 
 ## `trustedOrigins` as a function reading `x-tenant-id`, not a static list
 
