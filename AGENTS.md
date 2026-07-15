@@ -55,3 +55,21 @@ No `typecheck` script is defined. `tsconfig.json` has `noEmit: true`; run `pnpm 
 ## More context
 
 See [docs/README.md](docs/README.md) for architecture, setup, auth flow, and design decisions.
+
+
+
+```temp
+That's the actual bug — tenant has been sliding between two meanings: the business/org entity (the schema table: id, description) and shorthand for "the person who owns it" (e.g. "the tenant signs up on platform.com"). Those need to be different words, or every future conversation (and future you, reading this code in 3 months) re-trips on the same ambiguity.
+
+Proposed fix — tenant is never a person, always the org/account entity:
+
+Term	What it is	Person or thing?
+tenant	The business/org being hosted — id, description, (later) billing/plan	Thing
+admin	The owner who manages one tenant — signs up, adds site domains, logs into platform.com/p/dashboard and tenant-x.com/admin	Person
+superadmin	Manages all tenants platform-wide (billing, suspension) — not built	Person
+user	One site domain's own end users/visitors	Person
+So the correct sentence going forward is "the admin signs up, which creates a tenant" — never "the tenant signs up." No schema/rename needed (this already matches admin.tenantId → tenant.id), it's purely a vocabulary discipline fix.
+
+Want me to add a "Terminology" section to docs/auth.md (or a new docs/terminology.md) pinning this down, so it stops drifting across sessions?
+
+```
