@@ -8,6 +8,9 @@
     "files.readonlyInclude": {
         "**/routeTree.gen.ts": true
     },
+    "editor.codeActionsOnSave": {
+        "source.organizeImports.biome": "explicit"
+    },
     "[javascript]": {
         "editor.defaultFormatter": "biomejs.biome"
     },
