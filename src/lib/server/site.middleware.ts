@@ -28,7 +28,7 @@ const classifyHost = (host: string | null): HostKind => {
 const findSite = (kind: Exclude<HostKind, { type: "platform" }>) =>
     findSiteByHostname(kind.type === "subdomain" ? `${kind.subdomain}.${rootDomain}` : kind.hostname);
 
-export const tenantMiddleware = createMiddleware({ type: "request" }).server(async ({ request, next }) => {
+export const siteMiddleware = createMiddleware({ type: "request" }).server(async ({ request, next }) => {
     const kind = classifyHost(getRequestHost(request.headers));
 
     let site: Site | null = null;
