@@ -2,40 +2,50 @@ import { redirect } from "@tanstack/react-router";
 import { createMiddleware } from "@tanstack/react-start";
 import { env } from "#/env";
 
-type Tenant = { id: string; subdomain: string };
+type Tenant = { id: string; hostname: string };
 
-const parseHostname = (host: string | null): { domain: string; subdomain: string | null } => {
+type HostKind = { type: "platform" } | { type: "subdomain"; subdomain: string } | { type: "custom"; hostname: string };
+
+const normalizeHost = (host: string) => host.toLowerCase().replace(/:\d+$/, "").replace(/\.$/, "");
+
+const rootDomain = normalizeHost(new URL(env.PLATFORM_URL).hostname);
+
+const classifyHost = (host: string | null): HostKind => {
     if (!host) {
-        return { domain: "", subdomain: null };
+        return { type: "platform" };
     }
 
-    const hostname = host.replace(/:\d+$/, "");
-    const parts = hostname.split(".");
-
-    // localhost has a single-label root (tenant-1.localhost), real domains have two (tenant-1.app.com)
-    const rootLabels = hostname.endsWith("localhost") ? 1 : 2;
-
-    if (parts.length <= rootLabels) {
-        return { domain: hostname, subdomain: null };
+    const hostname = normalizeHost(host);
+    if (hostname === rootDomain) {
+        return { type: "platform" };
     }
 
-    return {
-        domain: parts.slice(-rootLabels).join("."),
-        subdomain: parts.slice(0, -rootLabels).join("."),
-    };
+    if (hostname.endsWith(`.${rootDomain}`)) {
+        return { type: "subdomain", subdomain: hostname.slice(0, -(rootDomain.length + 1)) };
+    }
+
+    return { type: "custom", hostname };
+};
+
+// TODO: replace with a DB lookup (subdomain or custom hostname -> tenant)
+const findTenant = (kind: Exclude<HostKind, { type: "platform" }>): Tenant | null => {
+    if (kind.type === "subdomain" && kind.subdomain === "tenant-1") {
+        return { id: "tenant-1", hostname: `tenant-1.${rootDomain}` };
+    }
+    return null;
 };
 
 export const tenantMiddleware = createMiddleware({ type: "request" }).server(async ({ request, next }) => {
-    const { subdomain } = parseHostname(request.headers.get("host"));
+    const kind = classifyHost(request.headers.get("host"));
 
     let tenant: Tenant | null = null;
 
-    if (subdomain) {
-        tenant = subdomain === "tenant-1" ? { id: "tenant-1", subdomain } : null;
+    if (kind.type !== "platform") {
+        tenant = findTenant(kind);
 
         if (!tenant) {
             throw redirect({
-                href: env.SERVER_URL,
+                href: env.PLATFORM_URL,
             });
         }
     }

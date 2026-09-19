@@ -18,7 +18,7 @@ function RouteComponent() {
     }
     return (
         <div className="p-8">
-            <h1 className="text-4xl font-bold">Welcome to multi tenant</h1>
+            <h1 className="text-4xl font-bold">Welcome to multi tenant platform</h1>
             <Button>get started</Button>
         </div>
     );
