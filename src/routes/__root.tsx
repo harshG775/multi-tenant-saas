@@ -2,7 +2,7 @@ import { TanStackDevtools } from "@tanstack/react-devtools";
 import type { QueryClient } from "@tanstack/react-query";
 import { createRootRouteWithContext, HeadContent, Scripts } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
-import { getTenantFn } from "#/lib/server/tenant.function";
+import { getSiteFn } from "#/lib/server/site.function";
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
 import appCss from "../styles.css?url";
 
@@ -12,12 +12,12 @@ interface MyRouterContext {
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
     beforeLoad: async ({ context }) => {
-        const tenant = await context.queryClient.query({
-            queryKey: ["tenant"],
-            queryFn: () => getTenantFn(),
+        const site = await context.queryClient.query({
+            queryKey: ["site"],
+            queryFn: () => getSiteFn(),
             staleTime: "static",
         });
-        return { tenant };
+        return { site };
     },
     head: () => ({
         meta: [
