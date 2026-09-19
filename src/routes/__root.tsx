@@ -11,8 +11,12 @@ interface MyRouterContext {
 }
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
-    beforeLoad: async () => {
-        const tenant = await getTenantFn();
+    beforeLoad: async ({ context }) => {
+        const tenant = await context.queryClient.query({
+            queryKey: ["tenant"],
+            queryFn: () => getTenantFn(),
+            staleTime: "static",
+        });
         return { tenant };
     },
     head: () => ({
@@ -25,7 +29,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
                 content: "width=device-width, initial-scale=1",
             },
             {
-                title: "TanStack Start Starter",
+                title: "Multi-Tenant SaaS",
             },
         ],
         links: [

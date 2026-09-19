@@ -10,6 +10,9 @@ const normalizeHost = (host: string) => host.toLowerCase().replace(/:\d+$/, "").
 
 const rootDomain = normalizeHost(new URL(env.PLATFORM_URL).hostname);
 
+const getRequestHost = (headers: Headers) =>
+    headers.get("x-forwarded-host")?.split(",")[0]?.trim() || headers.get("host");
+
 const classifyHost = (host: string | null): HostKind => {
     if (!host) {
         return { type: "platform" };
@@ -36,7 +39,7 @@ const findTenant = (kind: Exclude<HostKind, { type: "platform" }>): Tenant | nul
 };
 
 export const tenantMiddleware = createMiddleware({ type: "request" }).server(async ({ request, next }) => {
-    const kind = classifyHost(request.headers.get("host"));
+    const kind = classifyHost(getRequestHost(request.headers));
 
     let tenant: Tenant | null = null;
 

@@ -1,5 +1,5 @@
-import { createServerFn } from "@tanstack/react-start"
+import { createServerFn } from "@tanstack/react-start";
 
 export const getTenantFn = createServerFn({ method: "GET" }).handler(async ({ context }) => {
-    return context.tenant
-})
+    return context.tenant;
+});
