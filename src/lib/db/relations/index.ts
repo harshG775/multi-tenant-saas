@@ -18,4 +18,34 @@ export const relations = defineRelations(schema, (r) => ({
             to: r.user.id,
         }),
     },
+    ownerUser: {
+        sessions: r.many.ownerSession(),
+        accounts: r.many.ownerAccount(),
+        ownedSites: r.many.site(),
+    },
+    ownerSession: {
+        user: r.one.ownerUser({
+            from: r.ownerSession.userId,
+            to: r.ownerUser.id,
+        }),
+    },
+    ownerAccount: {
+        user: r.one.ownerUser({
+            from: r.ownerAccount.userId,
+            to: r.ownerUser.id,
+        }),
+    },
+    site: {
+        owner: r.one.ownerUser({
+            from: r.site.ownerId,
+            to: r.ownerUser.id,
+        }),
+        domains: r.many.siteDomain(),
+    },
+    siteDomain: {
+        site: r.one.site({
+            from: r.siteDomain.siteId,
+            to: r.site.id,
+        }),
+    },
 }));

@@ -1,17 +1,12 @@
 import { redirect } from "@tanstack/react-router";
 import { createMiddleware } from "@tanstack/react-start";
 import { env } from "#/env";
-
-type Tenant = { id: string; hostname: string };
+import { getRequestHost, normalizeHost } from "./host";
+import { findSiteByHostname, type Site } from "./site.lookup";
 
 type HostKind = { type: "platform" } | { type: "subdomain"; subdomain: string } | { type: "custom"; hostname: string };
 
-const normalizeHost = (host: string) => host.toLowerCase().replace(/:\d+$/, "").replace(/\.$/, "");
-
 const rootDomain = normalizeHost(new URL(env.PLATFORM_URL).hostname);
-
-const getRequestHost = (headers: Headers) =>
-    headers.get("x-forwarded-host")?.split(",")[0]?.trim() || headers.get("host");
 
 const classifyHost = (host: string | null): HostKind => {
     if (!host) {
@@ -30,23 +25,18 @@ const classifyHost = (host: string | null): HostKind => {
     return { type: "custom", hostname };
 };
 
-// TODO: replace with a DB lookup (subdomain or custom hostname -> tenant)
-const findTenant = (kind: Exclude<HostKind, { type: "platform" }>): Tenant | null => {
-    if (kind.type === "subdomain" && kind.subdomain === "tenant-1") {
-        return { id: "tenant-1", hostname: `tenant-1.${rootDomain}` };
-    }
-    return null;
-};
+const findSite = (kind: Exclude<HostKind, { type: "platform" }>) =>
+    findSiteByHostname(kind.type === "subdomain" ? `${kind.subdomain}.${rootDomain}` : kind.hostname);
 
 export const tenantMiddleware = createMiddleware({ type: "request" }).server(async ({ request, next }) => {
     const kind = classifyHost(getRequestHost(request.headers));
 
-    let tenant: Tenant | null = null;
+    let site: Site | null = null;
 
     if (kind.type !== "platform") {
-        tenant = findTenant(kind);
+        site = await findSite(kind);
 
-        if (!tenant) {
+        if (!site) {
             throw redirect({
                 href: env.PLATFORM_URL,
             });
@@ -54,6 +44,6 @@ export const tenantMiddleware = createMiddleware({ type: "request" }).server(asy
     }
 
     return next({
-        context: { tenant },
+        context: { site },
     });
 });

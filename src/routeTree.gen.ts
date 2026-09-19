@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiV1AuthSplatRouteImport } from './routes/api/v1/auth/$'
+import { Route as ApiV1AuthOwnerSplatRouteImport } from './routes/api/v1/auth/owner/$'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,31 +23,40 @@ const ApiV1AuthSplatRoute = ApiV1AuthSplatRouteImport.update({
   path: '/api/v1/auth/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiV1AuthOwnerSplatRoute = ApiV1AuthOwnerSplatRouteImport.update({
+  id: '/api/v1/auth/owner/$',
+  path: '/api/v1/auth/owner/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/api/v1/auth/$': typeof ApiV1AuthSplatRoute
+  '/api/v1/auth/owner/$': typeof ApiV1AuthOwnerSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/api/v1/auth/$': typeof ApiV1AuthSplatRoute
+  '/api/v1/auth/owner/$': typeof ApiV1AuthOwnerSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/api/v1/auth/$': typeof ApiV1AuthSplatRoute
+  '/api/v1/auth/owner/$': typeof ApiV1AuthOwnerSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/v1/auth/$'
+  fullPaths: '/' | '/api/v1/auth/$' | '/api/v1/auth/owner/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/v1/auth/$'
-  id: '__root__' | '/' | '/api/v1/auth/$'
+  to: '/' | '/api/v1/auth/$' | '/api/v1/auth/owner/$'
+  id: '__root__' | '/' | '/api/v1/auth/$' | '/api/v1/auth/owner/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ApiV1AuthSplatRoute: typeof ApiV1AuthSplatRoute
+  ApiV1AuthOwnerSplatRoute: typeof ApiV1AuthOwnerSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +75,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiV1AuthSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/v1/auth/owner/$': {
+      id: '/api/v1/auth/owner/$'
+      path: '/api/v1/auth/owner/$'
+      fullPath: '/api/v1/auth/owner/$'
+      preLoaderRoute: typeof ApiV1AuthOwnerSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ApiV1AuthSplatRoute: ApiV1AuthSplatRoute,
+  ApiV1AuthOwnerSplatRoute: ApiV1AuthOwnerSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
