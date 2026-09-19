@@ -1,4 +1,4 @@
-import { createFileRoute, useRouteContext } from "@tanstack/react-router";
+import { createFileRoute, Link, useRouteContext } from "@tanstack/react-router";
 import { Button } from "#/components/ui/button";
 
 export const Route = createFileRoute("/")({
@@ -19,7 +19,14 @@ function RouteComponent() {
     return (
         <div className="p-8">
             <h1 className="text-4xl font-bold">Welcome to multi tenant platform</h1>
-            <Button>get started</Button>
+            <div className="mt-4 flex gap-2">
+                <Button asChild>
+                    <Link to="/owner/signup">get started</Link>
+                </Button>
+                <Button variant="outline" asChild>
+                    <Link to="/owner/login">log in</Link>
+                </Button>
+            </div>
         </div>
     );
 }

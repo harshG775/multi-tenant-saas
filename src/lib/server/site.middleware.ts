@@ -1,12 +1,10 @@
 import { redirect } from "@tanstack/react-router";
 import { createMiddleware } from "@tanstack/react-start";
 import { env } from "#/env";
-import { getRequestHost, normalizeHost } from "./host";
+import { getRequestHost, normalizeHost, rootDomain } from "./host";
 import { findSiteByHostname, type Site } from "./site.lookup";
 
 type HostKind = { type: "platform" } | { type: "subdomain"; subdomain: string } | { type: "custom"; hostname: string };
-
-const rootDomain = normalizeHost(new URL(env.PLATFORM_URL).hostname);
 
 const classifyHost = (host: string | null): HostKind => {
     if (!host) {
