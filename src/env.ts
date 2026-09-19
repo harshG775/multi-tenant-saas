@@ -1,9 +1,12 @@
-import { createEnv } from "@t3-oss/env-core"
-import { z } from "zod"
+import { createEnv } from "@t3-oss/env-core";
+import { z } from "zod";
 
 export const env = createEnv({
     server: {
-        SERVER_URL: z.string().url().optional(),
+        NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
+        PLATFORM_URL: z.url(),
+        DATABASE_URL: z.string().min(32),
+        BETTER_AUTH_SECRET: z.string().min(32),
     },
 
     /**
@@ -20,7 +23,7 @@ export const env = createEnv({
      * What object holds the environment variables at runtime. This is usually
      * `process.env` or `import.meta.env`.
      */
-    runtimeEnv: import.meta.env,
+    runtimeEnv: { ...process.env, ...import.meta.env },
 
     /**
      * By default, this library will feed the environment variables directly to
@@ -36,4 +39,4 @@ export const env = createEnv({
      * explicitly specify this option as true.
      */
     emptyStringAsUndefined: true,
-})
+});

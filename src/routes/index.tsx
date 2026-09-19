@@ -1,27 +1,25 @@
-import { createFileRoute } from "@tanstack/react-router"
+import { createFileRoute, useRouteContext } from "@tanstack/react-router";
+import { Button } from "#/components/ui/button";
 
-export const Route = createFileRoute("/")({ component: component })
+export const Route = createFileRoute("/")({
+    component: RouteComponent,
+});
 
-function component() {
-    const { tenant } = Route.useRouteContext()
+function RouteComponent() {
+    const context = useRouteContext({ from: "__root__" });
+    if (context.tenant) {
+        return (
+            <div className="p-8">
+                <h1 className="text-4xl font-bold">
+                    Welcome to <span className="text-primary">{context.tenant?.id}</span> website
+                </h1>
+            </div>
+        );
+    }
     return (
-        <main>
-            <section className="p-6 flex items-center gap-4">
-                <img
-                    src={tenant.meta.logo}
-                    alt={tenant.meta.name}
-                    width={100}
-                    height={100}
-                    style={{ borderRadius: "50%" }}
-                />
-
-                <div>
-                    <h1>Welcome to {tenant.meta.name}</h1>
-                    <p>{tenant.meta.description}</p>
-
-                    <small>Hostname: {tenant.hostname}</small>
-                </div>
-            </section>
-        </main>
-    )
+        <div className="p-8">
+            <h1 className="text-4xl font-bold">Welcome to multi tenant platform</h1>
+            <Button>get started</Button>
+        </div>
+    );
 }

@@ -1,8 +1,8 @@
-import { createStart, createCsrfMiddleware } from "@tanstack/react-start"
-import { tenantMiddleware } from "./modules/tenant"
+import { createCsrfMiddleware, createStart } from "@tanstack/react-start";
+import { tenantMiddleware } from "./lib/server/tenant.middleware";
 
-const csrfMiddleware = createCsrfMiddleware({ filter: (ctx) => ctx.handlerType === "serverFn" })
+const csrfMiddleware = createCsrfMiddleware({ filter: (ctx) => ctx.handlerType === "serverFn" });
 
 export const startInstance = createStart(() => {
-    return { requestMiddleware: [csrfMiddleware, tenantMiddleware] }
-})
+    return { requestMiddleware: [csrfMiddleware, tenantMiddleware] };
+});
