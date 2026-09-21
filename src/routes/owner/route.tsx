@@ -1,5 +1,5 @@
 import { createFileRoute, notFound, Outlet } from "@tanstack/react-router";
-import { getOwnerStateFn } from "#/features/owner/owner-state.function";
+import { getOwnerStateFn, ownerStateKey } from "#/features/owner/owner-state.function";
 
 // Owner pages exist only on the platform host; a site host must never serve them.
 export const Route = createFileRoute("/owner")({
@@ -7,7 +7,12 @@ export const Route = createFileRoute("/owner")({
         if (context.site) {
             throw notFound();
         }
-        return await getOwnerStateFn();
+        // Cached so hover preloads and redirects between `/owner/*` pages don't each hit the database.
+        return await context.queryClient.query({
+            queryKey: ownerStateKey,
+            queryFn: () => getOwnerStateFn(),
+            staleTime: 30_000,
+        });
     },
     component: Outlet,
 });

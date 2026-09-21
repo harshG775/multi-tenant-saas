@@ -5,6 +5,9 @@ import { ownerAuth } from "#/lib/auth/owner-auth";
 import { db } from "#/lib/db";
 import { siteOrigin } from "#/lib/server/host";
 
+/** Query key for the cached result of `getOwnerStateFn`; invalidate it whenever the session or the owned site changes. */
+export const ownerStateKey = ["owner-state"] as const;
+
 /** Who is signed in as an owner, and the site they own (if any). Shared by every `/owner/*` route guard. */
 export const getOwnerStateFn = createServerFn({ method: "GET" }).handler(async () => {
     const platformHost = new URL(env.PLATFORM_URL).host;

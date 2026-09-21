@@ -1,9 +1,11 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
 import { type SubmitEvent, useState } from "react";
 import { Button } from "#/components/ui/button";
 import { Input } from "#/components/ui/input";
 import { Label } from "#/components/ui/label";
 import { createSiteFn } from "../create-site.function";
+import { ownerStateKey } from "../owner-state.function";
 import { siteNameSchema, subdomainSchema } from "../subdomain";
 import { FormError, OwnerCard } from "./owner-card";
 
@@ -11,6 +13,7 @@ type Errors = { name?: string; subdomain?: string; form?: string };
 
 export function OnboardingForm({ platformHost }: { platformHost: string }) {
     const router = useRouter();
+    const queryClient = useQueryClient();
     const [errors, setErrors] = useState<Errors>({});
     const [pending, setPending] = useState(false);
 
@@ -39,6 +42,7 @@ export function OnboardingForm({ platformHost }: { platformHost: string }) {
             return;
         }
 
+        await queryClient.invalidateQueries({ queryKey: ownerStateKey });
         await router.navigate({ to: "/owner/dashboard" });
     };
 

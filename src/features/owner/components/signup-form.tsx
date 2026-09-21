@@ -1,13 +1,16 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { Link, useRouter } from "@tanstack/react-router";
 import { type SubmitEvent, useState } from "react";
 import { Button } from "#/components/ui/button";
 import { Input } from "#/components/ui/input";
 import { Label } from "#/components/ui/label";
 import { ownerAuthClient } from "../auth-client";
+import { ownerStateKey } from "../owner-state.function";
 import { FormError, OwnerCard } from "./owner-card";
 
 export function SignupForm() {
     const router = useRouter();
+    const queryClient = useQueryClient();
     const [error, setError] = useState<string | null>(null);
     const [pending, setPending] = useState(false);
 
@@ -30,6 +33,7 @@ export function SignupForm() {
             return;
         }
 
+        await queryClient.invalidateQueries({ queryKey: ownerStateKey });
         await router.navigate({ to: "/owner/onboarding" });
     };
 

@@ -1,6 +1,8 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
 import { Button } from "#/components/ui/button";
 import { ownerAuthClient } from "../auth-client";
+import { ownerStateKey } from "../owner-state.function";
 import { OwnerCard } from "./owner-card";
 
 type OwnerDashboardProps = {
@@ -11,9 +13,11 @@ type OwnerDashboardProps = {
 
 export function OwnerDashboard({ ownerName, siteName, siteUrl }: OwnerDashboardProps) {
     const router = useRouter();
+    const queryClient = useQueryClient();
 
     const onSignOut = async () => {
         await ownerAuthClient.signOut();
+        await queryClient.invalidateQueries({ queryKey: ownerStateKey });
         await router.navigate({ to: "/owner/login" });
     };
 
