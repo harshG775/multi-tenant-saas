@@ -7,7 +7,7 @@ import { db } from "#/lib/db";
 import { site } from "#/lib/db/schema/index";
 
 export const deleteSiteFn = createServerFn({ method: "POST" })
-    .inputValidator(z.object({ siteId: z.string().min(1) }))
+    .validator(z.object({ siteId: z.string().min(1) }))
     .handler(async ({ data }) => {
         const session = await ownerAuth.api.getSession({ headers: getRequestHeaders() });
         if (!session) {
