@@ -94,9 +94,9 @@ File-based routes live in `src/routes/`. `src/routeTree.gen.ts` is generated and
 - `/owner/*`: the owner area, **platform host only**. [src/routes/owner/route.tsx](src/routes/owner/route.tsx) throws `notFound()` when `context.site` is set, then loads `getOwnerStateFn` (`owner`, `ownedSite`, `platformHost`) into context for all children. Child routes gate themselves in `beforeLoad`:
   - `/owner` redirects to `/owner/dashboard`.
   - `/owner/signup` and `/owner/signin` redirect to the dashboard when already signed in.
-  - `/owner/onboarding` requires an owner (else signup) and redirects to the dashboard if a site exists.
-  - `/owner/dashboard` requires an owner (else signin). With no site yet it shows a "Create your site" prompt instead of forcing onboarding.
-- Flow: signup or signin → dashboard. With no site yet the dashboard offers "Create your site" → onboarding (`createSiteFn`), which can be skipped with "Skip for now". **One site per owner** is enforced in `createSiteFn`.
+  - `/owner/dashboard/sites` lists the owner's sites, inside the dashboard sidebar layout. `/owner/sites/new` is the onboarding form: it requires an owner (else signup) and redirects to `/owner/dashboard/sites` if a site already exists.
+  - `/owner/dashboard` (layout with sidebar) requires an owner (else signin) for every page under it. With no site yet it shows a "Create your site" prompt instead of forcing onboarding.
+- Flow: signup or signin → dashboard. With no site yet the dashboard and `/owner/dashboard/sites` offer "Create your site" → `/owner/sites/new` (`createSiteFn`, onboarding only), which can be skipped with "Skip for now". **One site per owner** is enforced in `createSiteFn`.
 - Server functions use `createServerFn` with a zod `inputValidator`. `createSiteFn` returns a discriminated `CreateSiteResult` for expected failures (for example a taken subdomain, detected via Postgres error `23505` by walking `cause`) and throws only for unexpected ones.
 
 ### Feature code

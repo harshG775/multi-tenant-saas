@@ -12,12 +12,16 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as OwnerRouteRouteImport } from './routes/owner/route'
 import { Route as OwnerIndexRouteImport } from './routes/owner/index'
-import { Route as OwnerDashboardRouteImport } from './routes/owner/dashboard'
-import { Route as OwnerOnboardingRouteImport } from './routes/owner/onboarding'
+import { Route as OwnerDashboardRouteRouteImport } from './routes/owner/dashboard/route'
 import { Route as OwnerSigninRouteImport } from './routes/owner/signin'
 import { Route as OwnerSignupRouteImport } from './routes/owner/signup'
+import { Route as OwnerDashboardIndexRouteImport } from './routes/owner/dashboard/index'
+import { Route as OwnerSitesNewRouteImport } from './routes/owner/sites/new'
 import { Route as ApiV1AuthSplatRouteImport } from './routes/api/v1/auth/$'
+import { Route as OwnerDashboardSitesIndexRouteImport } from './routes/owner/dashboard/sites/index'
+import { Route as OwnerSitesSite_idDashboardRouteRouteImport } from './routes/owner/sites/$site_id/dashboard/route'
 import { Route as ApiV1AuthOwnerSplatRouteImport } from './routes/api/v1/auth/owner/$'
+import { Route as OwnerSitesSite_idDashboardIndexRouteImport } from './routes/owner/sites/$site_id/dashboard/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -34,14 +38,9 @@ const OwnerIndexRoute = OwnerIndexRouteImport.update({
   path: '/',
   getParentRoute: () => OwnerRouteRoute,
 } as any)
-const OwnerDashboardRoute = OwnerDashboardRouteImport.update({
+const OwnerDashboardRouteRoute = OwnerDashboardRouteRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
-  getParentRoute: () => OwnerRouteRoute,
-} as any)
-const OwnerOnboardingRoute = OwnerOnboardingRouteImport.update({
-  id: '/onboarding',
-  path: '/onboarding',
   getParentRoute: () => OwnerRouteRoute,
 } as any)
 const OwnerSigninRoute = OwnerSigninRouteImport.update({
@@ -54,49 +53,87 @@ const OwnerSignupRoute = OwnerSignupRouteImport.update({
   path: '/signup',
   getParentRoute: () => OwnerRouteRoute,
 } as any)
+const OwnerDashboardIndexRoute = OwnerDashboardIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => OwnerDashboardRouteRoute,
+} as any)
+const OwnerSitesNewRoute = OwnerSitesNewRouteImport.update({
+  id: '/sites/new',
+  path: '/sites/new',
+  getParentRoute: () => OwnerRouteRoute,
+} as any)
 const ApiV1AuthSplatRoute = ApiV1AuthSplatRouteImport.update({
   id: '/api/v1/auth/$',
   path: '/api/v1/auth/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OwnerDashboardSitesIndexRoute =
+  OwnerDashboardSitesIndexRouteImport.update({
+    id: '/sites/',
+    path: '/sites/',
+    getParentRoute: () => OwnerDashboardRouteRoute,
+  } as any)
+const OwnerSitesSite_idDashboardRouteRoute =
+  OwnerSitesSite_idDashboardRouteRouteImport.update({
+    id: '/sites/$site_id/dashboard',
+    path: '/sites/$site_id/dashboard',
+    getParentRoute: () => OwnerRouteRoute,
+  } as any)
 const ApiV1AuthOwnerSplatRoute = ApiV1AuthOwnerSplatRouteImport.update({
   id: '/api/v1/auth/owner/$',
   path: '/api/v1/auth/owner/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OwnerSitesSite_idDashboardIndexRoute =
+  OwnerSitesSite_idDashboardIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => OwnerSitesSite_idDashboardRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/owner': typeof OwnerRouteRouteWithChildren
-  '/owner/dashboard': typeof OwnerDashboardRoute
-  '/owner/onboarding': typeof OwnerOnboardingRoute
+  '/owner/dashboard': typeof OwnerDashboardRouteRouteWithChildren
   '/owner/signin': typeof OwnerSigninRoute
   '/owner/signup': typeof OwnerSignupRoute
   '/owner/': typeof OwnerIndexRoute
+  '/owner/sites/new': typeof OwnerSitesNewRoute
+  '/owner/dashboard/': typeof OwnerDashboardIndexRoute
+  '/owner/sites/$site_id/dashboard': typeof OwnerSitesSite_idDashboardRouteRouteWithChildren
   '/api/v1/auth/$': typeof ApiV1AuthSplatRoute
+  '/owner/dashboard/sites/': typeof OwnerDashboardSitesIndexRoute
   '/api/v1/auth/owner/$': typeof ApiV1AuthOwnerSplatRoute
+  '/owner/sites/$site_id/dashboard/': typeof OwnerSitesSite_idDashboardIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/owner/dashboard': typeof OwnerDashboardRoute
-  '/owner/onboarding': typeof OwnerOnboardingRoute
   '/owner/signin': typeof OwnerSigninRoute
   '/owner/signup': typeof OwnerSignupRoute
   '/owner': typeof OwnerIndexRoute
+  '/owner/sites/new': typeof OwnerSitesNewRoute
+  '/owner/dashboard': typeof OwnerDashboardIndexRoute
   '/api/v1/auth/$': typeof ApiV1AuthSplatRoute
+  '/owner/dashboard/sites': typeof OwnerDashboardSitesIndexRoute
   '/api/v1/auth/owner/$': typeof ApiV1AuthOwnerSplatRoute
+  '/owner/sites/$site_id/dashboard': typeof OwnerSitesSite_idDashboardIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/owner': typeof OwnerRouteRouteWithChildren
-  '/owner/dashboard': typeof OwnerDashboardRoute
-  '/owner/onboarding': typeof OwnerOnboardingRoute
+  '/owner/dashboard': typeof OwnerDashboardRouteRouteWithChildren
   '/owner/signin': typeof OwnerSigninRoute
   '/owner/signup': typeof OwnerSignupRoute
   '/owner/': typeof OwnerIndexRoute
+  '/owner/sites/new': typeof OwnerSitesNewRoute
+  '/owner/dashboard/': typeof OwnerDashboardIndexRoute
+  '/owner/sites/$site_id/dashboard': typeof OwnerSitesSite_idDashboardRouteRouteWithChildren
   '/api/v1/auth/$': typeof ApiV1AuthSplatRoute
+  '/owner/dashboard/sites/': typeof OwnerDashboardSitesIndexRoute
   '/api/v1/auth/owner/$': typeof ApiV1AuthOwnerSplatRoute
+  '/owner/sites/$site_id/dashboard/': typeof OwnerSitesSite_idDashboardIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -104,33 +141,43 @@ export interface FileRouteTypes {
     | '/'
     | '/owner'
     | '/owner/dashboard'
-    | '/owner/onboarding'
     | '/owner/signin'
     | '/owner/signup'
     | '/owner/'
+    | '/owner/sites/new'
+    | '/owner/dashboard/'
+    | '/owner/sites/$site_id/dashboard'
     | '/api/v1/auth/$'
+    | '/owner/dashboard/sites/'
     | '/api/v1/auth/owner/$'
+    | '/owner/sites/$site_id/dashboard/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/owner/dashboard'
-    | '/owner/onboarding'
     | '/owner/signin'
     | '/owner/signup'
     | '/owner'
+    | '/owner/sites/new'
+    | '/owner/dashboard'
     | '/api/v1/auth/$'
+    | '/owner/dashboard/sites'
     | '/api/v1/auth/owner/$'
+    | '/owner/sites/$site_id/dashboard'
   id:
     | '__root__'
     | '/'
     | '/owner'
     | '/owner/dashboard'
-    | '/owner/onboarding'
     | '/owner/signin'
     | '/owner/signup'
     | '/owner/'
+    | '/owner/sites/new'
+    | '/owner/dashboard/'
+    | '/owner/sites/$site_id/dashboard'
     | '/api/v1/auth/$'
+    | '/owner/dashboard/sites/'
     | '/api/v1/auth/owner/$'
+    | '/owner/sites/$site_id/dashboard/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -167,14 +214,7 @@ declare module '@tanstack/react-router' {
       id: '/owner/dashboard'
       path: '/dashboard'
       fullPath: '/owner/dashboard'
-      preLoaderRoute: typeof OwnerDashboardRouteImport
-      parentRoute: typeof OwnerRouteRoute
-    }
-    '/owner/onboarding': {
-      id: '/owner/onboarding'
-      path: '/onboarding'
-      fullPath: '/owner/onboarding'
-      preLoaderRoute: typeof OwnerOnboardingRouteImport
+      preLoaderRoute: typeof OwnerDashboardRouteRouteImport
       parentRoute: typeof OwnerRouteRoute
     }
     '/owner/signin': {
@@ -191,12 +231,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OwnerSignupRouteImport
       parentRoute: typeof OwnerRouteRoute
     }
+    '/owner/dashboard/': {
+      id: '/owner/dashboard/'
+      path: '/'
+      fullPath: '/owner/dashboard/'
+      preLoaderRoute: typeof OwnerDashboardIndexRouteImport
+      parentRoute: typeof OwnerDashboardRouteRoute
+    }
+    '/owner/sites/new': {
+      id: '/owner/sites/new'
+      path: '/sites/new'
+      fullPath: '/owner/sites/new'
+      preLoaderRoute: typeof OwnerSitesNewRouteImport
+      parentRoute: typeof OwnerRouteRoute
+    }
     '/api/v1/auth/$': {
       id: '/api/v1/auth/$'
       path: '/api/v1/auth/$'
       fullPath: '/api/v1/auth/$'
       preLoaderRoute: typeof ApiV1AuthSplatRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/owner/dashboard/sites/': {
+      id: '/owner/dashboard/sites/'
+      path: '/sites'
+      fullPath: '/owner/dashboard/sites/'
+      preLoaderRoute: typeof OwnerDashboardSitesIndexRouteImport
+      parentRoute: typeof OwnerDashboardRouteRoute
+    }
+    '/owner/sites/$site_id/dashboard': {
+      id: '/owner/sites/$site_id/dashboard'
+      path: '/sites/$site_id/dashboard'
+      fullPath: '/owner/sites/$site_id/dashboard'
+      preLoaderRoute: typeof OwnerSitesSite_idDashboardRouteRouteImport
+      parentRoute: typeof OwnerRouteRoute
     }
     '/api/v1/auth/owner/$': {
       id: '/api/v1/auth/owner/$'
@@ -205,23 +273,60 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiV1AuthOwnerSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/owner/sites/$site_id/dashboard/': {
+      id: '/owner/sites/$site_id/dashboard/'
+      path: '/'
+      fullPath: '/owner/sites/$site_id/dashboard/'
+      preLoaderRoute: typeof OwnerSitesSite_idDashboardIndexRouteImport
+      parentRoute: typeof OwnerSitesSite_idDashboardRouteRoute
+    }
   }
 }
 
+interface OwnerDashboardRouteRouteChildren {
+  OwnerDashboardIndexRoute: typeof OwnerDashboardIndexRoute
+  OwnerDashboardSitesIndexRoute: typeof OwnerDashboardSitesIndexRoute
+}
+
+const OwnerDashboardRouteRouteChildren: OwnerDashboardRouteRouteChildren = {
+  OwnerDashboardIndexRoute: OwnerDashboardIndexRoute,
+  OwnerDashboardSitesIndexRoute: OwnerDashboardSitesIndexRoute,
+}
+
+const OwnerDashboardRouteRouteWithChildren =
+  OwnerDashboardRouteRoute._addFileChildren(OwnerDashboardRouteRouteChildren)
+
+interface OwnerSitesSite_idDashboardRouteRouteChildren {
+  OwnerSitesSite_idDashboardIndexRoute: typeof OwnerSitesSite_idDashboardIndexRoute
+}
+
+const OwnerSitesSite_idDashboardRouteRouteChildren: OwnerSitesSite_idDashboardRouteRouteChildren =
+  {
+    OwnerSitesSite_idDashboardIndexRoute: OwnerSitesSite_idDashboardIndexRoute,
+  }
+
+const OwnerSitesSite_idDashboardRouteRouteWithChildren =
+  OwnerSitesSite_idDashboardRouteRoute._addFileChildren(
+    OwnerSitesSite_idDashboardRouteRouteChildren,
+  )
+
 interface OwnerRouteRouteChildren {
-  OwnerDashboardRoute: typeof OwnerDashboardRoute
-  OwnerOnboardingRoute: typeof OwnerOnboardingRoute
+  OwnerDashboardRouteRoute: typeof OwnerDashboardRouteRouteWithChildren
   OwnerSigninRoute: typeof OwnerSigninRoute
   OwnerSignupRoute: typeof OwnerSignupRoute
   OwnerIndexRoute: typeof OwnerIndexRoute
+  OwnerSitesNewRoute: typeof OwnerSitesNewRoute
+  OwnerSitesSite_idDashboardRouteRoute: typeof OwnerSitesSite_idDashboardRouteRouteWithChildren
 }
 
 const OwnerRouteRouteChildren: OwnerRouteRouteChildren = {
-  OwnerDashboardRoute: OwnerDashboardRoute,
-  OwnerOnboardingRoute: OwnerOnboardingRoute,
+  OwnerDashboardRouteRoute: OwnerDashboardRouteRouteWithChildren,
   OwnerSigninRoute: OwnerSigninRoute,
   OwnerSignupRoute: OwnerSignupRoute,
   OwnerIndexRoute: OwnerIndexRoute,
+  OwnerSitesNewRoute: OwnerSitesNewRoute,
+  OwnerSitesSite_idDashboardRouteRoute:
+    OwnerSitesSite_idDashboardRouteRouteWithChildren,
 }
 
 const OwnerRouteRouteWithChildren = OwnerRouteRoute._addFileChildren(

@@ -5,7 +5,7 @@ import { Button } from "#/components/ui/button";
 import { Input } from "#/components/ui/input";
 import { Label } from "#/components/ui/label";
 import { ownerAuthClient } from "#/lib/auth/owner-client";
-import { ownerStateKey } from "../-functions/owner-state.function";
+import { ownerKeys } from "../-lib/owner-keys";
 import { FormError, OwnerCard } from "./owner-card";
 
 export function SigninForm() {
@@ -32,7 +32,7 @@ export function SigninForm() {
             return;
         }
 
-        await queryClient.invalidateQueries({ queryKey: ownerStateKey });
+        await queryClient.invalidateQueries({ queryKey: ownerKeys.all });
         await router.navigate({ to: "/owner/dashboard" });
     };
 

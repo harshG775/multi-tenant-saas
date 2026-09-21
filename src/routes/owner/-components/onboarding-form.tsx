@@ -4,8 +4,8 @@ import { type SubmitEvent, useState } from "react";
 import { Button } from "#/components/ui/button";
 import { Input } from "#/components/ui/input";
 import { Label } from "#/components/ui/label";
-import { createSiteFn } from "../-functions/create-site.function";
-import { ownerStateKey } from "../-functions/owner-state.function";
+import { createSiteFn } from "../-lib/-server/create-site.function";
+import { ownerKeys } from "../-lib/owner-keys";
 import { siteNameSchema, subdomainSchema } from "../-lib/subdomain";
 import { FormError, OwnerCard } from "./owner-card";
 
@@ -42,7 +42,7 @@ export function OnboardingForm({ platformHost }: { platformHost: string }) {
             return;
         }
 
-        await queryClient.invalidateQueries({ queryKey: ownerStateKey });
+        await queryClient.invalidateQueries({ queryKey: ownerKeys.all });
         await router.navigate({ to: "/owner/dashboard" });
     };
 
