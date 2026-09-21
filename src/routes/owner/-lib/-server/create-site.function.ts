@@ -30,11 +30,6 @@ export const createSiteFn = createServerFn({ method: "POST" })
             throw new Error("Unauthorized");
         }
 
-        const existing = await db.query.site.findFirst({ where: { ownerId: session.user.id } });
-        if (existing) {
-            return { ok: false, field: "form", message: "You already have a site." };
-        }
-
         const siteId = crypto.randomUUID();
 
         try {

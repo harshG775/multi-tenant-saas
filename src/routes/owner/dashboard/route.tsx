@@ -18,7 +18,9 @@ function RouteComponent() {
         <SidebarProvider>
             <DashboardSidebar owner={owner} />
             <SidebarInset>
-                <SidebarTrigger />
+                <header className="flex h-12 items-center border-b px-4">
+                    <SidebarTrigger />
+                </header>
                 <Outlet />
             </SidebarInset>
         </SidebarProvider>

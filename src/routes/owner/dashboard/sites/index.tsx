@@ -1,7 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "#/components/ui/button";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "#/components/ui/table";
 import { getOwnerSitesFn } from "#/routes/owner/-lib/-server/get-owner-sites.function";
 import { ownerKeys } from "#/routes/owner/-lib/owner-keys";
+import { SiteActions } from "../-components/site-actions";
 
 export const Route = createFileRoute("/owner/dashboard/sites/")({
     loader: ({ context }) =>
@@ -13,40 +15,74 @@ export const Route = createFileRoute("/owner/dashboard/sites/")({
     component: SitesPage,
 });
 
+const formatDate = (date: Date) =>
+    new Date(date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" });
+
 function SitesPage() {
     const ownedSites = Route.useLoaderData();
     return (
-        <main className="flex-1">
-            <div className="flex justify-between">
-                <h1>Sites</h1>
+        <main className="grid w-full gap-6 p-6">
+            <div className="flex items-center justify-between gap-4">
+                <h1 className="text-2xl font-semibold tracking-tight">Sites</h1>
+                <Button asChild>
+                    <Link to="/owner/sites/new">Create site</Link>
+                </Button>
             </div>
-            <div>
+            <div className="overflow-hidden rounded-xl border bg-card">
                 {ownedSites.length ? (
-                    <ul className="grid gap-2 text-sm">
-                        {ownedSites.map((site) => (
-                            <Link
-                                key={site.id}
-                                to="/owner/sites/$site_id/dashboard"
-                                params={{
-                                    site_id: site.id,
-                                }}
-                            >
-                                <span className="font-medium">{site.name}</span>{" "}
-                                {site.url && (
-                                    <div className="text-secondary-foreground underline-offset-4 underline">
-                                        {site.url}
-                                    </div>
-                                )}
-                            </Link>
-                        ))}
-                    </ul>
+                    <Table>
+                        <TableHeader>
+                            <TableRow className="hover:bg-transparent">
+                                <TableHead className="h-11 px-5 text-muted-foreground">Site</TableHead>
+                                <TableHead className="h-11 px-5 text-right text-muted-foreground">Created</TableHead>
+                                <TableHead className="w-14 px-3">
+                                    <span className="sr-only">Actions</span>
+                                </TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {ownedSites.map((site) => (
+                                <TableRow key={site.id} className="relative">
+                                    <TableCell className="px-5 py-4">
+                                        <div className="flex items-center gap-3">
+                                            <div className="flex size-10 shrink-0 items-center justify-center rounded-md bg-primary text-xs font-medium text-primary-foreground">
+                                                {site.name.slice(0, 3).toUpperCase()}
+                                            </div>
+                                            <div className="grid min-w-0">
+                                                <Link
+                                                    to="/owner/sites/$site_id/dashboard"
+                                                    params={{ site_id: site.id }}
+                                                    target="_blank"
+                                                    rel="noreferrer"
+                                                    className="truncate font-medium after:absolute after:inset-0"
+                                                >
+                                                    {site.name}
+                                                </Link>
+                                                {site.url && (
+                                                    <a
+                                                        href={site.url}
+                                                        target="_blank"
+                                                        rel="noreferrer"
+                                                        className="relative w-fit max-w-full truncate text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
+                                                    >
+                                                        {site.url}
+                                                    </a>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </TableCell>
+                                    <TableCell className="px-5 py-4 text-right text-muted-foreground">
+                                        {formatDate(site.createdAt)}
+                                    </TableCell>
+                                    <TableCell className="px-3 py-4 text-right">
+                                        <SiteActions site={site} />
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
                 ) : (
-                    <div className="grid gap-4">
-                        <p className="text-sm text-muted-foreground">You haven't created a site yet.</p>
-                        <Button asChild>
-                            <Link to="/owner/sites/new">Create your site</Link>
-                        </Button>
-                    </div>
+                    <p className="p-6 text-sm text-muted-foreground">You haven't created a site yet.</p>
                 )}
             </div>
         </main>
