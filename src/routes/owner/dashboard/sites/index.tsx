@@ -53,7 +53,13 @@ function SitesPage() {
                                                     to="/owner/sites/$site_id/dashboard"
                                                     params={{ site_id: site.id }}
                                                     target="_blank"
-                                                    rel="noreferrer"
+                                                    onClick={(event) => {
+                                                        if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey) {
+                                                            return;
+                                                        }
+                                                        event.preventDefault();
+                                                        window.open(event.currentTarget.href, "_blank");
+                                                    }}
                                                     className="truncate font-medium after:absolute after:inset-0"
                                                 >
                                                     {site.name}
