@@ -21,10 +21,7 @@ function RouteComponent() {
             <h1 className="text-4xl font-bold">Welcome to multi tenant platform</h1>
             <div className="mt-4 flex gap-2">
                 <Button asChild>
-                    <Link to="/owner/signup">get started</Link>
-                </Button>
-                <Button variant="outline" asChild>
-                    <Link to="/owner/login">log in</Link>
+                    <Link to="/owner">get started</Link>
                 </Button>
             </div>
         </div>

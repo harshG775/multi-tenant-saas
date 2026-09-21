@@ -1,5 +1,5 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "@tanstack/react-router";
+import { Link, useRouter } from "@tanstack/react-router";
 import { type SubmitEvent, useState } from "react";
 import { Button } from "#/components/ui/button";
 import { Input } from "#/components/ui/input";
@@ -73,6 +73,9 @@ export function OnboardingForm({ platformHost }: { platformHost: string }) {
                 <FormError message={errors.form} />
                 <Button type="submit" disabled={pending}>
                     {pending ? "Creating site…" : "Create site"}
+                </Button>
+                <Button variant="ghost" asChild>
+                    <Link to="/owner/dashboard">Skip for now</Link>
                 </Button>
             </form>
         </OwnerCard>

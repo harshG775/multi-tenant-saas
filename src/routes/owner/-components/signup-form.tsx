@@ -34,7 +34,7 @@ export function SignupForm() {
         }
 
         await queryClient.invalidateQueries({ queryKey: ownerStateKey });
-        await router.navigate({ to: "/owner/onboarding" });
+        await router.navigate({ to: "/owner/dashboard" });
     };
 
     return (
@@ -44,8 +44,8 @@ export function SignupForm() {
             footer={
                 <span>
                     Already have an account?{" "}
-                    <Link to="/owner/login" className="text-primary underline-offset-4 hover:underline">
-                        Log in
+                    <Link to="/owner/signin" className="text-primary underline-offset-4 hover:underline">
+                        Sign in
                     </Link>
                 </span>
             }
@@ -72,7 +72,7 @@ export function SignupForm() {
                 </div>
                 <FormError message={error} />
                 <Button type="submit" disabled={pending}>
-                    {pending ? "Creating account…" : "Create account"}
+                    {pending ? "Signing up…" : "Sign up"}
                 </Button>
             </form>
         </OwnerCard>

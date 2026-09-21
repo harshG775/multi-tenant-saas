@@ -13,8 +13,8 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as OwnerRouteRouteImport } from './routes/owner/route'
 import { Route as OwnerIndexRouteImport } from './routes/owner/index'
 import { Route as OwnerDashboardRouteImport } from './routes/owner/dashboard'
-import { Route as OwnerLoginRouteImport } from './routes/owner/login'
 import { Route as OwnerOnboardingRouteImport } from './routes/owner/onboarding'
+import { Route as OwnerSigninRouteImport } from './routes/owner/signin'
 import { Route as OwnerSignupRouteImport } from './routes/owner/signup'
 import { Route as ApiV1AuthSplatRouteImport } from './routes/api/v1/auth/$'
 import { Route as ApiV1AuthOwnerSplatRouteImport } from './routes/api/v1/auth/owner/$'
@@ -39,14 +39,14 @@ const OwnerDashboardRoute = OwnerDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => OwnerRouteRoute,
 } as any)
-const OwnerLoginRoute = OwnerLoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => OwnerRouteRoute,
-} as any)
 const OwnerOnboardingRoute = OwnerOnboardingRouteImport.update({
   id: '/onboarding',
   path: '/onboarding',
+  getParentRoute: () => OwnerRouteRoute,
+} as any)
+const OwnerSigninRoute = OwnerSigninRouteImport.update({
+  id: '/signin',
+  path: '/signin',
   getParentRoute: () => OwnerRouteRoute,
 } as any)
 const OwnerSignupRoute = OwnerSignupRouteImport.update({
@@ -69,8 +69,8 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/owner': typeof OwnerRouteRouteWithChildren
   '/owner/dashboard': typeof OwnerDashboardRoute
-  '/owner/login': typeof OwnerLoginRoute
   '/owner/onboarding': typeof OwnerOnboardingRoute
+  '/owner/signin': typeof OwnerSigninRoute
   '/owner/signup': typeof OwnerSignupRoute
   '/owner/': typeof OwnerIndexRoute
   '/api/v1/auth/$': typeof ApiV1AuthSplatRoute
@@ -79,8 +79,8 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/owner/dashboard': typeof OwnerDashboardRoute
-  '/owner/login': typeof OwnerLoginRoute
   '/owner/onboarding': typeof OwnerOnboardingRoute
+  '/owner/signin': typeof OwnerSigninRoute
   '/owner/signup': typeof OwnerSignupRoute
   '/owner': typeof OwnerIndexRoute
   '/api/v1/auth/$': typeof ApiV1AuthSplatRoute
@@ -91,8 +91,8 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/owner': typeof OwnerRouteRouteWithChildren
   '/owner/dashboard': typeof OwnerDashboardRoute
-  '/owner/login': typeof OwnerLoginRoute
   '/owner/onboarding': typeof OwnerOnboardingRoute
+  '/owner/signin': typeof OwnerSigninRoute
   '/owner/signup': typeof OwnerSignupRoute
   '/owner/': typeof OwnerIndexRoute
   '/api/v1/auth/$': typeof ApiV1AuthSplatRoute
@@ -104,8 +104,8 @@ export interface FileRouteTypes {
     | '/'
     | '/owner'
     | '/owner/dashboard'
-    | '/owner/login'
     | '/owner/onboarding'
+    | '/owner/signin'
     | '/owner/signup'
     | '/owner/'
     | '/api/v1/auth/$'
@@ -114,8 +114,8 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/owner/dashboard'
-    | '/owner/login'
     | '/owner/onboarding'
+    | '/owner/signin'
     | '/owner/signup'
     | '/owner'
     | '/api/v1/auth/$'
@@ -125,8 +125,8 @@ export interface FileRouteTypes {
     | '/'
     | '/owner'
     | '/owner/dashboard'
-    | '/owner/login'
     | '/owner/onboarding'
+    | '/owner/signin'
     | '/owner/signup'
     | '/owner/'
     | '/api/v1/auth/$'
@@ -170,18 +170,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OwnerDashboardRouteImport
       parentRoute: typeof OwnerRouteRoute
     }
-    '/owner/login': {
-      id: '/owner/login'
-      path: '/login'
-      fullPath: '/owner/login'
-      preLoaderRoute: typeof OwnerLoginRouteImport
-      parentRoute: typeof OwnerRouteRoute
-    }
     '/owner/onboarding': {
       id: '/owner/onboarding'
       path: '/onboarding'
       fullPath: '/owner/onboarding'
       preLoaderRoute: typeof OwnerOnboardingRouteImport
+      parentRoute: typeof OwnerRouteRoute
+    }
+    '/owner/signin': {
+      id: '/owner/signin'
+      path: '/signin'
+      fullPath: '/owner/signin'
+      preLoaderRoute: typeof OwnerSigninRouteImport
       parentRoute: typeof OwnerRouteRoute
     }
     '/owner/signup': {
@@ -210,16 +210,16 @@ declare module '@tanstack/react-router' {
 
 interface OwnerRouteRouteChildren {
   OwnerDashboardRoute: typeof OwnerDashboardRoute
-  OwnerLoginRoute: typeof OwnerLoginRoute
   OwnerOnboardingRoute: typeof OwnerOnboardingRoute
+  OwnerSigninRoute: typeof OwnerSigninRoute
   OwnerSignupRoute: typeof OwnerSignupRoute
   OwnerIndexRoute: typeof OwnerIndexRoute
 }
 
 const OwnerRouteRouteChildren: OwnerRouteRouteChildren = {
   OwnerDashboardRoute: OwnerDashboardRoute,
-  OwnerLoginRoute: OwnerLoginRoute,
   OwnerOnboardingRoute: OwnerOnboardingRoute,
+  OwnerSigninRoute: OwnerSigninRoute,
   OwnerSignupRoute: OwnerSignupRoute,
   OwnerIndexRoute: OwnerIndexRoute,
 }

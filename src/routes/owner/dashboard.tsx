@@ -4,17 +4,14 @@ import { OwnerDashboard } from "#/routes/owner/-components/owner-dashboard";
 export const Route = createFileRoute("/owner/dashboard")({
     beforeLoad: ({ context }) => {
         if (!context.owner) {
-            throw redirect({ to: "/owner/login" });
+            throw redirect({ to: "/owner/signin" });
         }
-        if (!context.ownedSite) {
-            throw redirect({ to: "/owner/onboarding" });
-        }
-        return { owner: context.owner, ownedSite: context.ownedSite };
+        return { owner: context.owner };
     },
     component: DashboardPage,
 });
 
 function DashboardPage() {
     const { owner, ownedSite } = Route.useRouteContext();
-    return <OwnerDashboard ownerName={owner.name} siteName={ownedSite.name} siteUrl={ownedSite.url} />;
+    return <OwnerDashboard ownerName={owner.name} site={ownedSite} />;
 }
