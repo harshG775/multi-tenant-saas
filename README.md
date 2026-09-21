@@ -97,7 +97,7 @@ File-based routes live in `src/routes/`. `src/routeTree.gen.ts` is generated and
   - `/owner/dashboard/sites` lists the owner's sites, inside the dashboard sidebar layout. `/owner/sites/new` is the onboarding form: it requires an owner (else signup) and redirects to `/owner/dashboard/sites` if a site already exists.
   - `/owner/dashboard` (layout with sidebar) requires an owner (else signin) for every page under it. With no site yet it shows a "Create your site" prompt instead of forcing onboarding.
 - Flow: signin → dashboard. Signup → `/owner/sites/new?onboarding=true` (`createSiteFn`), where "Skip for now" appears only because of that search param; otherwise the page is reached from the sites list's "Create site" and has no skip. An owner can create any number of sites for now (no limit in `createSiteFn`).
-- Server functions use `createServerFn` with a zod `inputValidator`. `createSiteFn` returns a discriminated `CreateSiteResult` for expected failures (for example a taken subdomain, detected via Postgres error `23505` by walking `cause`) and throws only for unexpected ones.
+- Server functions use `createServerFn` with a zod `validator`. `createSiteFn` returns a discriminated `CreateSiteResult` for expected failures (for example a taken subdomain, detected via Postgres error `23505` by walking `cause`) and throws only for unexpected ones.
 
 ### Feature code
 

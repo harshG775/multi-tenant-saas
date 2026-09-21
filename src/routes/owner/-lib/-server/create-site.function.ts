@@ -23,7 +23,7 @@ const isUniqueViolation = (error: unknown): boolean => {
 };
 
 export const createSiteFn = createServerFn({ method: "POST" })
-    .inputValidator(createSiteInput)
+    .validator(createSiteInput)
     .handler(async ({ data }): Promise<CreateSiteResult> => {
         const session = await ownerAuth.api.getSession({ headers: getRequestHeaders() });
         if (!session) {
