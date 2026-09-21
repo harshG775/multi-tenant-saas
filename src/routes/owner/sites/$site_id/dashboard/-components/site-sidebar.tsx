@@ -1,10 +1,9 @@
-import { RiArrowLeftLine, RiDashboardLine, RiExternalLinkLine } from "@remixicon/react";
+import { RiArrowLeftLine, RiDashboardLine } from "@remixicon/react";
 import { Link, useRouter, useRouterState } from "@tanstack/react-router";
 import { Button } from "#/components/ui/button";
 import {
     Sidebar,
     SidebarContent,
-    SidebarFooter,
     SidebarGroup,
     SidebarGroupContent,
     SidebarGroupLabel,
@@ -13,6 +12,7 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from "#/components/ui/sidebar";
+import { SiteAvatar } from "#/routes/owner/-components/site-avatar";
 
 type SiteSidebarProps = {
     site: { id: string; name: string; url: string | null };
@@ -42,7 +42,22 @@ export default function SiteSidebar({ site }: SiteSidebarProps) {
                         All sites
                     </Link>
                 </Button>
-                <span className="truncate px-2 py-1 text-base font-semibold">{site.name}</span>
+                <div className="flex items-center gap-3 px-2 py-1">
+                    <SiteAvatar name={site.name} />
+                    <div className="grid min-w-0">
+                        <span className="truncate text-base font-semibold">{site.name}</span>
+                        {site.url && (
+                            <a
+                                href={site.url}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="truncate text-sm text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
+                            >
+                                {site.url.replace(/^https?:\/\//, "")}
+                            </a>
+                        )}
+                    </div>
+                </div>
             </SidebarHeader>
             <SidebarContent>
                 <SidebarGroup>
@@ -61,16 +76,6 @@ export default function SiteSidebar({ site }: SiteSidebarProps) {
                     </SidebarGroupContent>
                 </SidebarGroup>
             </SidebarContent>
-            {site.url && (
-                <SidebarFooter>
-                    <Button variant="outline" asChild>
-                        <a href={site.url} target="_blank" rel="noreferrer">
-                            Visit site
-                            <RiExternalLinkLine />
-                        </a>
-                    </Button>
-                </SidebarFooter>
-            )}
         </Sidebar>
     );
 }

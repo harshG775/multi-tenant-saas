@@ -3,6 +3,7 @@ import { Button } from "#/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "#/components/ui/table";
 import { getOwnerSitesFn } from "#/routes/owner/-lib/-server/get-owner-sites.function";
 import { ownerKeys } from "#/routes/owner/-lib/owner-keys";
+import { SiteAvatar } from "../../-components/site-avatar";
 import { SiteActions } from "../-components/site-actions";
 
 export const Route = createFileRoute("/owner/dashboard/sites/")({
@@ -45,9 +46,7 @@ function SitesPage() {
                                 <TableRow key={site.id} className="relative">
                                     <TableCell className="px-5 py-4">
                                         <div className="flex items-center gap-3">
-                                            <div className="flex size-10 shrink-0 items-center justify-center rounded-md bg-primary text-xs font-medium text-primary-foreground">
-                                                {site.name.slice(0, 3).toUpperCase()}
-                                            </div>
+                                            <SiteAvatar name={site.name} />
                                             <div className="grid min-w-0">
                                                 <Link
                                                     to="/owner/sites/$site_id/dashboard"
