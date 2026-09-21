@@ -1,13 +1,16 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { Link, useRouter } from "@tanstack/react-router";
 import { type SubmitEvent, useState } from "react";
 import { Button } from "#/components/ui/button";
 import { Input } from "#/components/ui/input";
 import { Label } from "#/components/ui/label";
-import { ownerAuthClient } from "../auth-client";
+import { ownerAuthClient } from "#/lib/auth/owner-client";
+import { ownerKeys } from "../-lib/owner-keys";
 import { FormError, OwnerCard } from "./owner-card";
 
-export function LoginForm() {
+export function SigninForm() {
     const router = useRouter();
+    const queryClient = useQueryClient();
     const [error, setError] = useState<string | null>(null);
     const [pending, setPending] = useState(false);
 
@@ -24,17 +27,18 @@ export function LoginForm() {
         });
 
         if (signInError) {
-            setError(signInError.message ?? "Could not log you in.");
+            setError(signInError.message ?? "Could not sign you in.");
             setPending(false);
             return;
         }
 
+        await queryClient.invalidateQueries({ queryKey: ownerKeys.all });
         await router.navigate({ to: "/owner/dashboard" });
     };
 
     return (
         <OwnerCard
-            title="Log in"
+            title="Sign in"
             description="Welcome back."
             footer={
                 <span>
@@ -56,7 +60,7 @@ export function LoginForm() {
                 </div>
                 <FormError message={error} />
                 <Button type="submit" disabled={pending}>
-                    {pending ? "Logging in…" : "Log in"}
+                    {pending ? "Signing in…" : "Sign in"}
                 </Button>
             </form>
         </OwnerCard>

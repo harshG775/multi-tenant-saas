@@ -5,7 +5,7 @@ import { ownerAuth } from "#/lib/auth/owner-auth";
 import { db } from "#/lib/db";
 import { site, siteDomain } from "#/lib/db/schema/index";
 import { rootDomain } from "#/lib/server/host";
-import { siteNameSchema, subdomainSchema } from "./subdomain";
+import { siteNameSchema, subdomainSchema } from "../subdomain";
 
 const createSiteInput = z.object({ name: siteNameSchema, subdomain: subdomainSchema });
 
@@ -28,11 +28,6 @@ export const createSiteFn = createServerFn({ method: "POST" })
         const session = await ownerAuth.api.getSession({ headers: getRequestHeaders() });
         if (!session) {
             throw new Error("Unauthorized");
-        }
-
-        const existing = await db.query.site.findFirst({ where: { ownerId: session.user.id } });
-        if (existing) {
-            return { ok: false, field: "form", message: "You already have a site." };
         }
 
         const siteId = crypto.randomUUID();

@@ -8,6 +8,7 @@ const RESERVED_SUBDOMAINS = new Set([
     "owner",
     "dashboard",
     "auth",
+    "signin",
     "login",
     "signup",
     "mail",

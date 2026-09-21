@@ -1,13 +1,16 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { Link, useRouter } from "@tanstack/react-router";
 import { type SubmitEvent, useState } from "react";
 import { Button } from "#/components/ui/button";
 import { Input } from "#/components/ui/input";
 import { Label } from "#/components/ui/label";
-import { ownerAuthClient } from "../auth-client";
+import { ownerAuthClient } from "#/lib/auth/owner-client";
+import { ownerKeys } from "../-lib/owner-keys";
 import { FormError, OwnerCard } from "./owner-card";
 
 export function SignupForm() {
     const router = useRouter();
+    const queryClient = useQueryClient();
     const [error, setError] = useState<string | null>(null);
     const [pending, setPending] = useState(false);
 
@@ -30,7 +33,8 @@ export function SignupForm() {
             return;
         }
 
-        await router.navigate({ to: "/owner/onboarding" });
+        await queryClient.invalidateQueries({ queryKey: ownerKeys.all });
+        await router.navigate({ to: "/owner/sites/new", search: { onboarding: true } });
     };
 
     return (
@@ -40,8 +44,8 @@ export function SignupForm() {
             footer={
                 <span>
                     Already have an account?{" "}
-                    <Link to="/owner/login" className="text-primary underline-offset-4 hover:underline">
-                        Log in
+                    <Link to="/owner/signin" className="text-primary underline-offset-4 hover:underline">
+                        Sign in
                     </Link>
                 </span>
             }
@@ -68,7 +72,7 @@ export function SignupForm() {
                 </div>
                 <FormError message={error} />
                 <Button type="submit" disabled={pending}>
-                    {pending ? "Creating account…" : "Create account"}
+                    {pending ? "Signing up…" : "Sign up"}
                 </Button>
             </form>
         </OwnerCard>
