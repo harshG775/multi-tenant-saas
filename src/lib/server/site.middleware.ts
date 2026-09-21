@@ -1,6 +1,4 @@
-import { redirect } from "@tanstack/react-router";
 import { createMiddleware } from "@tanstack/react-start";
-import { env } from "#/env";
 import { getRequestHost, normalizeHost, rootDomain } from "./host";
 import { findSiteByHostname, type Site } from "./site.lookup";
 
@@ -33,15 +31,10 @@ export const siteMiddleware = createMiddleware({ type: "request" }).server(async
 
     if (kind.type !== "platform") {
         site = await findSite(kind);
-
-        if (!site) {
-            throw redirect({
-                href: env.PLATFORM_URL,
-            });
-        }
     }
 
+    // A host that isn't the platform but matches no site is answered with a 404 by the root route.
     return next({
-        context: { site },
+        context: { site, unknownHost: kind.type !== "platform" && !site },
     });
 });

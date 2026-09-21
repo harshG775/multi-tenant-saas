@@ -56,7 +56,7 @@ Every request is classified by its `Host` header (`x-forwarded-host` first) agai
 `*.localhost` resolves automatically in modern browsers, so no hosts-file edits are needed in development.
 
 - [src/start.ts](src/start.ts) registers request middleware: a CSRF middleware (server functions only), then `siteMiddleware`.
-- [src/lib/server/site.middleware.ts](src/lib/server/site.middleware.ts) classifies the host, looks up the site, and puts `site` (`Site | null`) in server context. An unknown site host redirects to `PLATFORM_URL`.
+- [src/lib/server/site.middleware.ts](src/lib/server/site.middleware.ts) classifies the host, looks up the site, and puts `site` (`Site | null`) and `unknownHost` in server context. A host that matches no site gets a 404 "This site doesn't exist" page (thrown as `notFound()` from the root `beforeLoad`), with a link back to `PLATFORM_URL`.
 - [src/lib/server/site.lookup.ts](src/lib/server/site.lookup.ts) `findSiteByHostname` queries `site_domain` joined to `site`. Custom domains only resolve once `verifiedAt` is set.
 - [src/lib/server/host.ts](src/lib/server/host.ts) holds `normalizeHost`, `getRequestHost`, `rootDomain` and `siteOrigin()` (builds a site's public origin, reusing the platform scheme and port).
 - The client gets `site` through `getSiteFn` ([src/lib/server/site.function.ts](src/lib/server/site.function.ts)). The root route's `beforeLoad` caches it in Query with `staleTime: "static"` and adds it to router context. Components read it with `useRouteContext({ from: "__root__" })`. `/` renders a tenant welcome page when `site` is set, otherwise the platform landing page.
