@@ -17,12 +17,16 @@ export const Route = createFileRoute("/owner/sites/new")({
             throw redirect({ to: "/owner/signup" });
         }
     },
+    // `onboarding` is set only by signup, which is the one place skipping this step makes sense.
+    validateSearch: (search: Record<string, unknown>): { onboarding?: true } =>
+        search.onboarding === true ? { onboarding: true } : {},
     component: NewSitePage,
 });
 
 function NewSitePage() {
     const { platformHost } = Route.useRouteContext();
-     const router = useRouter();
+    const { onboarding } = Route.useSearch();
+    const router = useRouter();
     const queryClient = useQueryClient();
     const [errors, setErrors] = useState<Errors>({});
     const [pending, setPending] = useState(false);
@@ -84,9 +88,11 @@ function NewSitePage() {
                 <Button type="submit" disabled={pending}>
                     {pending ? "Creating site…" : "Create site"}
                 </Button>
-                <Button variant="ghost" asChild>
-                    <Link to="/owner/dashboard">Skip for now</Link>
-                </Button>
+                {onboarding && (
+                    <Button variant="ghost" asChild>
+                        <Link to="/owner/dashboard">Skip for now</Link>
+                    </Button>
+                )}
             </form>
         </OwnerCard>
     );

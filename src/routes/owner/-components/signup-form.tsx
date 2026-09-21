@@ -34,7 +34,7 @@ export function SignupForm() {
         }
 
         await queryClient.invalidateQueries({ queryKey: ownerKeys.all });
-        await router.navigate({ to: "/owner/dashboard" });
+        await router.navigate({ to: "/owner/sites/new", search: { onboarding: true } });
     };
 
     return (
