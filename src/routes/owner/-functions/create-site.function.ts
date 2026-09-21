@@ -5,7 +5,7 @@ import { ownerAuth } from "#/lib/auth/owner-auth";
 import { db } from "#/lib/db";
 import { site, siteDomain } from "#/lib/db/schema/index";
 import { rootDomain } from "#/lib/server/host";
-import { siteNameSchema, subdomainSchema } from "./subdomain";
+import { siteNameSchema, subdomainSchema } from "../-lib/subdomain";
 
 const createSiteInput = z.object({ name: siteNameSchema, subdomain: subdomainSchema });
 

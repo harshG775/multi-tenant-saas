@@ -76,7 +76,7 @@ Two separate Better Auth instances share `db` and the schema barrel, but use dif
 
 - Owner auth's `trustedOrigins` is async. It always trusts `PLATFORM_URL` and additionally trusts the request host if it resolves to a known site. Preserve this when touching auth: owner auth is meant to be reachable from a site's own host too (a comment in `owner-auth.ts` mentions `/admin`, which doesn't exist yet).
 - Handlers are mounted by the catch-all routes [src/routes/api/v1/auth/$.ts](src/routes/api/v1/auth/$.ts) and [src/routes/api/v1/auth/owner/$.ts](src/routes/api/v1/auth/owner/$.ts). Both instances use the `tanstackStartCookies()` plugin.
-- Browser client: `ownerAuthClient` in [src/features/owner/auth-client.ts](src/features/owner/auth-client.ts). Server-side session check: `ownerAuth.api.getSession({ headers: getRequestHeaders() })`.
+- Browser client: `ownerAuthClient` in [src/lib/auth/owner-client.ts](src/lib/auth/owner-client.ts). Server-side session check: `ownerAuth.api.getSession({ headers: getRequestHeaders() })`.
 
 ### Database
 
@@ -101,7 +101,7 @@ File-based routes live in `src/routes/`. `src/routeTree.gen.ts` is generated and
 
 ### Feature code
 
-`src/features/owner/` holds the owner feature: `components/` (forms, the `OwnerCard` and `FormError` layout primitives, the dashboard), `*.function.ts` (server functions), `subdomain.ts` (zod schemas and the reserved-subdomain list, shared by the client form and the server), and `auth-client.ts`. New features should follow this layout.
+Files that belong to a route live next to it in a `-`-prefixed folder, which the router ignores when generating routes (do not use `_`, it marks a pathless layout route). `src/routes/owner/` uses `-components/` (forms, the `OwnerCard` and `FormError` layout primitives, the dashboard), `-functions/` (`*.function.ts` server functions) and `-lib/` (`subdomain.ts`: zod schemas and the reserved-subdomain list, shared by the client form and the server). New route groups should follow this layout.
 
 ### UI
 

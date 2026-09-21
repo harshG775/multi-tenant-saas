@@ -4,8 +4,8 @@ import { type SubmitEvent, useState } from "react";
 import { Button } from "#/components/ui/button";
 import { Input } from "#/components/ui/input";
 import { Label } from "#/components/ui/label";
-import { ownerAuthClient } from "../auth-client";
-import { ownerStateKey } from "../owner-state.function";
+import { ownerAuthClient } from "#/lib/auth/owner-client";
+import { ownerStateKey } from "../-functions/owner-state.function";
 import { FormError, OwnerCard } from "./owner-card";
 
 export function LoginForm() {

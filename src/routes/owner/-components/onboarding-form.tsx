@@ -4,9 +4,9 @@ import { type SubmitEvent, useState } from "react";
 import { Button } from "#/components/ui/button";
 import { Input } from "#/components/ui/input";
 import { Label } from "#/components/ui/label";
-import { createSiteFn } from "../create-site.function";
-import { ownerStateKey } from "../owner-state.function";
-import { siteNameSchema, subdomainSchema } from "../subdomain";
+import { createSiteFn } from "../-functions/create-site.function";
+import { ownerStateKey } from "../-functions/owner-state.function";
+import { siteNameSchema, subdomainSchema } from "../-lib/subdomain";
 import { FormError, OwnerCard } from "./owner-card";
 
 type Errors = { name?: string; subdomain?: string; form?: string };

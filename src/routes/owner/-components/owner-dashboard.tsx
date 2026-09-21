@@ -1,8 +1,8 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
 import { Button } from "#/components/ui/button";
-import { ownerAuthClient } from "../auth-client";
-import { ownerStateKey } from "../owner-state.function";
+import { ownerAuthClient } from "#/lib/auth/owner-client";
+import { ownerStateKey } from "../-functions/owner-state.function";
 import { OwnerCard } from "./owner-card";
 
 type OwnerDashboardProps = {

@@ -1,5 +1,5 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import { OwnerDashboard } from "#/features/owner/components/owner-dashboard";
+import { OwnerDashboard } from "#/routes/owner/-components/owner-dashboard";
 
 export const Route = createFileRoute("/owner/dashboard")({
     beforeLoad: ({ context }) => {
