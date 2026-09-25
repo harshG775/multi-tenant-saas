@@ -19,9 +19,9 @@ import { Route as OwnerDashboardIndexRouteImport } from './routes/owner/dashboar
 import { Route as OwnerSitesNewRouteImport } from './routes/owner/sites/new'
 import { Route as ApiV1AuthSplatRouteImport } from './routes/api/v1/auth/$'
 import { Route as OwnerDashboardSitesIndexRouteImport } from './routes/owner/dashboard/sites/index'
-import { Route as OwnerSitesSite_idDashboardRouteRouteImport } from './routes/owner/sites/$site_id/dashboard/route'
+import { Route as OwnerSitesHandleDashboardRouteRouteImport } from './routes/owner/sites/$handle/dashboard/route'
 import { Route as ApiV1AuthOwnerSplatRouteImport } from './routes/api/v1/auth/owner/$'
-import { Route as OwnerSitesSite_idDashboardIndexRouteImport } from './routes/owner/sites/$site_id/dashboard/index'
+import { Route as OwnerSitesHandleDashboardIndexRouteImport } from './routes/owner/sites/$handle/dashboard/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -74,10 +74,10 @@ const OwnerDashboardSitesIndexRoute =
     path: '/sites/',
     getParentRoute: () => OwnerDashboardRouteRoute,
   } as any)
-const OwnerSitesSite_idDashboardRouteRoute =
-  OwnerSitesSite_idDashboardRouteRouteImport.update({
-    id: '/sites/$site_id/dashboard',
-    path: '/sites/$site_id/dashboard',
+const OwnerSitesHandleDashboardRouteRoute =
+  OwnerSitesHandleDashboardRouteRouteImport.update({
+    id: '/sites/$handle/dashboard',
+    path: '/sites/$handle/dashboard',
     getParentRoute: () => OwnerRouteRoute,
   } as any)
 const ApiV1AuthOwnerSplatRoute = ApiV1AuthOwnerSplatRouteImport.update({
@@ -85,11 +85,11 @@ const ApiV1AuthOwnerSplatRoute = ApiV1AuthOwnerSplatRouteImport.update({
   path: '/api/v1/auth/owner/$',
   getParentRoute: () => rootRouteImport,
 } as any)
-const OwnerSitesSite_idDashboardIndexRoute =
-  OwnerSitesSite_idDashboardIndexRouteImport.update({
+const OwnerSitesHandleDashboardIndexRoute =
+  OwnerSitesHandleDashboardIndexRouteImport.update({
     id: '/',
     path: '/',
-    getParentRoute: () => OwnerSitesSite_idDashboardRouteRoute,
+    getParentRoute: () => OwnerSitesHandleDashboardRouteRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -101,11 +101,11 @@ export interface FileRoutesByFullPath {
   '/owner/': typeof OwnerIndexRoute
   '/owner/sites/new': typeof OwnerSitesNewRoute
   '/owner/dashboard/': typeof OwnerDashboardIndexRoute
-  '/owner/sites/$site_id/dashboard': typeof OwnerSitesSite_idDashboardRouteRouteWithChildren
+  '/owner/sites/$handle/dashboard': typeof OwnerSitesHandleDashboardRouteRouteWithChildren
   '/api/v1/auth/$': typeof ApiV1AuthSplatRoute
   '/owner/dashboard/sites/': typeof OwnerDashboardSitesIndexRoute
   '/api/v1/auth/owner/$': typeof ApiV1AuthOwnerSplatRoute
-  '/owner/sites/$site_id/dashboard/': typeof OwnerSitesSite_idDashboardIndexRoute
+  '/owner/sites/$handle/dashboard/': typeof OwnerSitesHandleDashboardIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -117,7 +117,7 @@ export interface FileRoutesByTo {
   '/api/v1/auth/$': typeof ApiV1AuthSplatRoute
   '/owner/dashboard/sites': typeof OwnerDashboardSitesIndexRoute
   '/api/v1/auth/owner/$': typeof ApiV1AuthOwnerSplatRoute
-  '/owner/sites/$site_id/dashboard': typeof OwnerSitesSite_idDashboardIndexRoute
+  '/owner/sites/$handle/dashboard': typeof OwnerSitesHandleDashboardIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -129,11 +129,11 @@ export interface FileRoutesById {
   '/owner/': typeof OwnerIndexRoute
   '/owner/sites/new': typeof OwnerSitesNewRoute
   '/owner/dashboard/': typeof OwnerDashboardIndexRoute
-  '/owner/sites/$site_id/dashboard': typeof OwnerSitesSite_idDashboardRouteRouteWithChildren
+  '/owner/sites/$handle/dashboard': typeof OwnerSitesHandleDashboardRouteRouteWithChildren
   '/api/v1/auth/$': typeof ApiV1AuthSplatRoute
   '/owner/dashboard/sites/': typeof OwnerDashboardSitesIndexRoute
   '/api/v1/auth/owner/$': typeof ApiV1AuthOwnerSplatRoute
-  '/owner/sites/$site_id/dashboard/': typeof OwnerSitesSite_idDashboardIndexRoute
+  '/owner/sites/$handle/dashboard/': typeof OwnerSitesHandleDashboardIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -146,11 +146,11 @@ export interface FileRouteTypes {
     | '/owner/'
     | '/owner/sites/new'
     | '/owner/dashboard/'
-    | '/owner/sites/$site_id/dashboard'
+    | '/owner/sites/$handle/dashboard'
     | '/api/v1/auth/$'
     | '/owner/dashboard/sites/'
     | '/api/v1/auth/owner/$'
-    | '/owner/sites/$site_id/dashboard/'
+    | '/owner/sites/$handle/dashboard/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -162,7 +162,7 @@ export interface FileRouteTypes {
     | '/api/v1/auth/$'
     | '/owner/dashboard/sites'
     | '/api/v1/auth/owner/$'
-    | '/owner/sites/$site_id/dashboard'
+    | '/owner/sites/$handle/dashboard'
   id:
     | '__root__'
     | '/'
@@ -173,11 +173,11 @@ export interface FileRouteTypes {
     | '/owner/'
     | '/owner/sites/new'
     | '/owner/dashboard/'
-    | '/owner/sites/$site_id/dashboard'
+    | '/owner/sites/$handle/dashboard'
     | '/api/v1/auth/$'
     | '/owner/dashboard/sites/'
     | '/api/v1/auth/owner/$'
-    | '/owner/sites/$site_id/dashboard/'
+    | '/owner/sites/$handle/dashboard/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -259,11 +259,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OwnerDashboardSitesIndexRouteImport
       parentRoute: typeof OwnerDashboardRouteRoute
     }
-    '/owner/sites/$site_id/dashboard': {
-      id: '/owner/sites/$site_id/dashboard'
-      path: '/sites/$site_id/dashboard'
-      fullPath: '/owner/sites/$site_id/dashboard'
-      preLoaderRoute: typeof OwnerSitesSite_idDashboardRouteRouteImport
+    '/owner/sites/$handle/dashboard': {
+      id: '/owner/sites/$handle/dashboard'
+      path: '/sites/$handle/dashboard'
+      fullPath: '/owner/sites/$handle/dashboard'
+      preLoaderRoute: typeof OwnerSitesHandleDashboardRouteRouteImport
       parentRoute: typeof OwnerRouteRoute
     }
     '/api/v1/auth/owner/$': {
@@ -273,12 +273,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiV1AuthOwnerSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/owner/sites/$site_id/dashboard/': {
-      id: '/owner/sites/$site_id/dashboard/'
+    '/owner/sites/$handle/dashboard/': {
+      id: '/owner/sites/$handle/dashboard/'
       path: '/'
-      fullPath: '/owner/sites/$site_id/dashboard/'
-      preLoaderRoute: typeof OwnerSitesSite_idDashboardIndexRouteImport
-      parentRoute: typeof OwnerSitesSite_idDashboardRouteRoute
+      fullPath: '/owner/sites/$handle/dashboard/'
+      preLoaderRoute: typeof OwnerSitesHandleDashboardIndexRouteImport
+      parentRoute: typeof OwnerSitesHandleDashboardRouteRoute
     }
   }
 }
@@ -296,18 +296,18 @@ const OwnerDashboardRouteRouteChildren: OwnerDashboardRouteRouteChildren = {
 const OwnerDashboardRouteRouteWithChildren =
   OwnerDashboardRouteRoute._addFileChildren(OwnerDashboardRouteRouteChildren)
 
-interface OwnerSitesSite_idDashboardRouteRouteChildren {
-  OwnerSitesSite_idDashboardIndexRoute: typeof OwnerSitesSite_idDashboardIndexRoute
+interface OwnerSitesHandleDashboardRouteRouteChildren {
+  OwnerSitesHandleDashboardIndexRoute: typeof OwnerSitesHandleDashboardIndexRoute
 }
 
-const OwnerSitesSite_idDashboardRouteRouteChildren: OwnerSitesSite_idDashboardRouteRouteChildren =
+const OwnerSitesHandleDashboardRouteRouteChildren: OwnerSitesHandleDashboardRouteRouteChildren =
   {
-    OwnerSitesSite_idDashboardIndexRoute: OwnerSitesSite_idDashboardIndexRoute,
+    OwnerSitesHandleDashboardIndexRoute: OwnerSitesHandleDashboardIndexRoute,
   }
 
-const OwnerSitesSite_idDashboardRouteRouteWithChildren =
-  OwnerSitesSite_idDashboardRouteRoute._addFileChildren(
-    OwnerSitesSite_idDashboardRouteRouteChildren,
+const OwnerSitesHandleDashboardRouteRouteWithChildren =
+  OwnerSitesHandleDashboardRouteRoute._addFileChildren(
+    OwnerSitesHandleDashboardRouteRouteChildren,
   )
 
 interface OwnerRouteRouteChildren {
@@ -316,7 +316,7 @@ interface OwnerRouteRouteChildren {
   OwnerSignupRoute: typeof OwnerSignupRoute
   OwnerIndexRoute: typeof OwnerIndexRoute
   OwnerSitesNewRoute: typeof OwnerSitesNewRoute
-  OwnerSitesSite_idDashboardRouteRoute: typeof OwnerSitesSite_idDashboardRouteRouteWithChildren
+  OwnerSitesHandleDashboardRouteRoute: typeof OwnerSitesHandleDashboardRouteRouteWithChildren
 }
 
 const OwnerRouteRouteChildren: OwnerRouteRouteChildren = {
@@ -325,8 +325,8 @@ const OwnerRouteRouteChildren: OwnerRouteRouteChildren = {
   OwnerSignupRoute: OwnerSignupRoute,
   OwnerIndexRoute: OwnerIndexRoute,
   OwnerSitesNewRoute: OwnerSitesNewRoute,
-  OwnerSitesSite_idDashboardRouteRoute:
-    OwnerSitesSite_idDashboardRouteRouteWithChildren,
+  OwnerSitesHandleDashboardRouteRoute:
+    OwnerSitesHandleDashboardRouteRouteWithChildren,
 }
 
 const OwnerRouteRouteWithChildren = OwnerRouteRoute._addFileChildren(

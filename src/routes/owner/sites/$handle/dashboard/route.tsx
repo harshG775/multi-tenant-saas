@@ -4,7 +4,7 @@ import { getOwnerSitesFn } from "#/routes/owner/-lib/-server/get-owner-sites.fun
 import { ownerKeys } from "#/routes/owner/-lib/owner-keys";
 import SiteSidebar from "./-components/site-sidebar";
 
-export const Route = createFileRoute("/owner/sites/$site_id/dashboard")({
+export const Route = createFileRoute("/owner/sites/$handle/dashboard")({
     beforeLoad: ({ context }) => {
         if (!context.owner) {
             throw redirect({ to: "/owner/signin" });
@@ -16,7 +16,7 @@ export const Route = createFileRoute("/owner/sites/$site_id/dashboard")({
             queryFn: () => getOwnerSitesFn(),
             staleTime: 30_000,
         });
-        const site = sites.find((s) => s.id === params.site_id);
+        const site = sites.find((s) => s.handle === params.handle);
         if (!site) {
             throw notFound();
         }
