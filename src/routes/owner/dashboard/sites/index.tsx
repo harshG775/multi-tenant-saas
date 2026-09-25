@@ -49,8 +49,8 @@ function SitesPage() {
                                             <SiteAvatar name={site.name} />
                                             <div className="grid min-w-0">
                                                 <Link
-                                                    to="/owner/sites/$site_id/dashboard"
-                                                    params={{ site_id: site.id }}
+                                                    to="/owner/sites/$handle/dashboard"
+                                                    params={{ handle: site.handle }}
                                                     target="_blank"
                                                     onClick={(event) => {
                                                         if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey) {

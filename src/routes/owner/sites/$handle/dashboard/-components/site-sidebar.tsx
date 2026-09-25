@@ -15,13 +15,13 @@ import {
 import { SiteAvatar } from "#/routes/owner/-components/site-avatar";
 
 type SiteSidebarProps = {
-    site: { id: string; name: string; url: string | null };
+    site: { handle: string; name: string; url: string };
 };
 
 export default function SiteSidebar({ site }: SiteSidebarProps) {
     const router = useRouter();
     const pathname = useRouterState({ select: (state) => state.location.pathname });
-    const overviewActive = pathname.replace(/\/$/, "") === `/owner/sites/${site.id}/dashboard`;
+    const overviewActive = pathname.replace(/\/$/, "") === `/owner/sites/${site.handle}/dashboard`;
 
     return (
         <Sidebar>
@@ -66,7 +66,7 @@ export default function SiteSidebar({ site }: SiteSidebarProps) {
                         <SidebarMenu>
                             <SidebarMenuItem>
                                 <SidebarMenuButton asChild isActive={overviewActive}>
-                                    <Link to="/owner/sites/$site_id/dashboard" params={{ site_id: site.id }}>
+                                    <Link to="/owner/sites/$handle/dashboard" params={{ handle: site.handle }}>
                                         <RiDashboardLine />
                                         Overview
                                     </Link>
