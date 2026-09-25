@@ -1,5 +1,8 @@
 import { Render } from "@puckeditor/core";
 import { createFileRoute, notFound, redirect } from "@tanstack/react-router";
+import { NotFound } from "#/components/not-found";
+import { RouteError } from "#/components/route-error";
+import { RoutePending } from "#/components/route-pending";
 import config from "#/lib/puck/config.puck";
 import { getPageFn } from "#/lib/puck/page.function";
 
@@ -19,9 +22,9 @@ export const Route = createFileRoute("/$")({
 
         return data;
     },
-    pendingComponent: () => <div>Loading...</div>,
-    errorComponent: () => <div>Error</div>,
-    notFoundComponent: () => <div>Not Found</div>,
+    pendingComponent: RoutePending,
+    errorComponent: RouteError,
+    notFoundComponent: NotFound,
     component: RouteComponent,
 });
 
