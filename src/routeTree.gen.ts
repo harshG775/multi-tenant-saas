@@ -22,6 +22,10 @@ import { Route as OwnerDashboardSitesIndexRouteImport } from './routes/owner/das
 import { Route as OwnerSitesHandleDashboardRouteRouteImport } from './routes/owner/sites/$handle/dashboard/route'
 import { Route as ApiV1AuthOwnerSplatRouteImport } from './routes/api/v1/auth/owner/$'
 import { Route as OwnerSitesHandleDashboardIndexRouteImport } from './routes/owner/sites/$handle/dashboard/index'
+import { Route as OwnerSitesHandleEditorPageIdRouteImport } from './routes/owner/sites/$handle/editor/$pageId'
+import { Route as OwnerSitesHandleDashboardSitePagesIndexRouteImport } from './routes/owner/sites/$handle/dashboard/site/pages/index'
+import { Route as OwnerSitesHandleDashboardSitePagesPageIdRouteImport } from './routes/owner/sites/$handle/dashboard/site/pages/$pageId'
+import { Route as OwnerSitesHandleDashboardSitePagesNewRouteImport } from './routes/owner/sites/$handle/dashboard/site/pages/new'
 
 const SplatRoute = SplatRouteImport.update({
   id: '/$',
@@ -91,6 +95,30 @@ const OwnerSitesHandleDashboardIndexRoute =
     path: '/',
     getParentRoute: () => OwnerSitesHandleDashboardRouteRoute,
   } as any)
+const OwnerSitesHandleEditorPageIdRoute =
+  OwnerSitesHandleEditorPageIdRouteImport.update({
+    id: '/sites/$handle/editor/$pageId',
+    path: '/sites/$handle/editor/$pageId',
+    getParentRoute: () => OwnerRouteRoute,
+  } as any)
+const OwnerSitesHandleDashboardSitePagesIndexRoute =
+  OwnerSitesHandleDashboardSitePagesIndexRouteImport.update({
+    id: '/site/pages/',
+    path: '/site/pages/',
+    getParentRoute: () => OwnerSitesHandleDashboardRouteRoute,
+  } as any)
+const OwnerSitesHandleDashboardSitePagesPageIdRoute =
+  OwnerSitesHandleDashboardSitePagesPageIdRouteImport.update({
+    id: '/site/pages/$pageId',
+    path: '/site/pages/$pageId',
+    getParentRoute: () => OwnerSitesHandleDashboardRouteRoute,
+  } as any)
+const OwnerSitesHandleDashboardSitePagesNewRoute =
+  OwnerSitesHandleDashboardSitePagesNewRouteImport.update({
+    id: '/site/pages/new',
+    path: '/site/pages/new',
+    getParentRoute: () => OwnerSitesHandleDashboardRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/owner': typeof OwnerRouteRouteWithChildren
@@ -105,7 +133,11 @@ export interface FileRoutesByFullPath {
   '/api/v1/auth/$': typeof ApiV1AuthSplatRoute
   '/owner/dashboard/sites/': typeof OwnerDashboardSitesIndexRoute
   '/api/v1/auth/owner/$': typeof ApiV1AuthOwnerSplatRoute
+  '/owner/sites/$handle/editor/$pageId': typeof OwnerSitesHandleEditorPageIdRoute
   '/owner/sites/$handle/dashboard/': typeof OwnerSitesHandleDashboardIndexRoute
+  '/owner/sites/$handle/dashboard/site/pages/$pageId': typeof OwnerSitesHandleDashboardSitePagesPageIdRoute
+  '/owner/sites/$handle/dashboard/site/pages/new': typeof OwnerSitesHandleDashboardSitePagesNewRoute
+  '/owner/sites/$handle/dashboard/site/pages/': typeof OwnerSitesHandleDashboardSitePagesIndexRoute
 }
 export interface FileRoutesByTo {
   '/$': typeof SplatRoute
@@ -117,7 +149,11 @@ export interface FileRoutesByTo {
   '/api/v1/auth/$': typeof ApiV1AuthSplatRoute
   '/owner/dashboard/sites': typeof OwnerDashboardSitesIndexRoute
   '/api/v1/auth/owner/$': typeof ApiV1AuthOwnerSplatRoute
+  '/owner/sites/$handle/editor/$pageId': typeof OwnerSitesHandleEditorPageIdRoute
   '/owner/sites/$handle/dashboard': typeof OwnerSitesHandleDashboardIndexRoute
+  '/owner/sites/$handle/dashboard/site/pages/$pageId': typeof OwnerSitesHandleDashboardSitePagesPageIdRoute
+  '/owner/sites/$handle/dashboard/site/pages/new': typeof OwnerSitesHandleDashboardSitePagesNewRoute
+  '/owner/sites/$handle/dashboard/site/pages': typeof OwnerSitesHandleDashboardSitePagesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -133,7 +169,11 @@ export interface FileRoutesById {
   '/api/v1/auth/$': typeof ApiV1AuthSplatRoute
   '/owner/dashboard/sites/': typeof OwnerDashboardSitesIndexRoute
   '/api/v1/auth/owner/$': typeof ApiV1AuthOwnerSplatRoute
+  '/owner/sites/$handle/editor/$pageId': typeof OwnerSitesHandleEditorPageIdRoute
   '/owner/sites/$handle/dashboard/': typeof OwnerSitesHandleDashboardIndexRoute
+  '/owner/sites/$handle/dashboard/site/pages/$pageId': typeof OwnerSitesHandleDashboardSitePagesPageIdRoute
+  '/owner/sites/$handle/dashboard/site/pages/new': typeof OwnerSitesHandleDashboardSitePagesNewRoute
+  '/owner/sites/$handle/dashboard/site/pages/': typeof OwnerSitesHandleDashboardSitePagesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -150,7 +190,11 @@ export interface FileRouteTypes {
     | '/api/v1/auth/$'
     | '/owner/dashboard/sites/'
     | '/api/v1/auth/owner/$'
+    | '/owner/sites/$handle/editor/$pageId'
     | '/owner/sites/$handle/dashboard/'
+    | '/owner/sites/$handle/dashboard/site/pages/$pageId'
+    | '/owner/sites/$handle/dashboard/site/pages/new'
+    | '/owner/sites/$handle/dashboard/site/pages/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/$'
@@ -162,7 +206,11 @@ export interface FileRouteTypes {
     | '/api/v1/auth/$'
     | '/owner/dashboard/sites'
     | '/api/v1/auth/owner/$'
+    | '/owner/sites/$handle/editor/$pageId'
     | '/owner/sites/$handle/dashboard'
+    | '/owner/sites/$handle/dashboard/site/pages/$pageId'
+    | '/owner/sites/$handle/dashboard/site/pages/new'
+    | '/owner/sites/$handle/dashboard/site/pages'
   id:
     | '__root__'
     | '/owner'
@@ -177,7 +225,11 @@ export interface FileRouteTypes {
     | '/api/v1/auth/$'
     | '/owner/dashboard/sites/'
     | '/api/v1/auth/owner/$'
+    | '/owner/sites/$handle/editor/$pageId'
     | '/owner/sites/$handle/dashboard/'
+    | '/owner/sites/$handle/dashboard/site/pages/$pageId'
+    | '/owner/sites/$handle/dashboard/site/pages/new'
+    | '/owner/sites/$handle/dashboard/site/pages/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -280,6 +332,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OwnerSitesHandleDashboardIndexRouteImport
       parentRoute: typeof OwnerSitesHandleDashboardRouteRoute
     }
+    '/owner/sites/$handle/editor/$pageId': {
+      id: '/owner/sites/$handle/editor/$pageId'
+      path: '/sites/$handle/editor/$pageId'
+      fullPath: '/owner/sites/$handle/editor/$pageId'
+      preLoaderRoute: typeof OwnerSitesHandleEditorPageIdRouteImport
+      parentRoute: typeof OwnerRouteRoute
+    }
+    '/owner/sites/$handle/dashboard/site/pages/': {
+      id: '/owner/sites/$handle/dashboard/site/pages/'
+      path: '/site/pages'
+      fullPath: '/owner/sites/$handle/dashboard/site/pages/'
+      preLoaderRoute: typeof OwnerSitesHandleDashboardSitePagesIndexRouteImport
+      parentRoute: typeof OwnerSitesHandleDashboardRouteRoute
+    }
+    '/owner/sites/$handle/dashboard/site/pages/$pageId': {
+      id: '/owner/sites/$handle/dashboard/site/pages/$pageId'
+      path: '/site/pages/$pageId'
+      fullPath: '/owner/sites/$handle/dashboard/site/pages/$pageId'
+      preLoaderRoute: typeof OwnerSitesHandleDashboardSitePagesPageIdRouteImport
+      parentRoute: typeof OwnerSitesHandleDashboardRouteRoute
+    }
+    '/owner/sites/$handle/dashboard/site/pages/new': {
+      id: '/owner/sites/$handle/dashboard/site/pages/new'
+      path: '/site/pages/new'
+      fullPath: '/owner/sites/$handle/dashboard/site/pages/new'
+      preLoaderRoute: typeof OwnerSitesHandleDashboardSitePagesNewRouteImport
+      parentRoute: typeof OwnerSitesHandleDashboardRouteRoute
+    }
   }
 }
 
@@ -298,11 +378,20 @@ const OwnerDashboardRouteRouteWithChildren =
 
 interface OwnerSitesHandleDashboardRouteRouteChildren {
   OwnerSitesHandleDashboardIndexRoute: typeof OwnerSitesHandleDashboardIndexRoute
+  OwnerSitesHandleDashboardSitePagesPageIdRoute: typeof OwnerSitesHandleDashboardSitePagesPageIdRoute
+  OwnerSitesHandleDashboardSitePagesNewRoute: typeof OwnerSitesHandleDashboardSitePagesNewRoute
+  OwnerSitesHandleDashboardSitePagesIndexRoute: typeof OwnerSitesHandleDashboardSitePagesIndexRoute
 }
 
 const OwnerSitesHandleDashboardRouteRouteChildren: OwnerSitesHandleDashboardRouteRouteChildren =
   {
     OwnerSitesHandleDashboardIndexRoute: OwnerSitesHandleDashboardIndexRoute,
+    OwnerSitesHandleDashboardSitePagesPageIdRoute:
+      OwnerSitesHandleDashboardSitePagesPageIdRoute,
+    OwnerSitesHandleDashboardSitePagesNewRoute:
+      OwnerSitesHandleDashboardSitePagesNewRoute,
+    OwnerSitesHandleDashboardSitePagesIndexRoute:
+      OwnerSitesHandleDashboardSitePagesIndexRoute,
   }
 
 const OwnerSitesHandleDashboardRouteRouteWithChildren =
@@ -317,6 +406,7 @@ interface OwnerRouteRouteChildren {
   OwnerIndexRoute: typeof OwnerIndexRoute
   OwnerSitesNewRoute: typeof OwnerSitesNewRoute
   OwnerSitesHandleDashboardRouteRoute: typeof OwnerSitesHandleDashboardRouteRouteWithChildren
+  OwnerSitesHandleEditorPageIdRoute: typeof OwnerSitesHandleEditorPageIdRoute
 }
 
 const OwnerRouteRouteChildren: OwnerRouteRouteChildren = {
@@ -327,6 +417,7 @@ const OwnerRouteRouteChildren: OwnerRouteRouteChildren = {
   OwnerSitesNewRoute: OwnerSitesNewRoute,
   OwnerSitesHandleDashboardRouteRoute:
     OwnerSitesHandleDashboardRouteRouteWithChildren,
+  OwnerSitesHandleEditorPageIdRoute: OwnerSitesHandleEditorPageIdRoute,
 }
 
 const OwnerRouteRouteWithChildren = OwnerRouteRoute._addFileChildren(

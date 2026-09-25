@@ -1,4 +1,7 @@
-import { createFileRoute, redirect, useRouteContext } from "@tanstack/react-router";
+import { Render } from "@puckeditor/core";
+import { createFileRoute, notFound, redirect } from "@tanstack/react-router";
+import config from "#/lib/puck/config.puck";
+import { getPageFn } from "#/lib/puck/page.function";
 
 export const Route = createFileRoute("/$")({
     beforeLoad: ({ context }) => {
@@ -6,16 +9,23 @@ export const Route = createFileRoute("/$")({
             throw redirect({ to: "/owner" });
         }
     },
+    loader: async ({ params }) => {
+        const path = `/${params._splat ?? ""}`;
+
+        const data = await getPageFn({ data: { path } });
+        if (!data) {
+            throw notFound();
+        }
+
+        return data;
+    },
+    pendingComponent: () => <div>Loading...</div>,
+    errorComponent: () => <div>Error</div>,
+    notFoundComponent: () => <div>Not Found</div>,
     component: RouteComponent,
 });
 
 function RouteComponent() {
-    const context = useRouteContext({ from: "__root__" });
-    return (
-        <div className="p-8">
-            <h1 className="text-4xl font-bold">
-                Welcome to <span className="text-primary">{context?.site?.name}</span> website
-            </h1>
-        </div>
-    );
+    const data = Route.useLoaderData();
+    return <Render config={config} data={data} />;
 }

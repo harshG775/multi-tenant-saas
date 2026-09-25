@@ -41,10 +41,17 @@ export const relations = defineRelations(schema, (r) => ({
             to: r.ownerUser.id,
         }),
         domains: r.many.siteDomain(),
+        pages: r.many.page(),
     },
     siteDomain: {
         site: r.one.site({
             from: r.siteDomain.siteId,
+            to: r.site.id,
+        }),
+    },
+    page: {
+        site: r.one.site({
+            from: r.page.siteId,
             to: r.site.id,
         }),
     },

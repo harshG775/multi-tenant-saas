@@ -1,4 +1,4 @@
-import { RiArrowLeftLine, RiDashboardLine } from "@remixicon/react";
+import { RiArrowLeftLine, RiDashboardLine, RiGlobalLine } from "@remixicon/react";
 import { Link, useRouter, useRouterState } from "@tanstack/react-router";
 import { Button } from "#/components/ui/button";
 import {
@@ -11,6 +11,9 @@ import {
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
+    SidebarMenuSub,
+    SidebarMenuSubButton,
+    SidebarMenuSubItem,
 } from "#/components/ui/sidebar";
 import { SiteAvatar } from "#/routes/owner/-components/site-avatar";
 
@@ -22,6 +25,7 @@ export default function SiteSidebar({ site }: SiteSidebarProps) {
     const router = useRouter();
     const pathname = useRouterState({ select: (state) => state.location.pathname });
     const overviewActive = pathname.replace(/\/$/, "") === `/owner/sites/${site.handle}/dashboard`;
+    const pagesActive = pathname.startsWith(`/owner/sites/${site.handle}/dashboard/site/pages`);
 
     return (
         <Sidebar>
@@ -71,6 +75,23 @@ export default function SiteSidebar({ site }: SiteSidebarProps) {
                                         Overview
                                     </Link>
                                 </SidebarMenuButton>
+                            </SidebarMenuItem>
+                            <SidebarMenuItem>
+                                <SidebarMenuButton asChild isActive={pagesActive}>
+                                    <Link to="/owner/sites/$handle/dashboard/site/pages" params={{ handle: site.handle }}>
+                                        <RiGlobalLine />
+                                        Site
+                                    </Link>
+                                </SidebarMenuButton>
+                                <SidebarMenuSub>
+                                    <SidebarMenuSubItem>
+                                        <SidebarMenuSubButton asChild isActive={pagesActive}>
+                                            <Link to="/owner/sites/$handle/dashboard/site/pages" params={{ handle: site.handle }}>
+                                                Pages
+                                            </Link>
+                                        </SidebarMenuSubButton>
+                                    </SidebarMenuSubItem>
+                                </SidebarMenuSub>
                             </SidebarMenuItem>
                         </SidebarMenu>
                     </SidebarGroupContent>
