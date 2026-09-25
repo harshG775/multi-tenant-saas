@@ -9,7 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as SplatRouteImport } from './routes/$'
 import { Route as OwnerRouteRouteImport } from './routes/owner/route'
 import { Route as OwnerIndexRouteImport } from './routes/owner/index'
 import { Route as OwnerDashboardRouteRouteImport } from './routes/owner/dashboard/route'
@@ -23,9 +23,9 @@ import { Route as OwnerSitesHandleDashboardRouteRouteImport } from './routes/own
 import { Route as ApiV1AuthOwnerSplatRouteImport } from './routes/api/v1/auth/owner/$'
 import { Route as OwnerSitesHandleDashboardIndexRouteImport } from './routes/owner/sites/$handle/dashboard/index'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const SplatRoute = SplatRouteImport.update({
+  id: '/$',
+  path: '/$',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OwnerRouteRoute = OwnerRouteRouteImport.update({
@@ -93,8 +93,8 @@ const OwnerSitesHandleDashboardIndexRoute =
   } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
   '/owner': typeof OwnerRouteRouteWithChildren
+  '/$': typeof SplatRoute
   '/owner/dashboard': typeof OwnerDashboardRouteRouteWithChildren
   '/owner/signin': typeof OwnerSigninRoute
   '/owner/signup': typeof OwnerSignupRoute
@@ -108,7 +108,7 @@ export interface FileRoutesByFullPath {
   '/owner/sites/$handle/dashboard/': typeof OwnerSitesHandleDashboardIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
+  '/$': typeof SplatRoute
   '/owner/signin': typeof OwnerSigninRoute
   '/owner/signup': typeof OwnerSignupRoute
   '/owner': typeof OwnerIndexRoute
@@ -121,8 +121,8 @@ export interface FileRoutesByTo {
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
   '/owner': typeof OwnerRouteRouteWithChildren
+  '/$': typeof SplatRoute
   '/owner/dashboard': typeof OwnerDashboardRouteRouteWithChildren
   '/owner/signin': typeof OwnerSigninRoute
   '/owner/signup': typeof OwnerSignupRoute
@@ -138,8 +138,8 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/'
     | '/owner'
+    | '/$'
     | '/owner/dashboard'
     | '/owner/signin'
     | '/owner/signup'
@@ -153,7 +153,7 @@ export interface FileRouteTypes {
     | '/owner/sites/$handle/dashboard/'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
+    | '/$'
     | '/owner/signin'
     | '/owner/signup'
     | '/owner'
@@ -165,8 +165,8 @@ export interface FileRouteTypes {
     | '/owner/sites/$handle/dashboard'
   id:
     | '__root__'
-    | '/'
     | '/owner'
+    | '/$'
     | '/owner/dashboard'
     | '/owner/signin'
     | '/owner/signup'
@@ -181,19 +181,19 @@ export interface FileRouteTypes {
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
   OwnerRouteRoute: typeof OwnerRouteRouteWithChildren
+  SplatRoute: typeof SplatRoute
   ApiV1AuthSplatRoute: typeof ApiV1AuthSplatRoute
   ApiV1AuthOwnerSplatRoute: typeof ApiV1AuthOwnerSplatRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/$': {
+      id: '/$'
+      path: '/$'
+      fullPath: '/$'
+      preLoaderRoute: typeof SplatRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/owner': {
@@ -334,8 +334,8 @@ const OwnerRouteRouteWithChildren = OwnerRouteRoute._addFileChildren(
 )
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
   OwnerRouteRoute: OwnerRouteRouteWithChildren,
+  SplatRoute: SplatRoute,
   ApiV1AuthSplatRoute: ApiV1AuthSplatRoute,
   ApiV1AuthOwnerSplatRoute: ApiV1AuthOwnerSplatRoute,
 }
