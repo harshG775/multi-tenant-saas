@@ -23,7 +23,13 @@ export function NotFound({ data }: { data?: unknown }) {
                 </p>
                 <div className="flex justify-center">
                     <Button asChild>
-                        {platformUrl ? <a href={platformUrl}>Create your own site</a> : <Link to="/$">Go home</Link>}
+                        {platformUrl ? (
+                            <a href={platformUrl}>Create your own site</a>
+                        ) : (
+                            <Link to="/$" params={{ _splat: "" }}>
+                                Go home
+                            </Link>
+                        )}
                     </Button>
                 </div>
             </div>

@@ -15,7 +15,9 @@ export function RouteError({ error, reset }: ErrorComponentProps) {
                         Try again
                     </Button>
                     <Button asChild>
-                        <Link to="/$">Go home</Link>
+                        <Link to="/$" params={{ _splat: "" }}>
+                            Go home
+                        </Link>
                     </Button>
                 </div>
             </div>
